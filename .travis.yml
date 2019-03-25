@@ -13,7 +13,7 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: "$GITHUB_TOKEN"
-  local-dir: "./upm19"
+  local-dir: "./lecture"
   keep-history: true
   on:
     branch: master
