@@ -1,0 +1,21 @@
+language: rust
+sudo: false
+cache: cargo
+rust:
+- stable
+before_script:
+- "(test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)"
+- (test -x $HOME/.cargo/bin/mdbook || cargo install --vers "^0.1" mdbook)
+- cargo install-update -a
+script:
+- mdbook build && mdbook test
+deploy:
+  provider: pages
+  skip-cleanup: true
+  # Generate token at https://github.com/settings/tokens
+  # Go to travis and copy it to /repo/settings environment variable, name it "GITHUB-TOKEN"
+  github-token: "$GITHUB_TOKEN"
+  local-dir: "./lecture"
+  keep-history: true
+  on:
+    branch: master
