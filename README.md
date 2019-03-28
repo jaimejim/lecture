@@ -1,3 +1,3 @@
 # Lecture Material
 
-Contains the material from the lecture given to the IoT Master's students at Universidad Politécnica de Madrid in 2019
+Contains notes and lecture material around various topics I have condensed over the course of several years.
