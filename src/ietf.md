@@ -25,7 +25,18 @@ The IETF is ...
 
 ## The life of a draft
 
-## The work of an IETF contributor
+## Contributing to IETF
+
+
+
+### Communication tools
+
+**mailing lists**
+**jabber**
+**interims**
+**github**
+**face to face**
+
 
 ## References
 - [IETF Newcomer's presentation](https://www.youtube.com/playlist?list=PLC86T-6ZTP5hXPJ-n4mwJbZ0BHaNlhTMA)
