@@ -82,6 +82,6 @@ You ust then select a Working Group that fits your research/development interest
 
 * Some groups have **interim meetings** which are online videoconferencing calls. Those are published on the mailing list.
 
-* Although the IETF doe snot run their own GitLab servers, **Github** is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is <core-wg.github.io>
+* Although the IETF doe snot run their own GitLab servers, **Github** is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is <http://core-wg.github.io>
 
 * Finally, the best and most effective way of collaborating have been the **face to face** meetings happening three times a year. They can also be joined online.
