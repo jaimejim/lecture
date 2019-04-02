@@ -23,7 +23,7 @@ The IETF is ...
 * Focused on Internet technologies
 * Bottom-up... and unique!
 
-## The life of a draft
+## The life of a draft
 
 ## Contributing to IETF
 
