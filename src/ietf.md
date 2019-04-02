@@ -74,16 +74,14 @@ It all starts with an author of set of authors that want to propose some solutio
 
 If you are interested to take part, the best thing you can do is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/) of the IETF.
 
-You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a [charter document](https://datatracker.ietf.org/wg/core/charter/) that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many commuybni
-### Communication tools
+You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a [charter document](https://datatracker.ietf.org/wg/core/charter/) that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use. 
 
-**mailing lists**
-**jabber**
-**interims**
-**github**
-**face to face**
+**mailing lists** are the primary form of communication, they usually start with the group name and then `@ietf.org, like <core@ietf.org>.
 
-## References
-- [IETF Newcomer's presentation](https://www.youtube.com/playlist?list=PLC86T-6ZTP5hXPJ-n4mwJbZ0BHaNlhTMA)
-- [Newcomer's Overview](https://www.ietf.org/about/participate/tutorials/newcomers/overview/)
-- [Another 10 years](./another10years.md)
+**jabber** rooms work in a similar fashion <core@jabber.ietf.org>. However XMPP is used less and less these days.
+
+Some groups have **interim meetings** which are online videoconferencing calls. Those are published on the mailing list.
+
+Although the IETF doe snot run their own GitLab servers, **Github** is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is <core-wg.github.io>
+
+Finally, the best and most effective way of collaborating have been the **face to face** meetings happening three times a year. They can also be joined online.
