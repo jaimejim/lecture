@@ -6,7 +6,7 @@ A large portion of this success has been done by the work of engineers at organi
 
 ## What has the IETF done for us anyways?
 
-The mission of the IETF is [to make the Internet work better](https://tools.ietf.org/html/rfc3935), and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:
+IETF's mission is **[to make the Internet work better](https://tools.ietf.org/html/rfc3935)**, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:
 
 - [RFC791](https://tools.ietf.org/html/rfc791) The Internet Protocol.
 - [RFC792](https://tools.ietf.org/html/rfc792) The Internet Control Message Protocol.
@@ -54,7 +54,7 @@ The Internet Architecture Board, ([IAB](https://www.ietf.org/glossary.html#IAB))
 
 There are very detailed guideline documents like [RFC2418](https://tools.ietf.org/html/rfc2418) that explain how WGs are created and what the roles of each individual are, but at a high level the IETF relies on **"rough consensus and running code"**.
 
-## The life of a draft
+## A draft's lifetime
 
 It all starts with an author of set of authors that want to propose some solution for a specific problem they are facing. Usually the problem requires some interoperability and thus an Internet draft seems like the right approach.
 
