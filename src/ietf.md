@@ -1,12 +1,12 @@
 # The Internet Engineering Task Force (IETF)
 
-In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Nobody thought that we could achieve this astonishing feat, yet it has happened with almost no fanfare.
+In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Looking ahead, there are estimations of several other billions of devices to be soon connected to this network. Noone thought that this feat could be achievable and yet it has happened with almost no fanfare.
 
-A lot of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.
+A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.
 
-## What has the IETF done for us anyways?
+## What has the IETF done for us anyways?
 
-The IETF is a large open international community of network designers, operators, vendors, and researchers concerned with the evolution of the Internet architecture and the smooth operation of the Internet. The mission of the IETF is to make the Internet work better by producing high quality, relevant technical documents that influence the way people design, use, and manage the Internet. [RFC 3935](https://tools.ietf.org/html/rfc3935). Many of those RFCs have already been implemented on every connected machine today:
+The mission of the IETF is [to make the Internet work better](https://tools.ietf.org/html/rfc3935), and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:
 
 - [RFC791](https://tools.ietf.org/html/rfc791) The Internet Protocol.
 - [RFC792](https://tools.ietf.org/html/rfc792) The Internet Control Message Protocol.
@@ -32,7 +32,12 @@ The IETF is a large open international community of network designers, operators
 - [RFC4251](https://tools.ietf.org/html/rfc4251) The Secure Shell (SSH) Protocol Architecture.
 - [RFC8200](https://tools.ietf.org/html/rfc8200) Internet Protocol, Version 6 (IPv6) Sepcification.
 
-While most RFCs are just proposals, miscellaneous protocol descriptions, or opinion/information documents, there are true *“Internet standards”* among the RFCs and are maintained by the [RFC Editor](http://www.rfc-editor.org/standards).
+While most RFCs are just proposals, miscellaneous protocol descriptions, or opinion/information documents, there are true *Internet Standards* among the RFCs and are maintained by the [RFC Editor](http://www.rfc-editor.org/standards).
+
+For the reader's pleasure I also copied two fantastic summaries of the changes that have happened to the Internet in a couple of decades:
+
+- [A decade of Internet Evolution (2008)](./10years.md)
+- [Another 10 years (2018)](./another10years.md)
 
 ## IETF Organization
 
@@ -40,36 +45,30 @@ As explained at the [IETF website](https://www.ietf.org/about/who/), the technic
 
 Much of the work in the IETF is handled via [mailing lists](https://www.ietf.org/list/). The IETF holds [meetings](https://www.ietf.org/how/meetings/) three times per year. [IETF Hackathons](https://www.ietf.org/how/runningcode/hackathons/) encourage collaboration on developing utilities, ideas, sample code, and solutions that show practical implementations of IETF standards. More recently GitHub has become a prevalent way to track the work and interact with developers more smoothly; for example [CoRE](https://github.com/core-wg), [HTTP](https://github.com/httpwg) or [TEEP](https://github.com/ietf-teep) use it regularly.
 
-The Internet Architecture Board, ([IAB](https://www.ietf.org/glossary.html#IAB)). The IAB also adjudicates appeals when someone complains that the IESG has failed. The IAB and IESG are chartered by the Internet Society ([ISOC](https://www.ietf.org/glossary.html#ISOC)) for these purposes. The General Area Director also serves as the chair of the IESG and of the IETF, and is an ex-officio member of the IAB.
+The Internet Architecture Board, ([IAB](https://www.ietf.org/glossary.html#IAB)) is responsible for defining the overall architecture of the Internet, providing guidance and broad direction to the IETF. The IAB also serves as the technology advisory group to the Internet Society [ISOC](https://www.ietf.org/glossary.html#ISOC)).
 
 There are very detailed guideline documents like [RFC2418](https://tools.ietf.org/html/rfc2418) that explain how WGs are created and what the roles of each individual are, but at a high level the IETF relies on **"rough consensus and running code"**.
 
-
-
-
-The technical work of the IETF is done in Working Groups, which are organized by topic into several Areas. Much of the work is handled via mailing lists. The IETF holds meetings three times per year. 
-
-The IETF working groups are grouped into areas, and managed by Area Directors, or ADs. The ADs are members of the Internet Engineering Steering Group (IESG). Providing architectural oversight is the Internet Architecture Board, (IAB). The IAB also adjudicates appeals when someone complains that the IESG has failed. The IAB and IESG are chartered by the Internet Society (ISOC) for these purposes. The General Area Director also serves as the chair of the IESG and of the IETF, and is an ex-officio member of the IAB. The Internet Assigned Numbers Authority (IANA) is the central coordinator for the assignment of unique parameter values for Internet protocols.
-
-More information about the IETF standards process is available here and in RFC2026.
-
-New participants in the IETF might find it helpful to read Getting Started in the IETF and The Tao of the IETF, (also available as RFC4677). You can learn more via tutorials or mentoring.
-
-
-**IETF Working Groups (WGs)** are the primary mechanism for the development of IETF specifications and guidelines, many of which are intended to be standards or recommendations.
-
-**IRTF Research Group (RG)** explore and work on research-related topics with a more longer-term approach when compared to a WG. However, its organizational nature remains similar.
-
 ## The life of a draft
 
-**Internet-Drafts (I-Ds)** are working documents of the IETF, its areas, and its Working Groups. Note that other groups may also distribute working documents as I-Ds. I-Ds can be proposed by individual parties, normally within the scope a specific WG. In order to become WG I-Ds they need to go through an adoption process within the WG itself.
+It all starts with an author of set of authors that want to propose some solution for a specific problem they are facing. Usually the problem requires some interoperability and thus an Internet draft seems like the right approach.
 
-**Request for Comment (RFC)** is a technical and organizational publication, which describes mechanisms, implementations guidelines, or innovations applicable on topics related to Internet protocols, Internet-connected systems, applications, architecture and technology. In order to become RFC there needs to be several interoperable implementations, which often are Open Sourced.
+1. An Internet draft is first publish as an *individual submission* by one or more authors. Literally anyone can write a draft and the requirements on that submission are very low. 
 
-RFCs can follow multiple tracks; standard, informational or experimental. Standard track RFCs that reach an adequate level of maturity become firstly *Proposed Standard*. Once that the proposed standard reaches a high degree of maturity and adoption can become *Internet Standard*.
+2. Once the submission gets the attention of the Working Group, by discussing it on the mailing list, presenting it, doing implementations or evaluation... then the group can *adopt it* by doing a *Working Group Adoption (WGA)* call. Once agreed the document becomes a *working group internet draft*.
+
+3. The draft will then go through **many** iterations and revisions, interop events, discussions, errata, and so on before the group thinks it is ready for *Working Group Last Call* which is the moment in which the group decides that the document is ready for publication.
+
+4. After that the document is sent to the [Internet Engineering Steering Group (IESG)](https://www.ietf.org/about/groups/iesg/) for final review, [IANA](https://www.iana.org/) will due its due process and other and other editing will be done by/with the RFC Editor. After some time the document gets assigned an RFC number and is published. 
+
+5. After several years, providing there is industry adoption and the document is on the Standards Track i.e. it is not informational, the document may be come an Internet Standard. This whole process takes a long time and it can feel a bit slow, but at least the out put has guarantees of *some* consensus and *some* running code.
+
+![IETF Publication Process](./img/ietf-process.png)
 
 ## Contributing to IETF
 
+
+Best is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/)
 Initially, the IETF met quarterly, but from 1991, it has been meeting three times a year. The initial meetings were very small, with fewer than 35 people in attendance at each of the first five meetings. The maximum attendance during the first 13 meetings was only 120 attendees. This occurred at the 12th meeting held during January 1989. These meetings have grown in both participation and scope a great deal since the early 1990s; it had a maximum attendance of 2,810 at the December 2000 IETF held in San Diego, California. Attendance declined with industry restructuring during the early 2000s, and is currently around 1,200.
 
 ### Communication tools

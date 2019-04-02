@@ -106,7 +106,7 @@ The push to hide user traffic from the network and network-based eavesdroppers e
 
 We are now operating our applications in an environment of heightened paranoia. Applications do not necessarily trust the platform on which they are running, and we are seeing efforts from the applications to hide their activity from the underlying platform. Applications do not trust the network, and we are seeing increased use of end-to-end encryption to hide their activity from network eaves droppers. The use of identity credentials within the encrypted session establishment also acts to limit the vulnerability of application clients to be misdirected to masquerading servers.
 
-### The Rise and Rise of Content
+### The Rise and Rise of Content
 
 Moving further up the protocol stack to the environment of content and applications we have also seen some revolutionary changes over the past decade.
 
