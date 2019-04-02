@@ -2,6 +2,8 @@
 
 *This is an article published in the [Internet Protocol Journal on June 2009 - Volume 11, number 2](https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-40/112-evolution.html). It was written by Vint Cerf, if the name does not ring a bell you are in the wrong field.*
 
+---
+
 In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). In that same year, the Internet Corporation for Assigned Names and Numbers (ICANN) [1](https://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_10-4/104_future.html) was created. Internet companies such as Netscape Communications, Yahoo!, eBay, and Amazon were already 3 to 4 years old and the Internet was in the middle of its so-called "dot-boom" period. Google emerged that year as a highly speculative effort to "organize the world's information and make it accessible and useful." Investment in anything related to the Internet was called "irrational exuberance" by the then head of the U.S. Federal Reserve Bank, Alan Greenspan.
 
 By April 2000, the Internet boom ended—at least in the United States—and a notable decline in investment in Internet application providers and infrastructure ensued. Domino effects resulted for router vendors, Internet service providers, and application providers. An underlying demand for Internet services remained, however, and it continued to grow, in part because of the growth in the number of Internet users worldwide.

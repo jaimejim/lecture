@@ -68,11 +68,7 @@ New participants in the IETF might find it helpful to read Getting Started in th
 
 RFCs can follow multiple tracks; standard, informational or experimental. Standard track RFCs that reach an adequate level of maturity become firstly *Proposed Standard*. Once that the proposed standard reaches a high degree of maturity and adoption can become *Internet Standard*.
 
-
-
-
 ## Contributing to IETF
-
 
 Initially, the IETF met quarterly, but from 1991, it has been meeting three times a year. The initial meetings were very small, with fewer than 35 people in attendance at each of the first five meetings. The maximum attendance during the first 13 meetings was only 120 attendees. This occurred at the 12th meeting held during January 1989. These meetings have grown in both participation and scope a great deal since the early 1990s; it had a maximum attendance of 2,810 at the December 2000 IETF held in San Diego, California. Attendance declined with industry restructuring during the early 2000s, and is currently around 1,200.
 
@@ -84,8 +80,7 @@ Initially, the IETF met quarterly, but from 1991, it has been meeting three time
 **github**
 **face to face**
 
-
-## References
+## References
 - [IETF Newcomer's presentation](https://www.youtube.com/playlist?list=PLC86T-6ZTP5hXPJ-n4mwJbZ0BHaNlhTMA)
 - [Newcomer's Overview](https://www.ietf.org/about/participate/tutorials/newcomers/overview/)
 - [Another 10 years](./another10years.md)

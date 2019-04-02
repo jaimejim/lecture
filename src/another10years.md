@@ -2,6 +2,8 @@
 
 *This is an article published in the [Internet Protocol Journal on August 2018 - Volume 21, number 2](http://ipj.dreamhosters.com/wp-content/uploads/2018/08/ipj212.pdf). It was written by Geoff Huston who is Chief Scientist at APNIC, the Regional Internet Registry serving the Asia-Pacific region.*
 
+---
+
 The evolutionary path of any technology can often take strange and unanticipated turns and twists. At some points simplicity and minimalism can be replaced by complexity and ornamentation, while at other times a dramatic cut-through exposes the core concepts of the technology and removes layers of superfluous additions. The evolution of the Internet appears to be no exception and contains these same forms of unanticipated turns and twists. In thinking about the technology of the Internet over the last ten years, it appears that it’s been a very mixed story about what’s changed and what’s stayed the same.
 
 A lot of the Internet today looks much the same as the Internet of a decade ago. Much of the Internet’s infrastructure has stubbornly resisted various efforts to engender change. We are still in the middle of the process to transition the Internet to IPv6, which was the case a decade ago. We are still trying to improve the resilience of the Internet to various attack vectors, which was the case a decade ago. We are still grappling with various efforts to provide defined quality of service in the network, which was the case a decade ago. It seems that the rapid pace of technical change in the 1990’s and early 2000’s has simply run out of momentum and it seems that the dominant activity on the Internet over the past decade was consolidation rather than continued technical evolution. Perhaps this increased resistance to change is because as the size of the network increases, its inertial mass also increases. We used to quote Metcalf’s Law to each other, reciting the mantra that the value of a network increases in proportion to the square of the number of users. A related observation appears to be that a network’s inherent resistance to change, or inertial mass, is also directly related to the square of the number of users as well. Perhaps as a general observation, all large loosely coupled distributed systems are strongly resistant to efforts to orchestrate a coordinated change. At best, these systems respond to various forms of market pressures, but as the Internet’s overall system is so large and so diverse these market pressures manifest themselves in different ways in different parts of this network. Individual actors operate under no centrally orchestrated set of instructions or constraints. Where change occurs, it is because some sufficiently large body of individual actors see opportunity in undertaking the change or perceive unacceptable risk in not changing. The result for the Internet appears to be that some changes are very challenging, while others look like natural and inevitable progressive steps.
@@ -9,6 +11,8 @@ A lot of the Internet today looks much the same as the Internet of a decade ago.
 But the other side of the story is one that is about as diametrically opposed as its possible to paint. Over the last decade we’ve seen another profound revolution in the Internet as it embraced a combination of wireless-based infrastructure and a rich set of services at a speed which has been unprecedented. We’ve seen a revolution in content and content provision that has not only changed the Internet, but as collateral damage the Internet appears to be decimating the traditional newspaper and broadcast television sectors. Social media has all but replaced the social role of the telephone and the practice of letter writing. We’ve seen the rise of the resurgence of a novel twist to the old central mainframe service in the guise of the ‘cloud’ and the repurposing of Internet devices to support views of a common cloud-hosted content that in many ways mimic the function of display terminals of a bygone past. All of these are fundamental changes to the Internet and all of these have occurred in the last decade!
 
 That’s a significant breadth of material to cover, so I’ll keep the story to the larger themes, and to structure this story, rather than offer a set of unordered observations about the various changes and developments over the past decade, I’ll use a standard model of a protocol stack as the guiding template. I’ll start with the underlying transmission media and then looking at IP, the transport layer, then applications and services, and closing with a look at the business of the Internet to highlight the last decade’s developments.
+
+---
 
 ## Below the IP Layer
 
@@ -21,6 +25,8 @@ Radio systems have seen a similar evolution in overall capacity. Basic improveme
 While optical speeds are increasing, ethernet packet framing still persists in transmission systems long after the original rationale for the packet format died along with that bright yellow coaxial cable! Oddly enough, the Ethernet-defined minimum and maximum packet sizes of 64 and 1500 octets still persist. The inevitable result of faster transmission speeds with constant packet sizes results in an upper bound of the number of packets per second increasing more 100-fold over the past decade, in line with the increase of deployed transmission speeds from 2.5Gbps to 400 Gbps. As a consequence, higher packet processing rates are being demanded from silicon-based switches. But one really important scaling factor has not changed for the past decade, namely the clock speed of processors and the cycle time of memory, which has not moved at all. The response so far has been in increasing reliance of parallelism in high speed digital switching applications, and these days multi-core processors and highly parallel memory systems are used to achieve performance that would be impossible in a single threaded processing model.
 
 In 2018 it appears that we are close to achieving 1Tbps optical systems and up to 20Gbps in radio systems. Just how far and how quickly these transmission models can be pushed into supporting ever higher channel speeds is an open question.
+
+---
 
 ## The IP Layer
 
@@ -38,7 +44,7 @@ All well and good, but what about IPv6? Do we still need it? If so, then then ar
 
 It seems that today we are still seeing a mixed picture for IPv6. Some service providers simply see no way around their particular predicament of IPv4 address scarcity and these providers see IPv6 as a necessary decision to further expand their network. Other providers are willing to defer the question to some undefined point in the future.
 
-### Routing
+### Routing
 
 While we are looking at what’s largely unchanged over the past decade we need to mention the routing system. Despite dire predictions of the imminent scaling death of the Border Gateway Protocol (BGP) ten years ago, BGP has steadfastly continued to route the entire Internet. Yes, BGP is as insecure as ever, and yes, a continual stream of fat finger foul-ups and less common but more concerning malicious route hijacks continue to plague our routing system, but the routing technologies in use in 2008 are the same as we use in today’s Internet.
 
@@ -46,7 +52,7 @@ The size of the IPv4 routing table has tripled in the past ten years, growing fr
 
 In the same vein, we have not made any major change to the operation of our interior routing protocols. Larger networks still use either OPSF or ISIS depending on their circumstances, while smaller networks may opt for some distance vector protocol like RIPv2 or even EIGRP. The work in the IETF on more recent routing protocols LISP and BABEL seem lack any real traction with the Internet at large, and while they both have interesting properties in routing management, neither have a sufficient level of perceived benefit to overcome the considerable inertia of conventional network design and operation. Again, this looks like another instance where inertial mass is exerting its influence to resist change in the network.
 
-### Network Operations
+### Network Operations
 
 Speaking of network operation, we are seeing some stirrings of change, but it appears to be a rather conservative area, and adoption of new network management tools and practices takes time.
 
@@ -56,7 +62,7 @@ The more recent Netconf and YANG efforts are attempting to pull this area of con
 
 In the same time period as we appear to have advanced the state of automated control systems to achieve the driverless autonomous car, the task of fully automated network management appears to have fallen way short of the desired endpoint. Surely it must be feasible to feed an adaptive autonomous control system with the network’s infrastructure and available resources, and allow the control system to monitor the network and modify the operating parameters of network components to continuously meet the network’s service level objectives? Where’s the driverless car for driving networks? Maybe the next ten years might get us there.
 
-### The Mobile Internet
+### The Mobile Internet
 
 Before we move up a layer in the Internet protocol model and look at the evolution of the end-to-end transport layer, we probably need to talk about the evolution of the devices that connect to the Internet.
 
@@ -68,7 +74,9 @@ For the human Internet the mobile market is now the Internet-defining market in 
 
 Essentially, the public Internet is now a platform of apps on mobile devices.
 
-## End to End Transport Layer
+---
+
+## End to End Transport Layer
 
 It’s time to move up a level in the protocol stack and look at end-to-end transport protocols and changes that have occurred in the past decade.
 
@@ -82,7 +90,9 @@ The Bottleneck Bounded Rate control algorithm, or BBR, is a variant of the TCP f
 
 The second recent offering from Google also represents a significant shift in the way we use transport protocols. The QUIC protocol looks like a UDP protocol, and from the network’s perspective it is simply a UDP packet stream. But in this case looks are deceiving. The inner payload of these UDP packets contain a more conventional TCP flow control structure and a TCP stream payload. However, QUIC encrypts its UDP payload so the entire inner TCP control is completely hidden from the network. The ossification of the Internet’s transport is due in no small part to the intrusive role of network middleware that is used to discarding packets that it does not recognise. Approaches such as QUIC allow applications to break out of this regime and restore end-to-end flow management as an end-to-end function without any form of network middleware inspection or manipulation. I’d call this development as perhaps the most significant evolutionary step in transport protocols over the entire decade.
 
-## The Application Layer
+---
+
+## The Application Layer
 
 Let’s keep on moving up the protocol stack and look at the Internet from the perspective of the applications and services that operate across the network.
 
@@ -108,7 +118,7 @@ It should be no surprise that this industry is now using its capability and capi
 
 Within these CDNs we’ve also seen the rise of a new service model enter the Internet in the form of cloud services. Our computers are no longer self-contained systems with processing and compute resources but look more and more like a window that sees the data stored on a common server. Cloud services are very similar, where the local device is effectively a local cache of a larger backing store. In a world where users may have multiple devices this model makes persuasive sense, as the view to the common backing store is constant irrespective of which device is being used to access the data. These cloud services also make data sharing and collaborative work far easier to support. Rather than creating a set of copies of the original document and then attempt to stitch back all the individual edits into a single common whole, the cloud model shares a document by simply altering the document’s access permissions. There is only ever one copy of the document, and all edits and comments on the document are available to all.
 
-### The Evolution of Cyber Attacks
+### The Evolution of Cyber Attacks
 
 At the same time as we have seen announcements of ever increasing network capacity within the Internet we’ve seen a parallel set of announcements that note new records in the aggregate capacity of Denial of Service attacks. The current peak volume is an attack of some 1.7Tbps of malicious traffic.
 
@@ -124,7 +134,7 @@ The larger picture of hostile attack is not getting any better. Indeed, it’s g
 
 It’s a sobering through that about one half of the world’s population are now part of this digital environment. A more sobering thought is that many of today’s control systems, such as power generation and distribution, water distribution, and road traffic control systems are exposed to the Internet. Perhaps even more of a worry is the increasing use of the Internet in automated systems that include various life support functions. The consequences of massive failure of these systems in the face of a sustained and damaging attack cannot be easily imagined.
 
-### The Internet of Billions of Tragically Stupid Things
+### The Internet of Billions of Tragically Stupid Things
 
 What makes this scenario even more depressing is the portent of the so-called Internet of Things.
 
@@ -140,7 +150,9 @@ It would be nice to think that we’ve stopped making mistakes in code, and from
 
 The Internet of Things will continue to be a market place where the compromises between price and quality will continue to push us on to the side of cheap rather than secure. What’s going to stop us from further polluting our environment with a huge and diverse collection of programmed unmanaged devices with inbuilt vulnerabilities that will be all too readily exploited? What can we do to make this world of these stupid cheap toxic things less stupid and less toxic? Workable answers to this question have not been found so far.
 
-## The Next Ten Years
+---
+
+## The Next Ten Years
 
 The silicon industry is not going to shut down anytime soon. It will continue to produce chips with more gates, finer tracks and more stacked layers for some years to come. Our computers will become more capable in terms of the rage and complexity of the tasks that they will be able to undertake.
 
