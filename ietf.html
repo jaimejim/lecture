@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The IETF - Lecture</title>
+        <title>The IETF - Lectures</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html" class="active"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">2.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">2.2.</strong> Another 10 years</a></li></ol></li><li><a href="coapddos.html"><strong aria-hidden="true">3.</strong> DDOS using CoAP</a></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html" class="active"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap-ddos.html"><strong aria-hidden="true">3.</strong> DDOS using CoAP</a></li><li class="affix"><a href="another10years.html">Another 10 years</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +105,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Lecture</h1> 
+                        <h1 class="menu-title">Lectures</h1> 
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -144,7 +144,7 @@
 <p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Looking ahead, there are estimations of several other billions of devices to be soon connected to this network. Noone thought that this feat could be achievable and yet it has happened with almost no fanfare.</p>
 <p>A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.</p>
 <a class="header" href="#what-has-the-ietf-done-for-us-anyways" id="what-has-the-ietf-done-for-us-anyways"><h2>What has the IETF done for us anyways?</h2></a>
-<p>The mission of the IETF is <a href="https://tools.ietf.org/html/rfc3935">to make the Internet work better</a>, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:</p>
+<p>IETF's mission is <strong><a href="https://tools.ietf.org/html/rfc3935">to make the Internet work better</a></strong>, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:</p>
 <ul>
 <li><a href="https://tools.ietf.org/html/rfc791">RFC791</a> The Internet Protocol.</li>
 <li><a href="https://tools.ietf.org/html/rfc792">RFC792</a> The Internet Control Message Protocol.</li>
@@ -184,7 +184,7 @@
 <p>Much of the work in the IETF is handled via <a href="https://www.ietf.org/list/">mailing lists</a>. The IETF holds <a href="https://www.ietf.org/how/meetings/">meetings</a> three times per year. <a href="https://www.ietf.org/how/runningcode/hackathons/">IETF Hackathons</a> encourage collaboration on developing utilities, ideas, sample code, and solutions that show practical implementations of IETF standards. More recently GitHub has become a prevalent way to track the work and interact with developers more smoothly; for example <a href="https://github.com/core-wg">CoRE</a>, <a href="https://github.com/httpwg">HTTP</a> or <a href="https://github.com/ietf-teep">TEEP</a> use it regularly.</p>
 <p>The Internet Architecture Board, (<a href="https://www.ietf.org/glossary.html#IAB">IAB</a>) is responsible for defining the overall architecture of the Internet, providing guidance and broad direction to the IETF. The IAB also serves as the technology advisory group to the Internet Society <a href="https://www.ietf.org/glossary.html#ISOC">ISOC</a>).</p>
 <p>There are very detailed guideline documents like <a href="https://tools.ietf.org/html/rfc2418">RFC2418</a> that explain how WGs are created and what the roles of each individual are, but at a high level the IETF relies on <strong>&quot;rough consensus and running code&quot;</strong>.</p>
-<a class="header" href="#the-life-of-a-draft" id="the-life-of-a-draft"><h2>The life of a draft</h2></a>
+<a class="header" href="#a-drafts-lifetime" id="a-drafts-lifetime"><h2>A draft's lifetime</h2></a>
 <p>It all starts with an author of set of authors that want to propose some solution for a specific problem they are facing. Usually the problem requires some interoperability and thus an Internet draft seems like the right approach.</p>
 <ol>
 <li>
@@ -207,11 +207,23 @@
 <a class="header" href="#contributing-to-ietf" id="contributing-to-ietf"><h2>Contributing to IETF</h2></a>
 <p>If you are interested to take part, the best thing you can do is to start by reading <a href="https://www.ietf.org/about/participate/tao/">the Tao</a> of the IETF.</p>
 <p>You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a <a href="https://datatracker.ietf.org/wg/core/charter/">charter document</a> that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use.</p>
-<p><strong>mailing lists</strong> are the primary form of communication, they usually start with the group name and then `@ietf.org, like <a href="mailto:core@ietf.org">core@ietf.org</a>.</p>
+<ul>
+<li>
+<p><strong>Mailing lists</strong> are the primary form of communication, they usually start with the group name and then <code>@ietf.org</code>, like <a href="mailto:core@ietf.org">core@ietf.org</a>.</p>
+</li>
+<li>
 <p><strong>jabber</strong> rooms work in a similar fashion <a href="mailto:core@jabber.ietf.org">core@jabber.ietf.org</a>. However XMPP is used less and less these days.</p>
+</li>
+<li>
 <p>Some groups have <strong>interim meetings</strong> which are online videoconferencing calls. Those are published on the mailing list.</p>
+</li>
+<li>
 <p>Although the IETF doe snot run their own GitLab servers, <strong>Github</strong> is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is &lt;core-wg.github.io&gt;</p>
+</li>
+<li>
 <p>Finally, the best and most effective way of collaborating have been the <strong>face to face</strong> meetings happening three times a year. They can also be joined online.</p>
+</li>
+</ul>
 
                     </main>
 
@@ -224,7 +236,7 @@
                         
 
                         
-                            <a rel="next" href="10years.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="coap-ddos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -242,7 +254,7 @@
                 
 
                 
-                    <a href="10years.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="coap-ddos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

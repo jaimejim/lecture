@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lecture</title>
+        <title>Lectures</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">2.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">2.2.</strong> Another 10 years</a></li></ol></li><li><a href="coapddos.html"><strong aria-hidden="true">3.</strong> DDOS using CoAP</a></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap-ddos.html"><strong aria-hidden="true">3.</strong> DDOS using CoAP</a></li><li class="affix"><a href="another10years.html">Another 10 years</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +105,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Lecture</h1> 
+                        <h1 class="menu-title">Lectures</h1> 
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -150,7 +150,7 @@
 <p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Looking ahead, there are estimations of several other billions of devices to be soon connected to this network. Noone thought that this feat could be achievable and yet it has happened with almost no fanfare.</p>
 <p>A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.</p>
 <a class="header" href="#what-has-the-ietf-done-for-us-anyways" id="what-has-the-ietf-done-for-us-anyways"><h2>What has the IETF done for us anyways?</h2></a>
-<p>The mission of the IETF is <a href="https://tools.ietf.org/html/rfc3935">to make the Internet work better</a>, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:</p>
+<p>IETF's mission is <strong><a href="https://tools.ietf.org/html/rfc3935">to make the Internet work better</a></strong>, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:</p>
 <ul>
 <li><a href="https://tools.ietf.org/html/rfc791">RFC791</a> The Internet Protocol.</li>
 <li><a href="https://tools.ietf.org/html/rfc792">RFC792</a> The Internet Control Message Protocol.</li>
@@ -190,7 +190,7 @@
 <p>Much of the work in the IETF is handled via <a href="https://www.ietf.org/list/">mailing lists</a>. The IETF holds <a href="https://www.ietf.org/how/meetings/">meetings</a> three times per year. <a href="https://www.ietf.org/how/runningcode/hackathons/">IETF Hackathons</a> encourage collaboration on developing utilities, ideas, sample code, and solutions that show practical implementations of IETF standards. More recently GitHub has become a prevalent way to track the work and interact with developers more smoothly; for example <a href="https://github.com/core-wg">CoRE</a>, <a href="https://github.com/httpwg">HTTP</a> or <a href="https://github.com/ietf-teep">TEEP</a> use it regularly.</p>
 <p>The Internet Architecture Board, (<a href="https://www.ietf.org/glossary.html#IAB">IAB</a>) is responsible for defining the overall architecture of the Internet, providing guidance and broad direction to the IETF. The IAB also serves as the technology advisory group to the Internet Society <a href="https://www.ietf.org/glossary.html#ISOC">ISOC</a>).</p>
 <p>There are very detailed guideline documents like <a href="https://tools.ietf.org/html/rfc2418">RFC2418</a> that explain how WGs are created and what the roles of each individual are, but at a high level the IETF relies on <strong>&quot;rough consensus and running code&quot;</strong>.</p>
-<a class="header" href="#the-life-of-a-draft" id="the-life-of-a-draft"><h2>The life of a draft</h2></a>
+<a class="header" href="#a-drafts-lifetime" id="a-drafts-lifetime"><h2>A draft's lifetime</h2></a>
 <p>It all starts with an author of set of authors that want to propose some solution for a specific problem they are facing. Usually the problem requires some interoperability and thus an Internet draft seems like the right approach.</p>
 <ol>
 <li>
@@ -213,33 +213,43 @@
 <a class="header" href="#contributing-to-ietf" id="contributing-to-ietf"><h2>Contributing to IETF</h2></a>
 <p>If you are interested to take part, the best thing you can do is to start by reading <a href="https://www.ietf.org/about/participate/tao/">the Tao</a> of the IETF.</p>
 <p>You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a <a href="https://datatracker.ietf.org/wg/core/charter/">charter document</a> that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use.</p>
-<p><strong>mailing lists</strong> are the primary form of communication, they usually start with the group name and then `@ietf.org, like <a href="mailto:core@ietf.org">core@ietf.org</a>.</p>
+<ul>
+<li>
+<p><strong>Mailing lists</strong> are the primary form of communication, they usually start with the group name and then <code>@ietf.org</code>, like <a href="mailto:core@ietf.org">core@ietf.org</a>.</p>
+</li>
+<li>
 <p><strong>jabber</strong> rooms work in a similar fashion <a href="mailto:core@jabber.ietf.org">core@jabber.ietf.org</a>. However XMPP is used less and less these days.</p>
+</li>
+<li>
 <p>Some groups have <strong>interim meetings</strong> which are online videoconferencing calls. Those are published on the mailing list.</p>
+</li>
+<li>
 <p>Although the IETF doe snot run their own GitLab servers, <strong>Github</strong> is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is &lt;core-wg.github.io&gt;</p>
+</li>
+<li>
 <p>Finally, the best and most effective way of collaborating have been the <strong>face to face</strong> meetings happening three times a year. They can also be joined online.</p>
-<a class="header" href="#a-decade-of-internet-evolution" id="a-decade-of-internet-evolution"><h1>A decade of Internet Evolution</h1></a>
-<p><em>This is an article published in the <a href="https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-40/112-evolution.html">Internet Protocol Journal on June 2009 - Volume 11, number 2</a>. It was written by Vint Cerf, if the name does not ring a bell you are in the wrong field.</em></p>
-<hr />
-<p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). In that same year, the <a href="https://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_10-4/104_future.html">Internet Corporation for Assigned Names and Numbers (ICANN)</a> was created. Internet companies such as Netscape Communications, Yahoo!, eBay, and Amazon were already 3 to 4 years old and the Internet was in the middle of its so-called &quot;dot-boom&quot; period. Google emerged that year as a highly speculative effort to &quot;organize the world's information and make it accessible and useful.&quot; Investment in anything related to the Internet was called &quot;irrational exuberance&quot; by the then head of the U.S. Federal Reserve Bank, Alan Greenspan.</p>
-<p>By April 2000, the Internet boom ended—at least in the United States—and a notable decline in investment in Internet application providers and infrastructure ensued. Domino effects resulted for router vendors, Internet service providers, and application providers. An underlying demand for Internet services remained, however, and it continued to grow, in part because of the growth in the number of Internet users worldwide.</p>
-<p>During this same period, access to the Internet began to shift from dial-up speeds (on the order of kilobits to tens of kilobits per second) to broadband speeds (often measured in megabits per second). New access technologies such as digital subscriber loops and dedicated fiber raised consumer expectations of Internet capacity, in turn triggering much interest in streaming applications such as voice and video. In some locales, consumers could obtain gigabit access to the Internet (for example, in Japan and Stockholm). In addition, mobile access increased rapidly as mobile technology spread throughout the world, especially in regions where wireline telephony had been slow to develop.</p>
-<p>Today the Internet has an estimated 542 million servers and about 1.3 billion users. Of the estimated 3 billion mobile phones in use, about 15 percent are Internet-enabled, adding 450 million devices to the Internet. In addition, at least 1 billion personal computers are in use, a significant fraction of which also have access to the Internet. The diversity of devices and access speeds on the Internet combine to produce challenges and opportunities for Internet application providers around the world. Highly variable speeds, display areas, and physical modes of interaction create a rich but complex canvas on which to develop new Internet applications and adapt older ones.</p>
-<p>Another well-documented but unexpected development during this same decade is the dramatic increase in user-produced content on the Internet. There is no question that users contributed strongly to the utility of the Internet as the World Wide Web made its debut in the early 1990s with a rapidly growing menu of Web pages.</p>
-<p>But higher speeds have encouraged user-produced audio and video archives (Napster and YouTube), as well as sharing of all forms of digital content through peer-to-peer protocols. Voice over IP, once a novelty, is very common, together with video conferencing (iChat from Apple, for example).</p>
-<p>Geographically indexed information has also emerged as a major resource for Internet users. In the scientific realm, Google Earth and Google Maps are frequently used to display scientific data, sensor measurements, and so on. Local consumer information is another common theme. When I found myself in the small town of Page, Arizona, looking for saffron to make paella while in a houseboat on Lake Powell, a Google search on my Blackberry quickly identified markets in the area. I called one of them and verified that it had saffron in stock. I followed the map on the Website and bought 0.06 ounces of Spanish saffron for about $12.99. This experience reinforced my belief that having locally useful information at your fingertips no matter where you are is a powerful ally in daily living.</p>
-<p>New business models based on the economics of digital information are also emerging. I can recall spending $1,000 for about 10 MB of disk storage in 1979. Recently I purchased 2 TB of disk storage for about $600. If I had tried to buy 2 TB of disk storage in 1979, it would have cost $200 million, and probably would have outstripped the production capacity of the supplier. The cost of processing, storing, and transporting digital information has changed the cost basis for businesses that once required the physical delivery of objects containing information (books, newspapers, magazines, CDs, and DVDs). The Internet can deliver this kind of information in digital form economically—and often more quickly than physical delivery. Older businesses whose business models are based on the costs of physical delivery of information must adapt to these new economics or they may find themselves losing business to online competitors. (It is interesting to note, however, that the Netflix business, which delivers DVDs by postal mail, has a respectable data rate of about 145 kbps per DVD, assuming a 3-day delivery time and about 4.7 GB per DVD. The CEO of Netflix, Reed Hastings, told me nearly 2 years ago that he was then shipping about 1.9 million DVDs per day, for an aggregate data rate of about 275 Gbps!)</p>
-<p>Even the media that have traditionally been delivered electronically such as telephony, television, and radio are being changed by digital technology and the Internet. These media can now be delivered from countless sources to equally countless destinations over the Internet. It is common to think of these media as being delivered in streaming modes (that is, packets delivered in real time), but this need not be the case for material that has been prerecorded. Users of iPods have already discovered that they can download music faster than they can listen to it.</p>
-<p>With gigabit access to the Internet, one could download an hour's worth of conventional video in about 16 seconds. This fact certainly changes my understanding of &quot;video on demand&quot; from a streaming delivery to a file transfer. The latter is much easier on the Internet because one is not concerned about packet inter-arrival times (jitter), loss, or even orderly delivery because the packets can be reordered and retransmitted during the file transfer. I am told that about 10 hours of video are being uploaded to YouTube per second.</p>
-<p>The battles over Quality of Service (QoS) are probably not over yet either. Services such as Skype and applications such as iChat from Apple demonstrate the feasibility of credible, real-time audio and video conferencing on the &quot;best-efforts&quot; public Internet. I have been surprised by the quality that is possible when both parties have reasonably high-capacity access to the Internet.</p>
-<p>Technorati is said to be tracking on the order of 112 million blogs, and the China Internet Network Information Center (CNNIC) estimates 72 million Chinese blogs that are probably in addition to those tracked by Technorati. Adding to these are billions of Web pages and, perhaps even more significant, an unknown amount of information online in the form of large databases. The latter are not indexed in the same way that Web pages can be, but probably contain more information. Think about high-energy physics information, images from the Hubble and other telescopes, radio telescope data including the <a href="http://www.seti.org/">Search for Extra-Terrestrial Intelligence (SETI)</a>, and you quickly conclude that our modern society is awash in digital information.</p>
-<p>It seems fair to ask how long accessibility of this information is likely to continue. By this question I do not mean that it may be lost from the Internet but, rather, that we may lose the ability to interpret it. I have already encountered such problems with image files whose formats are old and whose interpretation by newer software may not be possible. Similarly, I have ASCII text files from more than 20 years ago that I can still read, but I no longer have operating software that can interpret the formatting instructions to produce a nicely formatted page. I sometimes think of this problem as the &quot;year 3000&quot; problem: It is the year 3000 and I have just finished a Google search and found a PowerPoint 1997 file. Assuming I am running Windows 3000, it is a fair question whether the format of this file will still be interpretable. This problem would arise even if I were using open-source software. It seems unlikely that application software will last 1000 years in the normal course of events unless we deliberately take steps to preserve our ability to interpret digital content. Absent such actions, we will find ourselves awash in a sea of rotting bits whose meaning has long since been lost.</p>
-<p>This problem is not trivial because questions will arise about intellectual property protection of the application, and even the operating system software involved. If a company goes out of business or asserts that it will no longer support a particular version of an application or operating system, do we need new regulations that require this software to be available on the public Internet in some way?</p>
-<p>Even if we have skirted this problem in the past by rendering information into printed form, or microfilm, the complexity of digital objects is increasing. Consider spreadsheets or other complex objects that really cannot be fully &quot;rendered&quot; without the assistance of application software. So it will not be adequate simply to print or render information in other long-lived media formats. We really will need to preserve our ability to read and interpret bits.</p>
-<p>The year 2008 also marks the tenth anniversary of a project that started at the U.S. Jet Propulsion Laboratory: The Interplanetary Internet. This effort began as a protocol design exercise to see what would have to change to make Internet-like capability available to manned and robotic spacecraft. The idea was to develop networking technology that would provide to the space exploration field the kind of rich and interoperable networking between spacecraft of any (Earth) origin that we enjoy between devices on the Internet.</p>
-<p>The design team quickly recognized that the standard TCP/IP protocols would not overcome some of the long delays and disruptions to be expected in deep space communication. A new set of protocols evolved that could operate above the conventional Internet or on underlying transport protocols more suited to long delays and disruption. Called <a href="ftp://ftp.rfc-editor.org/in-notes/rfc4838.txt">&quot;delay and disruption tolerant networking&quot;</a> or DTN, this suite of protocols is layered in the same abstract way as the Internet. The Interplanetary system could be thought of as a network of Internets, although it is not constrained to use conventional Internet protocols. The analog of IP is called the <a href="ftp://ftp.rfc-editor.org/in-notes/rfc5050.txt">Bundle Protocol</a>, and this protocol can run above TCP or the User Datagram Protocol (UDP) or the new Licklider Transport Protocol (for deep space application). Ironically, the DTN protocol suite has also proven to be useful for terrestrial applications in which delay and disruption are common: tactical military communication and civilian mobile communication.</p>
-<p>After 10 years of work, the DTN system will be tested onboard the Deep Impact mission platform late in 2008 as part of a program to qualify the new technology for use in future space missions. It is hoped that this protocol suite can be standardized for use by any of the world's space agencies so that spacecraft from any country will be interoperable with spacecraft of other countries and available to support new missions if they are still operational and have completed their primary missions. Such a situation already exists on Mars, where the Rovers are using previously launched orbital satellites to relay information to Earth's Deep Space Network using store-and-forward techniques like those common to the Internet.</p>
-<p>The Internet has gone from dial-up to deep space in just the past 10 years. One can only begin to speculate about its application and condition 10 years hence. We will all have to keep our subscriptions to The Internet Protocol Journal to find out!</p>
+</li>
+</ul>
+<a class="header" href="#ddos-using-coap" id="ddos-using-coap"><h1>DDOS using CoAP</h1></a>
+<a class="header" href="#overview-of-network-attacks-on-the-internet" id="overview-of-network-attacks-on-the-internet"><h2>Overview of Network Attacks on the Internet</h2></a>
+<p>(Refer to another10years for users and for attacks)
+(Refer to another10years for iotattacks)</p>
+<p>Here are some of my notes about the event, what are the causes and how can it be prevented.</p>
+<a class="header" href="#udp-based-attacks" id="udp-based-attacks"><h2>UDP-based Attacks</h2></a>
+<a class="header" href="#reflection-attack" id="reflection-attack"><h3>Reflection Attack</h3></a>
+<p>asdasdasd</p>
+<a class="header" href="#amplification-attack" id="amplification-attack"><h3>Amplification Attack</h3></a>
+<p>asdasdasd</p>
+<a class="header" href="#past-attacks-using-udp" id="past-attacks-using-udp"><h3>Past attacks using UDP</h3></a>
+<p>NTP, SNMP, DNS
+## Enter the Constrained Application Protocol</p>
+<a class="header" href="#attacks-using-coap-and-udp" id="attacks-using-coap-and-udp"><h2>Attacks using CoAP and UDP</h2></a>
+<a class="header" href="#solutions" id="solutions"><h2>Solutions</h2></a>
+<a class="header" href="#references" id="references"><h2>References</h2></a>
+<ul>
+<li>RFC2827</li>
+<li><a href="./another10years.html">Another 10 years</a></li>
+</ul>
 <a class="header" href="#another-10-years-later" id="another-10-years-later"><h1>Another 10 Years Later</h1></a>
 <p><em>This is an article published in the <a href="http://ipj.dreamhosters.com/wp-content/uploads/2018/08/ipj212.pdf">Internet Protocol Journal on August 2018 - Volume 21, number 2</a>. It was written by Geoff Huston who is Chief Scientist at APNIC, the Regional Internet Registry serving the Asia-Pacific region.</em></p>
 <hr />
@@ -324,26 +334,6 @@
 <p>However, beyond these broad-brush scenarios, it’s hard to predict where the Internet will head. Technology does not follow a pre-determined path. It’s driven by the vagaries of an enthusiastic consumer market place that is readily distracted by colourful bright shiny new objects, and easily bored by what we quickly regard as commonplace.</p>
 <p>What can we expect from the Internet in the next ten years that can outdo a pocket-sized computer that can converse with me in a natural language? That can offer more than immersive 3D video in outstanding quality? That can bring the entire corpus of humanity’s written work into a searchable database that can answer any of our questions in mere fractions of a second?</p>
 <p>Personally, I have no clue what to expect from the Internet. But whatever does manage to capture our collective attention I am pretty confident that it will be colourful, bright, shiny, and entirely unexpected!</p>
-<a class="header" href="#ddos-using-coap" id="ddos-using-coap"><h1>DDOS using CoAP</h1></a>
-<a class="header" href="#overview-of-network-attacks-on-the-internet" id="overview-of-network-attacks-on-the-internet"><h2>Overview of Network Attacks on the Internet</h2></a>
-<p>(Refer to another10years for users and for attacks)
-(Refer to another10years for iotattacks)</p>
-<p>Here are some of my notes about the event, what are the causes and how can it be prevented.</p>
-<a class="header" href="#udp-based-attacks" id="udp-based-attacks"><h2>UDP-based Attacks</h2></a>
-<a class="header" href="#reflection-attack" id="reflection-attack"><h3>Reflection Attack</h3></a>
-<p>asdasdasd</p>
-<a class="header" href="#amplification-attack" id="amplification-attack"><h3>Amplification Attack</h3></a>
-<p>asdasdasd</p>
-<a class="header" href="#past-attacks-using-udp" id="past-attacks-using-udp"><h3>Past attacks using UDP</h3></a>
-<p>NTP, SNMP, DNS
-## Enter the Constrained Application Protocol</p>
-<a class="header" href="#attacks-using-coap-and-udp" id="attacks-using-coap-and-udp"><h2>Attacks using CoAP and UDP</h2></a>
-<a class="header" href="#solutions" id="solutions"><h2>Solutions</h2></a>
-<a class="header" href="#references" id="references"><h2>References</h2></a>
-<ul>
-<li>RFC2827</li>
-<li><a href="./another10years.html">Another 10 years</a></li>
-</ul>
 
                     </main>
 
