@@ -23,6 +23,7 @@ The mission of the IETF is [to make the Internet work better](https://tools.ietf
 - [RFC2131](https://tools.ietf.org/html/rfc2131) Dynamic Host Configuration Protocol.
 - [RFC2246](https://tools.ietf.org/html/rfc2246) The TLS Protocol Version.
 - [RFC2328](https://tools.ietf.org/html/rfc2328) The Open Shortest Path First routing protocol.
+- [RFC3261](https://tools.ietf.org/html/rfc3261) The Session Initiation Protocol.
 - [RFC6455](https://tools.ietf.org/html/rfc6455) The WebSocket Protocol.
 - [RFC5321](https://tools.ietf.org/html/rfc5321) Simple Mail Transfer Protocol.
 - [RFC7540](https://tools.ietf.org/html/rfc7540) Hypertext Transfer Protocol Version 2.
@@ -38,6 +39,10 @@ For the reader's pleasure I also copied two fantastic summaries of the changes t
 
 - [A decade of Internet Evolution (2008)](./10years.md)
 - [Another 10 years (2018)](./another10years.md)
+
+You can also explore the RFC universe courtesy of [Peter Krantz](https://www.peterkrantz.com/v11n/rfc/).
+
+![RFC weighted by reference map](./img/rfc-map.jpg)
 
 ## IETF Organization
 
@@ -67,10 +72,9 @@ It all starts with an author of set of authors that want to propose some solutio
 
 ## Contributing to IETF
 
+If you are interested to take part, the best thing you can do is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/) of the IETF.
 
-Best is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/)
-Initially, the IETF met quarterly, but from 1991, it has been meeting three times a year. The initial meetings were very small, with fewer than 35 people in attendance at each of the first five meetings. The maximum attendance during the first 13 meetings was only 120 attendees. This occurred at the 12th meeting held during January 1989. These meetings have grown in both participation and scope a great deal since the early 1990s; it had a maximum attendance of 2,810 at the December 2000 IETF held in San Diego, California. Attendance declined with industry restructuring during the early 2000s, and is currently around 1,200.
-
+You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a [charter document](https://datatracker.ietf.org/wg/core/charter/) that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many commuybni
 ### Communication tools
 
 **mailing lists**
