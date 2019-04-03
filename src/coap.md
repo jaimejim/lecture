@@ -18,7 +18,7 @@ DICE which was task to improve DTLS.
 COSE specified how to create and process signatures and encryption using CBOR for serialization.
 ACE Now the focus is on making sure that the devices are accessed by the right parties with focus on authentication and authorization (ACE). TEEP and SUIT, SUIT basically defining the metadata needed for firmware upgrades, so that devices' bootloader can verify that the binary comes from the right source.
 
-![CoAP 1](./img/coap1.png)
+![CoAP 1](./img/coap1.png  =250x)
 
 ---
 
