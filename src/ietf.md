@@ -68,7 +68,7 @@ It all starts with an author of set of authors that want to propose some solutio
 
 5. After several years, providing there is industry adoption and the document is on the Standards Track i.e. it is not informational, the document may be come an Internet Standard. This whole process takes a long time and it can feel a bit slow, but at least the out put has guarantees of *some* consensus and *some* running code.
 
-![IETF Publication Process](./img/ietf-process.png)
+<center>![IETF Publication Process](./img/ietf-process.png)</center>
 
 ## Contributing to IETF
 
