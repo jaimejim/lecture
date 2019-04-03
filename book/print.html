@@ -269,8 +269,24 @@
       |      |   Payload: &quot;22.3 C&quot;
 </code></pre>
 <p>In the response you can see a <code>Content-Format</code> field explaining the format of the content. This is a CoAP option that will be explained in the next section.</p>
-<a class="header" href="print.html#core-link-format" id="core-link-format"><h3>CoRE Link Format</h3></a>
+<a class="header" href="print.html#core-link-format" id="core-link-format"><h2>CoRE Link Format</h2></a>
 <p>To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good clarification document <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">here</a>, we will also have to explain briefly what a URI is, but it is probably very intuitive for everyone as it is part of our daily HTTP browing.</p>
+<ol>
+<li>
+<p><strong>Media-Type</strong> is often abbreviated as &quot;mt&quot;, they are stored at the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Registry</a>. Originally it was a term that identify the general type like &quot;text&quot; or &quot;audio&quot;. Nowadays it is the combination of a <code>type</code> and a <code>subtype</code> like &quot;audio/ogg&quot;, &quot;text/plain&quot; or &quot;text/html&quot;. In IoT common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
+</li>
+<li>
+<p><strong>Content-Type</strong> they are the top <code>type</code> Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).</p>
+</li>
+<li>
+<p><strong>Content-Coding</strong> are registered in <a href="http://www.iana.org/assignments/http-parameters">IANA</a> too and they are essentially numbers that identify a <em>potential transformation to the representation of a resource</em>. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.</p>
+</li>
+<li>
+<p><strong>Content-Format</strong> is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml">CoAP Content-Formats registry</a>.</p>
+</li>
+</ol>
+<p>Keeing all this in mind, the following sentence will now make more sense:</p>
+<p><strong>The content-format <code>60</code> identifies the <code>application/cbor</code> media-type, defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>.</strong></p>
 <p>CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
 It is also client/server type, although endpoints will often be both, so it’d be more of a P2P scenario.
 It also uses a smaller subset of methods to operate on resources.

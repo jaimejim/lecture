@@ -64,10 +64,21 @@ Since the first message got lost the client waits for a time until the `timeout`
 
 In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in the next section.
 
-### CoRE Link Format
+## CoRE Link Format
 
 To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good clarification document [here](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), we will also have to explain briefly what a URI is, but it is probably very intuitive for everyone as it is part of our daily HTTP browing.
 
+1. **Media-Type** is often abbreviated as "mt", they are stored at the [IANA Registry](https://www.iana.org/assignments/media-types/media-types.xhtml). Originally it was a term that identify the general type like "text" or "audio". Nowadays it is the combination of a `type` and a `subtype` like "audio/ogg", "text/plain" or "text/html". In IoT common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
+
+2. **Content-Type** they are the top `type` Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).
+
+3. **Content-Coding** are registered in [IANA](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value. 
+
+4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml). 
+
+Keeing all this in mind, the following sentence will now make more sense:
+
+**The content-format `60` identifies the `application/cbor` media-type, defined by [RFC7049](http://www.iana.org/go/rfc7049).**
 
 
 CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
