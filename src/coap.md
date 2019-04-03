@@ -65,7 +65,10 @@ Since the first message got lost the client waits for a time until the `timeout`
 In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in the next section.
 
 ### CoRE Link Format
----
+
+To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good clarification document [here](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), we will also have to explain briefly what a URI is, but it is probably very intuitive for everyone as it is part of our daily HTTP browing.
+
+
 
 CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
 It is also client/server type, although endpoints will often be both, so it’d be more of a P2P scenario.
