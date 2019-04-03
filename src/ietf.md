@@ -4,7 +4,7 @@ In 1998 the Internet had about 50 million users, supported by approximately 25 m
 
 A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.
 
-## What has the IETF done for us anyways?
+## What has the IETF done for us anyways
 
 IETF's mission is **[to make the Internet work better](https://tools.ietf.org/html/rfc3935)**, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:
 

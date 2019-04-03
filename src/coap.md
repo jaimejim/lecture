@@ -80,6 +80,7 @@ Keeing all this in mind, the following sentence will now make more sense:
 
 **The content-format `60` identifies the `application/cbor` media-type, defined by [RFC7049](http://www.iana.org/go/rfc7049).**
 
+---
 
 CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
 It is also client/server type, although endpoints will often be both, so it’d be more of a P2P scenario.
