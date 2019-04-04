@@ -181,7 +181,7 @@
 <a class="header" href="#convenient-multicast" id="convenient-multicast"><h2>Convenient Multicast</h2></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
-<p>Nevertheless Multicast must be used with care as it is easy to greate other network issues involving broadcast storms.</p>
+<p>CoRE has registered two <a href="https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">IPv4</a> and <a href="https://www.iana.org/assignments/ipv6-multicast-addresses">IPv6</a> addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at <code>224.0.1.187</code> and at <code>FF0X::FD</code>. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting.</p>
 
                     </main>
 

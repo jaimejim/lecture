@@ -278,7 +278,7 @@
 <a class="header" href="#convenient-multicast" id="convenient-multicast"><h2>Convenient Multicast</h2></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
-<p>Nevertheless Multicast must be used with care as it is easy to greate other network issues involving broadcast storms.</p>
+<p>CoRE has registered two <a href="https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">IPv4</a> and <a href="https://www.iana.org/assignments/ipv6-multicast-addresses">IPv6</a> addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at <code>224.0.1.187</code> and at <code>FF0X::FD</code>. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting.</p>
 <a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization"><h1>CoAP Web Linking and Serialization</h1></a>
 <p>Web Linking in CoRE is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>.</p>
 <a class="header" href="#uris" id="uris"><h2>URIs</h2></a>
@@ -365,15 +365,33 @@ RES: 2.05 Content
    &lt;/sensors/temp1&gt;;rt=&quot;temperature&quot;,
    &lt;/sensors/temp2&gt;;rt=&quot;temperature&quot;,
 </code></pre>
-<p>Once the client knows that there are two sensors of the type <code>temperature</code>, it can decide to follow one of the presented links and query it, for example the first one <code>/sensors/temp1</code>. That way it can learn the current value of the resource as we learnt in the previous section.</p>
+<p>Once the client knows that there are two sensors of the type <code>temperature</code>, it can decide to follow one of the presented links and query it, for example the first one <code>/sensors/temp1</code>. That way it can find the current value of the resource as we learnt in the previous section.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/sensors/temp1
 RES: 2.05 Content
-   [
-     {&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}
-   ]
+   [{&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}]
 </code></pre>
 <a class="header" href="#discovering-coap-endpoints" id="discovering-coap-endpoints"><h2>Discovering CoAP Endpoints</h2></a>
-<p>As we saw CoAP allows for Resource Directory</p>
+<p>Finding a Resource Directory
+multicast 224.0.1.187  FF0X::FE
+As we saw CoAP allows for Resource Directory</p>
+<p>Registration
+Lookup</p>
+<pre><code class="language-txt">                Registration         Lookup
+                 Interface         Interface
+     +----+          |                 |
+     | EP |----      |                 |
+     +----+    ----  |                 |
+                   --|-    +------+    |
+     +----+          | ----|      |    |     +--------+
+     | EP | ---------|-----|  RD  |----|-----| Client |
+     +----+          | ----|      |    |     +--------+
+                   --|-    +------+    |
+     +----+    ----  |                 |
+     | CT |----      |                 |
+     +----+
+
+
+</code></pre>
 <a class="header" href="#attacks-on-coap" id="attacks-on-coap"><h1>Attacks on CoAP</h1></a>
 <a class="header" href="#overview-of-network-attacks-on-the-internet" id="overview-of-network-attacks-on-the-internet"><h2>Overview of Network Attacks on the Internet</h2></a>
 <p>(Refer to another10years for users and for attacks)

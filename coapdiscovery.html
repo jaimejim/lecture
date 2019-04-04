@@ -150,15 +150,33 @@ RES: 2.05 Content
    &lt;/sensors/temp1&gt;;rt=&quot;temperature&quot;,
    &lt;/sensors/temp2&gt;;rt=&quot;temperature&quot;,
 </code></pre>
-<p>Once the client knows that there are two sensors of the type <code>temperature</code>, it can decide to follow one of the presented links and query it, for example the first one <code>/sensors/temp1</code>. That way it can learn the current value of the resource as we learnt in the previous section.</p>
+<p>Once the client knows that there are two sensors of the type <code>temperature</code>, it can decide to follow one of the presented links and query it, for example the first one <code>/sensors/temp1</code>. That way it can find the current value of the resource as we learnt in the previous section.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/sensors/temp1
 RES: 2.05 Content
-   [
-     {&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}
-   ]
+   [{&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}]
 </code></pre>
 <a class="header" href="#discovering-coap-endpoints" id="discovering-coap-endpoints"><h2>Discovering CoAP Endpoints</h2></a>
-<p>As we saw CoAP allows for Resource Directory</p>
+<p>Finding a Resource Directory
+multicast 224.0.1.187  FF0X::FE
+As we saw CoAP allows for Resource Directory</p>
+<p>Registration
+Lookup</p>
+<pre><code class="language-txt">                Registration         Lookup
+                 Interface         Interface
+     +----+          |                 |
+     | EP |----      |                 |
+     +----+    ----  |                 |
+                   --|-    +------+    |
+     +----+          | ----|      |    |     +--------+
+     | EP | ---------|-----|  RD  |----|-----| Client |
+     +----+          | ----|      |    |     +--------+
+                   --|-    +------+    |
+     +----+    ----  |                 |
+     | CT |----      |                 |
+     +----+
+
+
+</code></pre>
 
                     </main>
 
