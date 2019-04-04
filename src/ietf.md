@@ -4,7 +4,7 @@ In 1998 the Internet had about 50 million users, supported by approximately 25 m
 
 A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.
 
-## What has the IETF done for us anyways
+## What has the IETF done for us anyways?
 
 IETF's mission is **[to make the Internet work better](https://tools.ietf.org/html/rfc3935)**, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:
 
@@ -72,16 +72,16 @@ It all starts with an author of set of authors that want to propose some solutio
 
 ## Contributing to IETF
 
-If you are interested to take part, the best thing you can do is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/) of the IETF.
+The IETF is built by volunteers, if you are interested to take part, the best thing you can do is to start by reading [the Tao](https://www.ietf.org/about/participate/tao/) of the IETF.
 
-You ust then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a [charter document](https://datatracker.ietf.org/wg/core/charter/) that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use. 
+You then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a [charter document](https://datatracker.ietf.org/wg/core/charter/) that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use.
 
-* **Mailing lists** are the primary form of communication, they usually start with the group name and then `@ietf.org`, like <core@ietf.org>.
+- **Mailing lists** are the primary form of communication, they usually start with the group name and then `@ietf.org`, like <core@ietf.org>.
 
-* **jabber** rooms work in a similar fashion <core@jabber.ietf.org>. However XMPP is used less and less these days.
+- **jabber** rooms work in a similar fashion <core@jabber.ietf.org>. However XMPP is used less and less these days.
 
-* Some groups have **interim meetings** which are online videoconferencing calls. Those are published on the mailing list.
+- Some groups have **interim meetings** which are online videoconferencing calls. Those are published on the mailing list.
 
-* Although the IETF doe snot run their own GitLab servers, **Github** is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is <http://core-wg.github.io>
+- Although the IETF doe snot run their own GitLab servers, **Github** is nevertheless used for collaboration and for tracking issues raised by the group and the authors. One example is <http://core-wg.github.io>
 
-* Finally, the best and most effective way of collaborating have been the **face to face** meetings happening three times a year. They can also be joined online.
+- Finally, the best and most effective way of collaborating have been the **face to face** meetings happening three times a year. They can also be joined online.

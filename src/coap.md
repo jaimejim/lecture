@@ -12,8 +12,6 @@ Devices may be sensors and actuators, exposing resources (i.e. measurable data) 
 
 Ideally we would be talking about a decentralized scenario, as on the Web. However, much like the Web is moving back to the mainframe format, most comertial IoT solutions today feature a central control point, manager, broker or orchestrating entity.  
 
----
-
 ## A CoAP Message
 
 As explained in [RFC7252](https://tools.ietf.org/html/rfc7252) CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The `version` indicates the CoAP version, the message `type` can be (`CON`, `NON`, `ACK` and `RST`). This is followed by a variable-length `Token` value, which can be between 0 and 8 bytes long. Then it has the response or method `codes` (e.g. `0.01` (GET) , `0.02` (POST) , `2.05` (Success) , `4.04` (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data.
@@ -64,9 +62,51 @@ Since the first message got lost the client waits for a time until the `timeout`
 
 In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in the next section.
 
-## CoRE Link Format
 
-To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good clarification document [here](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), we will also have to explain briefly what a URI is, but it is probably very intuitive for everyone as it is part of our daily HTTP browing.
+## Linking in CoAP
+
+Web Linking in CoRE is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988) and URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986).
+
+### URIs
+
+We will also have to explain briefly what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.
+
+```md
+   foo://example.com:8042/over/there?name=ferret#nose
+   \_/   \_____________/\________/\________/ \___/
+    |           |            |            |        |
+   scheme     authority       path        query   fragment
+```
+
+A URI can be classified as a locator, a name, or both. Uniform Resource Locator (URL) refers to URIs that allow for identification *and location* of a resource by describing how to access it on a network. Uniform Resource Name (URN) are used as *globally unique* identifiers. Universally Unique IDentifier ([UUID](https://tools.ietf.org/html/rfc4122)) are unique and persistent URNs that *do not require a central registration authority*.
+
+The URI format is used on pretty much any application protocol in existance, from FTP, HTTP or telnet to CoAP. Some with little variations in the syntax, like that of the email [`mailto`](https://tools.ietf.org/html/rfc6068) or the telephone [`tel`](https://tools.ietf.org/html/rfc3966), as you can see below.
+
+```md
+   tel     :                        +34-690-555-1212
+   mailto  :   infobot@example.com                      ?subject=issue
+   urn:uuid:                        f81d4fa...a0c91e6bf6
+   ftp     :// 196.4.160.12        /rfc/rfc1808.txt
+   http    :// www.ietf.org        /rfc/rfc2396.txt
+   \______/   \________________/ \_________________/\___________/
+     |              |                 |                         |
+   scheme        authority           path                     query
+```
+
+The CoAP URI is similar: `"coap:" "//" host [ ":" port ] path-abempty [ "?" query ]`, the examples below show several usages of it. You can try some yourself at [coap.me](http://coap.me).
+
+```md
+   coap://sensor.iot.org:5683 /lamp             ?rt=light-lux#rec=3
+   coap://[2001:db8:::1]:5683 /temperature      ?ct=60
+   coap://coap.me:5683        /.well-known/core
+   \__/  \_________________/\______________/\__________/\___/
+     |           |                 |                |           |
+   scheme     authority           path            query     fragment
+```
+
+### Media Types
+
+To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good [clarification document](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), 
 
 1. **Media-Type** is often abbreviated as "mt", they are stored at the [IANA Registry](https://www.iana.org/assignments/media-types/media-types.xhtml). Originally it was a term that identify the general type like "text" or "audio". Nowadays it is the combination of a `type` and a `subtype` like "audio/ogg", "text/plain" or "text/html". In IoT common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
 
