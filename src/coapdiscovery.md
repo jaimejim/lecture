@@ -25,6 +25,42 @@ RES: 2.05 Content
 
 ## Discovering CoAP Endpoints
 
+We have explained how to discover the resources on a coap endpoint but we have not mentioned how endpoints can be found to begin with.
+
+Networks are and will continue to be heterogeneous, some scenarios foresee the use of multicast, while others have a master/slave approach. Some scenarios will have NATs and firewalls while other - more ideal - will simply have globally addressable IPv6 addresses. Some devices will be asleep while others will be permanently connected. 
+
+In many IoT applications, direct discovery of resources is not
+   practical due to sleeping nodes, disperse networks, or networks where
+   multicast traffic is inefficient.  These problems can be solved by
+   employing an entity called a Resource Directory (RD), which contains
+   information about resources held on other servers, allowing lookups
+   to be performed for those resources.  The input to an RD is composed
+   of links and the output is composed of links constructed from the
+   information stored in the RD.  This document specifies the web
+   interfaces that a Resource Directory supports for web servers to
+   discover the RD and to register, maintain, lookup and remove
+   information on resources.  Furthermore, new target attributes useful
+   in conjunction with an RD are defined.
+
+To palliate these problems at CoRE there is a function used only to register and lookup for CoAP endpoints and their resources called [Resource Directory (RD)](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20). An RD is an entity whose input and oputput are links and that only stores links; like a link repository.
+
+```txt
+                Registration         Lookup
+                 Interface         Interface
+     +----+          |                 |
+     | EP |----      |                 |
+     +----+    ----  |                 |
+                   --|-    +------+    |
+     +----+          | ----|      |    |     +--------+
+     | EP | ---------|-----|  RD  |----|-----| Client |
+     +----+          | ----|      |    |     +--------+
+                   --|-    +------+    |
+     +----+    ----  |                 |
+     | CT |----      |                 |
+     +----+
+```
+
+
 
 Finding a Resource Directory
 multicast 224.0.1.187  FF0X::FE
