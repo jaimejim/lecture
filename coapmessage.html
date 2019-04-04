@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Lectures</title>
+        <title>A CoAP Message - Lectures</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapddos.html"><strong aria-hidden="true">3.4.</strong> Attacks on CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">4.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">4.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">4.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html" class="active"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapddos.html"><strong aria-hidden="true">3.4.</strong> Attacks on CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">4.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">4.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">4.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,21 +140,61 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#lecture-notes" id="lecture-notes"><h1>Lecture Notes</h1></a>
-<p>Here is a compilation of notes and potential lecture materials around various topics I have condensed over the course of <code>1 month</code>.</p>
-<p>The notes are written in markdown and generated using <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a>.</p>
-<p>The contents are <a href="https://github.com/jaimejim/lecture/blob/master/LICENSE">MIT Licensed</a> and so is any code they might contain. You can find the source code on <a href="https://github.com/jaimejim/lecture">GitHub</a>. Issues and feature requests can be posted on the <a href="https://github.com/jaimejim/lecture/issues">GitHub issue tracker</a>.</p>
-<a class="header" href="#license" id="license"><h2>License</h2></a>
-<p>All the source code is released under the <a href="https://opensource.org/licenses/MIT">MIT Licensed</a>.</p>
+                        <a class="header" href="#a-coap-message" id="a-coap-message"><h1>A CoAP Message</h1></a>
+<p>As explained in <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a> CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The <code>version</code> indicates the CoAP version, the message <code>type</code> can be (<code>CON</code>, <code>NON</code>, <code>ACK</code> and <code>RST</code>). This is followed by a variable-length <code>Token</code> value, which can be between 0 and 8 bytes long. Then it has the response or method <code>codes</code> (e.g. <code>0.01</code> (GET) , <code>0.02</code> (POST) , <code>2.05</code> (Success) , <code>4.04</code> (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data.</p>
+<pre><code class="language-md">    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |Ver| T |  TKL  |      Code     |          Message ID           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   Token (if any, TKL bytes) ...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   Options (if any) ...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |1 1 1 1 1 1 1 1|    Payload (if any) ...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</code></pre>
+<a class="header" href="#unreliable-transmission" id="unreliable-transmission"><h2>Unreliable Transmission</h2></a>
+<p>As mentioned before, CoAP was intended for <em>UDP transmission</em>, which is unreliable. This means that CoAP request and response messages may arrive out of order, appear duplicated, or go missing without notice. For this reason, CoAP implements a lightweight reliability mechanism using the <code>type</code>field, introducing both Confirmable and Non-Confirmable messages. If the messages is CON as in Confirmable, that means that either the request or the response require confirmation, that is an acknowledgemnt of receival or ACK.</p>
+<p>To ensure retransmission in case of loss, the CoAP endpoint sending the CON message keeps track of a <code>timeout</code> for the message and a <code>retransmission counter</code> to keep track of how many times the message was sent.</p>
+<p>Below it is shown how a simple CoAP Request would look like. The CoAP Client sends a request message <code>GET /temperature</code> that requires requires an acknowledgment message from the server as it uses the type <code>CON</code>. The <code>Message ID</code> is <code>0x7d36</code> which will be used in that acknowledgment message. Without the message ID, a client that makes two GET requests and gets two responses won’t know which response goes with which request. A single CoAP request may trigger several responses, and the same <code>token</code> is used in every response, not just the initial acknowledgment. Responses sent after the acknowledgment will have new message IDs, but they’ll be tied to the original request by the token.</p>
+<p>Since the first message got lost the client waits for a time until the <code>timeout</code> is triggered and the message is sent again.</p>
+<pre><code class="language-md">   Client  Server  (hosting a resource at &quot;/temperature&quot; with 
+      |      |       value 22.3 degrees centigrade)
+      |      |
+      +----X |   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: &quot;temperature&quot;
+   TIMEOUT   |
+      |      |
+      +-----&gt;|   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: &quot;temperature&quot;
+      |      |
+      |      |
+      |&lt;-----+   Header: 2.05 Content (T=ACK, Code=2.05, MID=0x7d36)
+      | 2.05 |   Token: 0x31
+      |      |   Content-Format: text/plain;charset=utf-8
+      |      |   Payload: &quot;22.3 C&quot;
+</code></pre>
+<p>In the response you can see a <code>Content-Format</code> field explaining the format of the content. This is a CoAP option that will be explained in the next section.</p>
+<a class="header" href="#convenient-multicast" id="convenient-multicast"><h2>Convenient Multicast</h2></a>
+<p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
+<p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
+<p>Nevertheless Multicast must be used with care as it is easy to greate other network issues involving broadcast storms.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="coap.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="ietf.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="coaplinks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -166,9 +206,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="coap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="ietf.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="coaplinks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
