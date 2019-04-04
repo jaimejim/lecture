@@ -15,17 +15,39 @@ RES: 2.05 Content
    </sensors/temp2>;rt="temperature",
 ```
 
-Once the client knows that there are two sensors of the type `temperature`, it can decide to follow one of the presented links and query it, for example the first one `/sensors/temp1`. That way it can learn the current value of the resource as we learnt in the previous section.
+Once the client knows that there are two sensors of the type `temperature`, it can decide to follow one of the presented links and query it, for example the first one `/sensors/temp1`. That way it can find the current value of the resource as we learnt in the previous section.
 
 ```txt
 REQ: GET coap://coap.me:5683/sensors/temp1
 RES: 2.05 Content
-   [
-     {"n":"urn:dev:ow:10e2073a01080063","u":"Cel","v":23.1}
-   ]
+   [{"n":"urn:dev:ow:10e2073a01080063","u":"Cel","v":23.1}]
 ```
 
 ## Discovering CoAP Endpoints
 
+
+Finding a Resource Directory
+multicast 224.0.1.187  FF0X::FE
 As we saw CoAP allows for Resource Directory
+
+Registration
+Lookup
+
+```txt
+                Registration         Lookup
+                 Interface         Interface
+     +----+          |                 |
+     | EP |----      |                 |
+     +----+    ----  |                 |
+                   --|-    +------+    |
+     +----+          | ----|      |    |     +--------+
+     | EP | ---------|-----|  RD  |----|-----| Client |
+     +----+          | ----|      |    |     +--------+
+                   --|-    +------+    |
+     +----+    ----  |                 |
+     | CT |----      |                 |
+     +----+
+
+
+```
 
