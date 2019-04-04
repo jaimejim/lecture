@@ -69,7 +69,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><ol class="section"><li><a href="coap.html"><strong aria-hidden="true">2.1.</strong> CoAP</a></li><li><a href="coapddos.html"><strong aria-hidden="true">2.2.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">3.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">3.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">3.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapddos.html"><strong aria-hidden="true">3.4.</strong> Attacks on CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">4.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">4.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">4.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -230,7 +230,7 @@
 <p>CoAP devices are intended to come from multiple manufacturers, much like the World Wide Web enabled anyone to have an HTTP server. While arriving to a common data modeling and representation form as HTML for HTTP has not yet happened for CoAP, the technology is already mature in terms of networking layout.</p>
 <p>Devices may be sensors and actuators, exposing resources (i.e. measurable data) or enabling interaction with the environment. They have to find ways to register to services, find each other, and interact without much human control or intervention.</p>
 <p>Ideally we would be talking about a decentralized scenario, as on the Web. However, much like the Web is moving back to the mainframe format, most comertial IoT solutions today feature a central control point, manager, broker or orchestrating entity.</p>
-<a class="header" href="print.html#a-coap-message" id="a-coap-message"><h2>A CoAP Message</h2></a>
+<a class="header" href="print.html#a-coap-message" id="a-coap-message"><h1>A CoAP Message</h1></a>
 <p>As explained in <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a> CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The <code>version</code> indicates the CoAP version, the message <code>type</code> can be (<code>CON</code>, <code>NON</code>, <code>ACK</code> and <code>RST</code>). This is followed by a variable-length <code>Token</code> value, which can be between 0 and 8 bytes long. Then it has the response or method <code>codes</code> (e.g. <code>0.01</code> (GET) , <code>0.02</code> (POST) , <code>2.05</code> (Success) , <code>4.04</code> (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data.</p>
 <pre><code class="language-md">    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -268,13 +268,13 @@
       |      |   Payload: &quot;22.3 C&quot;
 </code></pre>
 <p>In the response you can see a <code>Content-Format</code> field explaining the format of the content. This is a CoAP option that will be explained in the next section.</p>
-<a class="header" href="print.html#convenient-multicast" id="convenient-multicast"><h3>Convenient Multicast</h3></a>
+<a class="header" href="print.html#convenient-multicast" id="convenient-multicast"><h2>Convenient Multicast</h2></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
 <p>Nevertheless Multicast must be used with care as it is easy to greate other network issues involving broadcast storms.</p>
-<a class="header" href="print.html#revisiting-web-linking" id="revisiting-web-linking"><h2>Revisiting web linking</h2></a>
+<a class="header" href="print.html#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization"><h1>CoAP Web Linking and Serialization</h1></a>
 <p>Web Linking in CoRE is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>.</p>
-<a class="header" href="print.html#uris" id="uris"><h3>URIs</h3></a>
+<a class="header" href="print.html#uris" id="uris"><h2>URIs</h2></a>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
 <pre><code class="language-md">   foo://example.com:8042/over/there?name=ferret#nose
    \_/   \_____________/\________/\________/ \___/
@@ -300,7 +300,7 @@
      |           |                 |                |           |
    scheme     authority           path            query     fragment
 </code></pre>
-<a class="header" href="print.html#media-types" id="media-types"><h3>Media Types</h3></a>
+<a class="header" href="print.html#media-types" id="media-types"><h2>Media Types</h2></a>
 <p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>,</p>
 <ol>
 <li>
@@ -320,7 +320,7 @@
 <p><strong>The content-format <code>60</code> identifies the <code>application/cbor</code> media-type, defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>.</strong></p>
 <p>At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.</p>
 <p>Just like on the web a HTTP Client (e.g. a browser) can understand the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>; a CoAP Client could understand that <code>application/cbor</code> implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
-<a class="header" href="print.html#data-serialization" id="data-serialization"><h3>Data Serialization</h3></a>
+<a class="header" href="print.html#data-serialization" id="data-serialization"><h2>Data Serialization</h2></a>
 <p>We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be <em>serialized</em>, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called <a href="https://tools.ietf.org/html/rfc8428">SenML</a> that is much readable.</p>
 <p>SenML can be represented in various formats with their respective media types which are: <code>application/senml-exi</code> , <code>application/senml+cbor</code> , <code>application/senml+json</code> , <code>application/senml+xml</code>. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.</p>
@@ -348,9 +348,9 @@ While CBOR is binary and hard to read without translation tools for humans, ther
 00000070: 6375 7272 656e 7402 fb3f fb33 3333 3333  current..?.33333
 00000080: 33                                       3
 </code></pre>
-<a class="header" href="print.html#finding-your-things" id="finding-your-things"><h2>Finding your Things</h2></a>
+<a class="header" href="print.html#finding-your-coap-devices" id="finding-your-coap-devices"><h1>Finding your CoAP devices</h1></a>
 <p>While we have explained how data is transmitted and how it looks like and we do have URL to share the location of our CoAP devices, we have to figure out <strong>how to find CoAP devices to begin with?</strong> and, once we know the URL of a CoAP device, <strong>how do we know what is on that device?</strong></p>
-<a class="header" href="print.html#discovering-resources" id="discovering-resources"><h3>Discovering Resources</h3></a>
+<a class="header" href="print.html#discovering-resources" id="discovering-resources"><h2>Discovering Resources</h2></a>
 <p>Let's start with the second question first, how do you find the resources that a device has <em>before</em> asking it for them? Indeed, if we do not have any idea of what the device is supposed to do, it would be impossible to query for anything as we would not know the <code>path</code> part of the URL.</p>
 <p>To fix that problem every CoAP endpoint comes with a default URI that they all know, the <a href="https://tools.ietf.org/html/rfc8428">&quot;well-known&quot;</a> URI. If a server supports representations in <a href="https://tools.ietf.org/html/rfc6690">CoRE Link Format</a> it must always support too the URI called <code>/.well-known/core</code>. That way any CoAP client can always send a <code>GET</code> request to a CoAP Server on <code>/.well-known/core</code> and will get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with query filetering <code>?</code>. For example we could query a CoAP server for all resources of the type <code>rt</code> = temperature.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
@@ -365,9 +365,9 @@ RES: 2.05 Content
      {&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}
    ]
 </code></pre>
-<a class="header" href="print.html#discovering-coap-endpoints" id="discovering-coap-endpoints"><h3>Discovering CoAP Endpoints</h3></a>
+<a class="header" href="print.html#discovering-coap-endpoints" id="discovering-coap-endpoints"><h2>Discovering CoAP Endpoints</h2></a>
 <p>As we saw CoAP allows for Resource Directory</p>
-<a class="header" href="print.html#ddos-using-coap" id="ddos-using-coap"><h1>DDOS using CoAP</h1></a>
+<a class="header" href="print.html#attacks-on-coap" id="attacks-on-coap"><h1>Attacks on CoAP</h1></a>
 <a class="header" href="print.html#overview-of-network-attacks-on-the-internet" id="overview-of-network-attacks-on-the-internet"><h2>Overview of Network Attacks on the Internet</h2></a>
 <p>(Refer to another10years for users and for attacks)
 (Refer to another10years for iotattacks)</p>
