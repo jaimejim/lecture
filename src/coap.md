@@ -106,19 +106,55 @@ The CoAP URI is similar: `"coap:" "//" host [ ":" port ] path-abempty [ "?" quer
 
 ### Media Types
 
-To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good [clarification document](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), 
+In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good [clarification document](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), 
 
 1. **Media-Type** is often abbreviated as "mt", they are stored at the [IANA Registry](https://www.iana.org/assignments/media-types/media-types.xhtml). Originally it was a term that identify the general type like "text" or "audio". Nowadays it is the combination of a `type` and a `subtype` like "audio/ogg", "text/plain" or "text/html". In IoT common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
 
 2. **Content-Type** they are the top `type` Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).
 
-3. **Content-Coding** are registered in [IANA](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value. 
+3. **Content-Coding** are registered in [IANA](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.
 
-4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml). 
+4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml).
 
 Keeing all this in mind, the following sentence will now make more sense:
 
 **The content-format `60` identifies the `application/cbor` media-type, defined by [RFC7049](http://www.iana.org/go/rfc7049).**
+
+At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.
+
+Just like on the web a HTTP Client (e.g. a browser) can understand the common media types for HTML `text/html` and  images `image/jpeg`; a CoAP Client could understand that `application/cbor` implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
+
+### Data Serialization
+
+We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be *serialized*, that is how it is sent on the wire, by using CBOR.
+While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called [SenML](https://tools.ietf.org/html/rfc8428) that is much readable.
+
+SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document. 
+
+The following is an exchange between two CoAP endpoints shows a CoAP client (e.g. browser extension, dedicated app, another device, ...) requesting voltage information from another CoAP endpoint under the path `/voltage`. The request asks for the content to be formatted in `application/senml+json` format by using the content format identifier of `110`. Other CoAP fields like `token` or `version` have been omitted for simplicity.
+
+``` md
+Req: GET coap://coap.me:5683/voltage?ct=110
+```
+
+The response uses the CoAP `code` of 2.05, which means that the operation was successful and has the payload presented below. That payload contains a times series of measurements with the base name `bn`indicating the URN of the device, the base time `bt`when the time series started, the units `bu`and the first value which was `v`of `21.2`. After that it list the current value in increments of 10 seconds.
+
+```md
+Res: 2.05 Content
+    [   {"bn":"urn:dev:ow:10e2073a01080063","bt":1.320067464e+09,
+         "bu":"%RH","v":21.2},
+        {"t":10,"v":21.3},
+        {"t":20,"v":21.4},
+        {"t":30,"v":21.4},
+    ]
+```
+
+The same serialization could be done in a compressed fashion using a binary representation like CBOR. 
+
+
+
+entity-body. It’s so important that its value has a special name. We say the value of the Content-Type header is the entity-body’s media type. (It’s also called the MIME type or the content type. Sometimes “media type” is hyphenated: media-type.)
+
 
 ---
 
