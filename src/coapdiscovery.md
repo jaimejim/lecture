@@ -28,3 +28,4 @@ RES: 2.05 Content
 ## Discovering CoAP Endpoints
 
 As we saw CoAP allows for Resource Directory
+
