@@ -304,7 +304,7 @@
    scheme     authority           path            query     fragment
 </code></pre>
 <a class="header" href="#media-types" id="media-types"><h3>Media Types</h3></a>
-<p>To begin explaining the Link format used in CoAP it is important to know other concepts like media-types, content-types, etc. there is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>,</p>
+<p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>,</p>
 <ol>
 <li>
 <p><strong>Media-Type</strong> is often abbreviated as &quot;mt&quot;, they are stored at the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Registry</a>. Originally it was a term that identify the general type like &quot;text&quot; or &quot;audio&quot;. Nowadays it is the combination of a <code>type</code> and a <code>subtype</code> like &quot;audio/ogg&quot;, &quot;text/plain&quot; or &quot;text/html&quot;. In IoT common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
@@ -321,6 +321,26 @@
 </ol>
 <p>Keeing all this in mind, the following sentence will now make more sense:</p>
 <p><strong>The content-format <code>60</code> identifies the <code>application/cbor</code> media-type, defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>.</strong></p>
+<p>At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.</p>
+<p>Just like on the web a HTTP Client (e.g. a browser) can understand the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>; a CoAP Client could understand that <code>application/cbor</code> implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
+<a class="header" href="#data-serialization" id="data-serialization"><h3>Data Serialization</h3></a>
+<p>We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be <em>serialized</em>, that is how it is sent on the wire, by using CBOR.
+While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called <a href="https://tools.ietf.org/html/rfc8428">SenML</a> that is much readable.</p>
+<p>SenML can be represented in various formats with their respective media types which are: <code>application/senml-exi</code> , <code>application/senml+cbor</code> , <code>application/senml+json</code> , <code>application/senml+xml</code>. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document.</p>
+<p>The following is an exchange between two CoAP endpoints shows a CoAP client (e.g. browser extension, dedicated app, another device, ...) requesting voltage information from another CoAP endpoint under the path <code>/voltage</code>. The request asks for the content to be formatted in <code>application/senml+json</code> format by using the content format identifier of <code>110</code>. Other CoAP fields like <code>token</code> or <code>version</code> have been omitted for simplicity.</p>
+<pre><code class="language-md">Req: GET coap://coap.me:5683/voltage?ct=110
+</code></pre>
+<p>The response uses the CoAP <code>code</code> of 2.05, which means that the operation was successful and has the payload presented below. That payload contains a times series of measurements with the base name <code>bn</code>indicating the URN of the device, the base time <code>bt</code>when the time series started, the units <code>bu</code>and the first value which was <code>v</code>of <code>21.2</code>. After that it list the current value in increments of 10 seconds.</p>
+<pre><code class="language-md">Res: 2.05 Content
+    [   {&quot;bn&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;bt&quot;:1.320067464e+09,
+         &quot;bu&quot;:&quot;%RH&quot;,&quot;v&quot;:21.2},
+        {&quot;t&quot;:10,&quot;v&quot;:21.3},
+        {&quot;t&quot;:20,&quot;v&quot;:21.4},
+        {&quot;t&quot;:30,&quot;v&quot;:21.4},
+    ]
+</code></pre>
+<p>The same serialization could be done in a compressed fashion using a binary representation like CBOR.</p>
+<p>entity-body. It’s so important that its value has a special name. We say the value of the Content-Type header is the entity-body’s media type. (It’s also called the MIME type or the content type. Sometimes “media type” is hyphenated: media-type.)</p>
 <hr />
 <p>CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
 It is also client/server type, although endpoints will often be both, so it’d be more of a P2P scenario.
