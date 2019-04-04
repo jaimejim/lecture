@@ -30,7 +30,7 @@ As explained in [RFC7252](https://tools.ietf.org/html/rfc7252) CoAP messages are
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-### Unreliable Transmission
+## Unreliable Transmission
 
 As mentioned before, CoAP was intended for *UDP transmission*, which is unreliable. This means that CoAP request and response messages may arrive out of order, appear duplicated, or go missing without notice. For this reason, CoAP implements a lightweight reliability mechanism using the `type`field, introducing both Confirmable and Non-Confirmable messages. If the messages is CON as in Confirmable, that means that either the request or the response require confirmation, that is an acknowledgemnt of receival or ACK.
 
@@ -62,14 +62,21 @@ Since the first message got lost the client waits for a time until the `timeout`
 
 In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in the next section.
 
+### Convenient Multicast
 
-## Linking in CoAP
+Although the original lack of TCP, which now [is supported](https://tools.ietf.org/html/rfc8323) too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.
+
+In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.
+
+Nevertheless Multicast must be used with care as it is easy to greate other network issues involving broadcast storms.
+
+## Revisiting web linking
 
 Web Linking in CoRE is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988) and URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986).
 
 ### URIs
 
-We will also have to explain briefly what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.
+We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.
 
 ```md
    foo://example.com:8042/over/there?name=ferret#nose
@@ -129,60 +136,69 @@ Just like on the web a HTTP Client (e.g. a browser) can understand the common me
 We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be *serialized*, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called [SenML](https://tools.ietf.org/html/rfc8428) that is much readable.
 
-SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document. 
+SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.
 
-The following is an exchange between two CoAP endpoints shows a CoAP client (e.g. browser extension, dedicated app, another device, ...) requesting voltage information from another CoAP endpoint under the path `/voltage`. The request asks for the content to be formatted in `application/senml+json` format by using the content format identifier of `110`. Other CoAP fields like `token` or `version` have been omitted for simplicity.
-
-``` md
-Req: GET coap://coap.me:5683/voltage?ct=110
-```
-
-The response uses the CoAP `code` of 2.05, which means that the operation was successful and has the payload presented below. That payload contains a times series of measurements with the base name `bn`indicating the URN of the device, the base time `bt`when the time series started, the units `bu`and the first value which was `v`of `21.2`. After that it list the current value in increments of 10 seconds.
+The CoAP client will **request** the resources available under the path `/device`. The request asks for the content format identifier of `110` which means `application/senml+json` format. Other CoAP fields like `token` or `version` have been omitted for simplicity.
 
 ```md
-Res: 2.05 Content
-    [   {"bn":"urn:dev:ow:10e2073a01080063","bt":1.320067464e+09,
-         "bu":"%RH","v":21.2},
-        {"t":10,"v":21.3},
-        {"t":20,"v":21.4},
-        {"t":30,"v":21.4},
+REQ: GET coap://coap.me:5683/device?ct=110
+```
+
+The **response** below uses the CoAP `code` of 2.05, which means that the operation was successful The payload contains a times series of measurements with the base name `bn`indicating the URN of the device, the base time `bt`when the time series started, the units `bu` and the version used `ver` of `2`.
+
+After the base values there is the individual measurements containing the field name `n` either current or voltage, the time it was measured `t` , which is negative for historical data before the base measurement. Finally 
+
+```json
+RES: 2.05 Content
+    [   {"bn":"urn:dev:mac:0024befffe804ff1/","bt":1276020076,"bu":"A","ver":2},
+        {"n":"voltage","u":"V","v":0},
+        {"n":"current","t":-4,"v":1.3},
+        {"n":"current","t":-3,"v":1,"s":33.44},
+        {"n":"current","v":1.7}
     ]
 ```
 
-The same serialization could be done in a compressed fashion using a binary representation like CBOR. 
+The output looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation ([CBOR](https://cbor.io)) was created. Below you can see the same payload in CBOR in only 147 Bytes.
 
+```md
+00000000: 85a4 2178 1d75 726e 3a64 6576 3a6d 6163  ..!x.urn:dev:mac
+00000010: 3a30 3032 3462 6566 6666 6538 3034 6666  :0024befffe804ff
+00000020: 312f 221a 4c0e 856c 2361 4163 7665 7202  1/".L..l#aAcver.
+00000030: a300 6776 6f6c 7461 6765 0161 5602 00a3  ..gvoltage.aV...
+00000040: 0067 6375 7272 656e 7406 2302 fb3f f4cc  .gcurrent.#..?..
+00000050: cccc cccc cda4 0067 6375 7272 656e 7406  .......gcurrent.
+00000060: 2202 0105 fb40 40b8 51eb 851e b8a2 0067  "....@@.Q......g
+00000070: 6375 7272 656e 7402 fb3f fb33 3333 3333  current..?.33333
+00000080: 33                                       3
+```
 
+## Finding your Things
 
-entity-body. It’s so important that its value has a special name. We say the value of the Content-Type header is the entity-body’s media type. (It’s also called the MIME type or the content type. Sometimes “media type” is hyphenated: media-type.)
+While we have explained how data is transmitted and how it looks like and we do have URL to share the location of our CoAP devices, we have to figure out **how to find CoAP devices to begin with?** and, once we know the URL of a CoAP device, **how do we know what is on that device?**
 
+### Discovering Resources
 
----
+Let's start with the second question first, how do you find the resources that a device has *before* asking it for them? Indeed, if we do not have any idea of what the device is supposed to do, it would be impossible to query for anything as we would not know the `path` part of the URL.
 
-CoAP is the Constrained Application Protocol by the IETF for constrained devices and networks.  CoAP is the equivalent of HTTP but for constrained devices. From HTTP it takes multiple characteristics:
-It is also client/server type, although endpoints will often be both, so it’d be more of a P2P scenario.
-It also uses a smaller subset of methods to operate on resources.
-Same key concepts from the web like media types, URLs, URN, etc.
-Compact 4 byte header
-It was intended to run over UDP, providing reliability at the application layer. This was  done with one of the message types (CON NON ACK RST), basically marking a message as something to be confirmed back.
-Nowadays, due mainly to NATting issues in IoT, where you might not be able to have the device initiating the communication always, or the NAT mght be too strict, misconfigured, etc.. We also have TCP support. This was a requirement form OMA.
-RD used to register and lookup for devices.
+To fix that problem every CoAP endpoint comes with a default URI that they all know, the ["well-known"](https://tools.ietf.org/html/rfc8428) URI. If a server supports representations in [CoRE Link Format](https://tools.ietf.org/html/rfc6690) it must always support too the URI called `/.well-known/core`. That way any CoAP client can always send a `GET` request to a CoAP Server on `/.well-known/core` and will get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with query filetering `?`. For example we could query a CoAP server for all resources of the type `rt` = temperature.
 
-In this example we see a client getting a resource hosted at a coap server.
+```txt
+REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
+RES: 2.05 Content
+   </sensors/temp1>;rt="temperature",
+   </sensors/temp2>;rt="temperature",
+```
 
+Once the client knows that there are two sensors of the type `temperature`, it can decide to follow one of the presented links and query it, for example the first one `/sensors/temp1`. That way it can learn the current value of the resource as we learnt in the previous section.
 
----
+```txt
+REQ: GET coap://coap.me:5683/sensors/temp1
+RES: 2.05 Content
+   [
+     {"n":"urn:dev:ow:10e2073a01080063","u":"Cel","v":23.1}
+   ]
+```
 
-CoAP Core_Link RFC6690 expands the definitions on the web linking RFC and expands it for IoT. 
-Adds query string parameters and attributes. These attributes describe information useful in accessing the target link of the relation and provide useful semantic information like in this example that the resource we are accessing is part of the oma organization and it is of type temperature. It also tells us that the content is formatted in plaintext as indicated by the value 0. we could request it in senml-json and then we would be using ct=110 
-We also can observe parameters by using CoAP observe option, we can get notifications of state changes in the resources hosted by the coap server. We can even add query parameters like “less than” lt=0, if we want the value to be lower than 0 (-37 in this example).
-RFC6690 defines the serialization of links in a formal way as well as defining specific M2M content types.
-It also defines a well-known resource which is the well-known/core which is globally reserved. Also can be used with HTTP since it is also reserved there. 
-This well-known resource can accept optional query string parameters. So we could use this new content types and resources types to find resources on the device based on attribute and relation. You can see that we are requesting an IPSO temperature resource, with content type 0 (plaintext) and that it has to be observable.
-In order to find them and see the links, we can use GET  message with content type and the representation that we want (for example JSON)
+### Discovering CoAP Endpoints
 
-This example is the same as before, but now we use OMA’s resource uri (more on that letter) which is the same as asking for the temperature value, we also use a resource type and a content type in which we want the information returned.
-
-
-![CoAP 1](./img/coap1.png)
-![CoAP 2](./img/coap2.png)
-![CoAP 3](./img/coap3.png)
+As we saw CoAP allows for Resource Directory
