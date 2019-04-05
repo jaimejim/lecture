@@ -11,8 +11,8 @@ To fix that problem every CoAP endpoint comes with a default URI that they all k
 ```txt
 REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
 RES: 2.05 Content
-   </sensors/temp1>;rt="temperature",
-   </sensors/temp2>;rt="temperature",
+     </sensors/temp1>;rt="temperature",
+     </sensors/temp2>;rt="temperature",
 ```
 
 Once the client knows that there are two sensors of the type `temperature`, it can decide to follow one of the presented links and query it, for example the first one `/sensors/temp1`. That way it can find the current value of the resource as we learnt in the previous section.
@@ -20,7 +20,7 @@ Once the client knows that there are two sensors of the type `temperature`, it c
 ```txt
 REQ: GET coap://coap.me:5683/sensors/temp1
 RES: 2.05 Content
-   [{"n":"urn:dev:ow:10e2073a01080063","u":"Cel","v":23.1}]
+     [{"n":"urn:dev:ow:10e2073a01080063","u":"Cel","v":23.1}]
 ```
 
 ## Discovering CoAP Endpoints
@@ -50,39 +50,57 @@ In scenarios where direct discovery of resources is not possible due to sleeping
 To start using the Resource Directory first we need to find it too. There are several options:
 
 1. Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.
-1. Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. `www.resource.directory.jaime.win`).
+1. Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. `www.rd.jaime.win`).
 1. Multicast request as explained in the next below.
 1. It could be configured using DNS Service Discovery ([DNS-SD](https://tools.ietf.org/html/rfc67630))
 1. It could be provided by default from the network using [IPv6 Neighbor Discovery](https://tools.ietf.org/html/rfc4861) by carrying information about the address of the RD, there is a Resource Directory Address Option ([RDAO](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1)) for it.
 
-After performing the discovery you should get a URI of the resource directory like `coap://rd.example.com`
+After performing the discovery you should get a URI of the resource directory like `coap://rd.jaime.win`
 
 ### Registration
 
-After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier `ep`, the  and 
+After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier `ep`, the content format identifier which is `40` in this case (i.e. [`application/link-format`](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml)) as well as a series of links resources that the endpoint wants to register.
 
 ```md
-REQ: POST coap://rd.example.com/rd?ep=node1
-     Content-Format: 40
-     Payload:
+REQ: POST coap://rd.jaime.win/rd?ep=node1
+     ct:40
      </sensors/temp>;ct=41;rt="temperature-c";if="sensor";
-     anchor="coap://spurious.example.com:5683",
      </sensors/light>;ct=41;rt="light-lux";if="sensor"
+```
 
+The RD will return `2.01` (Created) response with the location path of the entry in the directory, in this case `/rd/4521`. That location is used in all subsequent operations on that registration.
+
+```md
 RES: 2.01 Created
      Location-Path: /rd/4521
 ```
 
+There are several alternatives, like delegating registration to a Commissioning Tool (CT), requesting the RD to fetch the links from the endpoint and others that are detailed in the RD specification.
 
 ### Lookup
 
-REQ: GET /rd-lookup/res?rt=temperature
+To discover the resources registered with the RD an endpoint can use the lookup interface, which allows lookups for endpoints and resources using attributes CoRE Link Format and - at least - two new resource types (`rt`), `core.rd-lookup-res` for resources and `core.rd-lookup-ep` for endpoints.
 
+You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for any endpoint or resource with `rt=core.rd*`but in this case we just want to find the resources so we query `rt=core.rd-lookup-res`. The RD returns the lookup interfaces `/rd-lookup/res`.
+
+```txt
+REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
+RES: </rd-lookup/res>;rt="core.rd-lookup-res";ct=40
+```
+
+Once we have the entry point to query the RD we could ask for all links to temperature resources in it with the query parameter `rt=temperature`.
+
+```md
+REQ: GET coap://rd.jaime.win/rd-lookup/res?rt=temperature
+```
+
+The RD will return the link to follow in order to fetch that resource. 
+
+```md
 RES: 2.05 Content
      <coap://[2001:db8:3::123]:61616/temp>;rt="temperature";
      anchor="coap://[2001:db8:3::123]:61616"
-
-
+```
 
 ### Use of Multicast in CoAP
 
