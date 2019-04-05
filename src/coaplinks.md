@@ -1,6 +1,6 @@
 # CoAP Web Linking and Serialization
 
-Web Linking in CoRE is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988) and URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986).
+Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988) and URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986). We will see some of the basic concepts in this chapter.
 
 ## URIs
 
@@ -74,7 +74,7 @@ The CoAP client will **request** the resources available under the path `/device
 REQ: GET coap://coap.me:5683/device?ct=110
 ```
 
-The **response** below uses the CoAP `code` of 2.05, which means that the operation was successful The payload contains a times series of measurements with the base name `bn`indicating the URN of the device, the base time `bt`when the time series started, the units `bu` and the version used `ver` of `2`.
+The **response** below uses the CoAP `code` of 2.05, which means that the operation was successful The payload contains a times series of measurements with the base name `bn` indicating the URN of the device, the base time `bt` when the time series started, the units `bu` and the version used `ver` of `2`.
 
 After the base values there is the individual measurements containing the field name `n` either current or voltage, the time it was measured `t` , which is negative for historical data before the base measurement. Finally 
 
