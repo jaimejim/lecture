@@ -47,6 +47,17 @@ In scenarios where direct discovery of resources is not possible due to sleeping
      +----+
 ```
 
+To start using the Resource Directory first we need to find it too. There are several options:
+
+1. Multicast request as explained in the next section.
+1. Already knowing the IP address. Which means that devices need to be configured with that IP.
+1. Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. `www.resource.directory.jaime.win`).
+1. It could be configured using DNS Service Discovery ([DNS-SD](https://tools.ietf.org/html/rfc67630))
+1. It could be provided by default from the network using [IPv6 Neighbor Discovery](https://tools.ietf.org/html/rfc4861) by carrying information about the address of the RD, there is a Resource Directory Address Option ([RDAO](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1)) for it.
+
+
+
+
 Finding a Resource Directory
 multicast 224.0.1.187  FF0X::FE
 As we saw CoAP allows for Resource Directory

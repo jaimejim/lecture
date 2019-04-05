@@ -133,10 +133,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="print.html#lecture-notes" id="lecture-notes"><h1>Lecture Notes</h1></a>
-<p>Here is a compilation of notes and potential lecture materials around various topics I have condensed over the course of <code>1 month</code>.</p>
-<p>The notes are written in markdown and generated using <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a>.</p>
-<p>The contents are <a href="https://github.com/jaimejim/lecture/blob/master/LICENSE">MIT Licensed</a> and so is any code they might contain. You can find the source code on <a href="https://github.com/jaimejim/lecture">GitHub</a>. Issues and feature requests can be posted on the <a href="https://github.com/jaimejim/lecture/issues">GitHub issue tracker</a>.</p>
+                        <a class="header" href="print.html#lecture-notes-a-hrefhttpstravis-ciorgjaimejimlectureimg-srchttpstravis-ciorgjaimejimlecturesvgbranchmaster-altbuild-status-a" id="lecture-notes-a-hrefhttpstravis-ciorgjaimejimlectureimg-srchttpstravis-ciorgjaimejimlecturesvgbranchmaster-altbuild-status-a"><h1>Lecture Notes <a href="https://travis-ci.org/jaimejim/lecture"><img src="https://travis-ci.org/jaimejim/lecture.svg?branch=master" alt="Build Status" /></a></h1></a>
+<p>Here is a compilation of notes and potential lecture materials around various topics I have condensed in the past few months.</p>
+<p>The notes are written in markdown and generated using <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a>. The contents are <a href="https://github.com/jaimejim/lecture/blob/master/LICENSE">MIT Licensed</a> and so is any code they might contain. You can find the source code on <a href="https://github.com/jaimejim/lecture">GitHub</a>.</p>
+<p>Please report issues and feature requests on the <a href="https://github.com/jaimejim/lecture/issues">GitHub issue tracker</a>.</p>
 <a class="header" href="print.html#license" id="license"><h2>License</h2></a>
 <p>All the source code is released under the <a href="https://opensource.org/licenses/MIT">MIT Licensed</a>.</p>
 <a class="header" href="print.html#the-internet-engineering-task-force-ietf" id="the-internet-engineering-task-force-ietf"><h1>The Internet Engineering Task Force (IETF)</h1></a>
@@ -381,6 +381,14 @@ RES: 2.05 Content
      | CT |----      |                 |
      +----+
 </code></pre>
+<p>To start using the Resource Directory first we need to find it too. There are several options:</p>
+<ol>
+<li>Multicast request as explained in the next section.</li>
+<li>Already knowing the IP address. Which means that devices need to be configured with that IP.</li>
+<li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.resource.directory.jaime.win</code>).</li>
+<li>It could be configured using DNS Service Discovery (<a href="https://tools.ietf.org/html/rfc67630">DNS-SD</a>)</li>
+<li>It could be provided by default from the network using <a href="https://tools.ietf.org/html/rfc4861">IPv6 Neighbor Discovery</a> by carrying information about the address of the RD, there is a Resource Directory Address Option (<a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1">RDAO</a>) for it.</li>
+</ol>
 <p>Finding a Resource Directory
 multicast 224.0.1.187  FF0X::FE
 As we saw CoAP allows for Resource Directory</p>
