@@ -78,7 +78,7 @@ RES (LOST MESSAGE): 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
 
---- 15 seconds pass and Max-Age timeout triggers---
+--- 15 seconds pass and Max-Age timeout triggers ---
 
 REQ: GET coap://coap.me:5683/sensors/temp1
      observe:0  | token: 0xb2
@@ -90,7 +90,7 @@ RES: 2.05 Content
 
 Now, getting into a potentially confusing case, it could be that the comunication uses **Confirmable** messages. Since `Max-Age` is 15 and the `timeout` is usually less than 5 seconds, in that case there is a retransmission `timeout` that will be triggered even *before* the freshness of the data expires.
 
-``txt
+```txt
 REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
      observe:0  | token: 0x4a
 
@@ -98,9 +98,10 @@ RES (LOST MESSAGE): 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
 
---- 2 seconds pass and retransmisison timeout triggers---
+--- 2 seconds pass and retransmisison timeout triggers ---
 
 RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
+
 ```
