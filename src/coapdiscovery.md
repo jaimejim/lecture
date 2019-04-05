@@ -18,7 +18,7 @@ There are quite a few steps needed in order to retrieve that measurement we are 
       GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
 ```
 
-3. Find an Endpoint or a Resource Registered in the RD.
+3. Find an endpoint or a temperature resource (for example) Registered in the RD.
 
 ```txt
       GET coap://rd.jaime.win/rd-lookup/res?rt=temperature
@@ -115,7 +115,18 @@ There are several alternatives, like delegating registration to a Commissioning 
 
 To discover the resources registered with the RD an endpoint can use the lookup interface, which allows lookups for endpoints and resources using attributes CoRE Link Format and - at least - two new resource types (`rt`), `core.rd-lookup-res` for resources and `core.rd-lookup-ep` for endpoints.
 
-You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for any endpoint or resource with `rt=core.rd*`but in this case we just want to find the resources so we query `rt=core.rd-lookup-res`. The RD returns the lookup interfaces `/rd-lookup/res`.
+You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for all available interfaces by querying `rt=core.rd*`.
+
+```txt
+REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd*
+
+RES: 2.05 Content
+     </rd>;rt="core.rd";ct=40,
+     </rd-lookup/ep>;rt="core.rd-lookup-ep";ct=40,
+     </rd-lookup/res>;rt="core.rd-lookup-res";ct=40,
+```
+
+However in in this case we just want to find the resources so we query `rt=core.rd-lookup-res`. The RD returns the lookup interface for resources `/rd-lookup/res`.
 
 ```txt
 REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
