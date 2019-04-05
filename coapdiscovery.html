@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html" class="active"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapabnf.html"><strong aria-hidden="true">3.4.</strong> CoAP ABNF</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html" class="active"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -147,13 +147,13 @@
 <p>To fix that problem every CoAP endpoint comes with a default URI that they all know, the <a href="https://tools.ietf.org/html/rfc8428">&quot;well-known&quot;</a> URI. If a server supports representations in <a href="https://tools.ietf.org/html/rfc6690">CoRE Link Format</a> it must always support too the URI called <code>/.well-known/core</code>. That way any CoAP client can always send a <code>GET</code> request to a CoAP Server on <code>/.well-known/core</code> and will get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with query filetering <code>?</code>. For example we could query a CoAP server for all resources of the type <code>rt</code> = temperature.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
 RES: 2.05 Content
-   &lt;/sensors/temp1&gt;;rt=&quot;temperature&quot;,
-   &lt;/sensors/temp2&gt;;rt=&quot;temperature&quot;,
+     &lt;/sensors/temp1&gt;;rt=&quot;temperature&quot;,
+     &lt;/sensors/temp2&gt;;rt=&quot;temperature&quot;,
 </code></pre>
 <p>Once the client knows that there are two sensors of the type <code>temperature</code>, it can decide to follow one of the presented links and query it, for example the first one <code>/sensors/temp1</code>. That way it can find the current value of the resource as we learnt in the previous section.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/sensors/temp1
 RES: 2.05 Content
-   [{&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}]
+     [{&quot;n&quot;:&quot;urn:dev:ow:10e2073a01080063&quot;,&quot;u&quot;:&quot;Cel&quot;,&quot;v&quot;:23.1}]
 </code></pre>
 <a class="header" href="#discovering-coap-endpoints" id="discovering-coap-endpoints"><h2>Discovering CoAP Endpoints</h2></a>
 <p>We have explained how to discover the resources on a coap endpoint but we have not mentioned how endpoints can be found to begin with.</p>
@@ -176,29 +176,38 @@ RES: 2.05 Content
 <p>To start using the Resource Directory first we need to find it too. There are several options:</p>
 <ol>
 <li>Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.</li>
-<li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.resource.directory.jaime.win</code>).</li>
+<li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.rd.jaime.win</code>).</li>
 <li>Multicast request as explained in the next below.</li>
 <li>It could be configured using DNS Service Discovery (<a href="https://tools.ietf.org/html/rfc67630">DNS-SD</a>)</li>
 <li>It could be provided by default from the network using <a href="https://tools.ietf.org/html/rfc4861">IPv6 Neighbor Discovery</a> by carrying information about the address of the RD, there is a Resource Directory Address Option (<a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1">RDAO</a>) for it.</li>
 </ol>
-<p>After performing the discovery you should get a URI of the resource directory like <code>coap://rd.example.com</code></p>
+<p>After performing the discovery you should get a URI of the resource directory like <code>coap://rd.jaime.win</code></p>
 <a class="header" href="#registration" id="registration"><h3>Registration</h3></a>
-<p>After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier <code>ep</code>, the  and</p>
-<pre><code class="language-md">REQ: POST coap://rd.example.com/rd?ep=node1
-     Content-Format: 40
-     Payload:
+<p>After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier <code>ep</code>, the content format identifier which is <code>40</code> in this case (i.e. <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml"><code>application/link-format</code></a>) as well as a series of links resources that the endpoint wants to register.</p>
+<pre><code class="language-md">REQ: POST coap://rd.jaime.win/rd?ep=node1
+     ct:40
      &lt;/sensors/temp&gt;;ct=41;rt=&quot;temperature-c&quot;;if=&quot;sensor&quot;;
-     anchor=&quot;coap://spurious.example.com:5683&quot;,
      &lt;/sensors/light&gt;;ct=41;rt=&quot;light-lux&quot;;if=&quot;sensor&quot;
-
-RES: 2.01 Created
+</code></pre>
+<p>The RD will return <code>2.01</code> (Created) response with the location path of the entry in the directory, in this case <code>/rd/4521</code>. That location is used in all subsequent operations on that registration.</p>
+<pre><code class="language-md">RES: 2.01 Created
      Location-Path: /rd/4521
 </code></pre>
+<p>There are several alternatives, like delegating registration to a Commissioning Tool (CT), requesting the RD to fetch the links from the endpoint and others that are detailed in the RD specification.</p>
 <a class="header" href="#lookup" id="lookup"><h3>Lookup</h3></a>
-<p>REQ: GET /rd-lookup/res?rt=temperature</p>
-<p>RES: 2.05 Content
-<a href="coap://%5B2001:db8:3::123%5D:61616/temp">coap://[2001:db8:3::123]:61616/temp</a>;rt=&quot;temperature&quot;;
-anchor=&quot;coap://[2001:db8:3::123]:61616&quot;</p>
+<p>To discover the resources registered with the RD an endpoint can use the lookup interface, which allows lookups for endpoints and resources using attributes CoRE Link Format and - at least - two new resource types (<code>rt</code>), <code>core.rd-lookup-res</code> for resources and <code>core.rd-lookup-ep</code> for endpoints.</p>
+<p>You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for any endpoint or resource with <code>rt=core.rd*</code>but in this case we just want to find the resources so we query <code>rt=core.rd-lookup-res</code>. The RD returns the lookup interfaces <code>/rd-lookup/res</code>.</p>
+<pre><code class="language-txt">REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
+RES: &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40
+</code></pre>
+<p>Once we have the entry point to query the RD we could ask for all links to temperature resources in it with the query parameter <code>rt=temperature</code>.</p>
+<pre><code class="language-md">REQ: GET coap://rd.jaime.win/rd-lookup/res?rt=temperature
+</code></pre>
+<p>The RD will return the link to follow in order to fetch that resource.</p>
+<pre><code class="language-md">RES: 2.05 Content
+     &lt;coap://[2001:db8:3::123]:61616/temp&gt;;rt=&quot;temperature&quot;;
+     anchor=&quot;coap://[2001:db8:3::123]:61616&quot;
+</code></pre>
 <a class="header" href="#use-of-multicast-in-coap" id="use-of-multicast-in-coap"><h3>Use of Multicast in CoAP</h3></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
@@ -221,7 +230,7 @@ anchor=&quot;coap://[2001:db8:3::123]:61616&quot;</p>
                         
 
                         
-                            <a rel="next" href="coapabnf.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="udpddos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -239,7 +248,7 @@ anchor=&quot;coap://[2001:db8:3::123]:61616&quot;</p>
                 
 
                 
-                    <a href="coapabnf.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="udpddos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
