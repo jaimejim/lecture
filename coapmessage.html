@@ -141,7 +141,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#a-coap-message" id="a-coap-message"><h1>A CoAP Message</h1></a>
-<p>As explained in <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a> CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The <code>version</code> indicates the CoAP version, the message <code>type</code> can be (<code>CON</code>, <code>NON</code>, <code>ACK</code> and <code>RST</code>). This is followed by a variable-length <code>Token</code> value, which can be between 0 and 8 bytes long. Then it has the response or method <code>codes</code> (e.g. <code>0.01</code> (GET) , <code>0.02</code> (POST) , <code>2.05</code> (Success) , <code>4.04</code> (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data. The <code>0xFF</code> or <code>11111111</code> is a marker to indicate the end of the header and beginning of the payload.</p>
+<p>As explained in <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a> CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The <code>version</code> indicates the CoAP version, the message <code>type</code> can be [ <code>CON</code>, <code>NON</code>, <code>ACK</code> and <code>RST</code> ]. This is followed by a variable-length <code>Token</code> value, which can be between 0 and 8 bytes long. Then it has the response or method <code>codes</code> [ <code>0.00</code> (Empty) , <code>0.01</code> (GET) , <code>0.02</code> (POST) , <code>2.05</code> (Success) , <code>4.04</code> (Not Found) ]. Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data. The <code>0xFF</code> or <code>11111111</code> is a marker to indicate the end of the header and beginning of the payload.</p>
 <pre><code class="language-md">    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -199,7 +199,7 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 
---- 15 seconds pass and Max-Age timeout triggers ---
+--- 15 seconds pass ---
 
 REQ: GET coap://coap.me:5683/sensors/temp1
      observe:0  | token: 0xb2
@@ -208,11 +208,14 @@ RES: 2.05 Content
      observe:44 | token: 0xb2 | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:18.4}]
 </code></pre>
-<p>Now, getting into a potentially confusing case, it could be that the comunication uses <strong>Confirmable</strong> messages. Since <code>Max-Age</code> is 15 and the <code>timeout</code> is usually less than 5 seconds, in that case there is a retransmission <code>timeout</code> that will be triggered even <em>before</em> the freshness of the data expires.</p>
+<p>most cases not confirmable
+Notification is a response but not necessarily an ACK
+every 10th notification could be confirmable unless it is really important</p>
+<p>Now, getting into a potentially confusing case, it could be that the comunication uses <strong>Confirmable</strong> messages. Since <code>Max-Age</code> is 15 and the <code>timeout</code> is usually from 2 to 5 seconds ... exponential backoff...  in that case there is a retransmission <code>timeout</code> that will be triggered even <em>before</em> the freshness of the data expires.</p>
 <pre><code class="language-txt">REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
      observe:0  | token: 0x4a
 
-RES (LOST MESSAGE): 2.05 Content
+RES: (LOST MESSAGE) 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 
@@ -222,7 +225,7 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 </code></pre>
-<p>It is important to remember that while <code>Max Age</code> may trigger a new request on the client, the retransmission <code>timeout</code> is triggered on the server. </p>
+<p>It is important to remember that while <code>Max Age</code> may trigger a new request on the client, the retransmission <code>timeout</code> is triggered on the server.</p>
 
                     </main>
 
