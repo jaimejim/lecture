@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html" class="active"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapddos.html"><strong aria-hidden="true">3.4.</strong> Attacks on CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">4.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">4.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">4.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html" class="active"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -183,6 +183,49 @@
 <p>In CoAP this has been solved by using the <a href="https://tools.ietf.org/html/rfc7641">CoAP Observe Option</a>. As we saw CoAP allows to define new Options to extend the protocol. This one is added to the <code>GET</code> method to request the server to add/remove a client from a list of observers of a resource. Thus the value of this option is either <code>0</code> for <em>register</em> or <code>1</code>for <em>deregister</em>.</p>
 <p>If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request <code>token</code> to the list of observers of the target resource, and the client will be notified of changes to the resource.</p>
 <p>Links that are observable may include the attribute <code>obs</code> to indicate that. This is an attribute of a link, which will be explained in <a href="./coaplinks.html">CoAP Web Linking and Serialization</a>.</p>
+<p>For example a CoAP client could request for a temperature resource and use <code>obs = 0</code> to get subsequent notifications. The CoAP server will sent every</p>
+<pre><code class="language-txt">REQ: GET coap://coap.me:5683/sensors/temp1
+     observe:0  | token: 0x4a
+
+RES: 2.05 Content
+     observe:9  | token: 0x4a | Max-Age: 15
+     [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:25.2}]
+
+RES: 2.05 Content
+     observe:16 | token: 0x4a | Max-Age: 15
+     [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:27.1}]
+</code></pre>
+<p>After these two notifications a message is lost</p>
+<pre><code class="language-txt">RES (LOST MESSAGE): 2.05 Content
+     observe:9  | token: 0x4a | Max-Age: 15
+     [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:25.2}]
+
+REQ: GET coap://coap.me:5683/sensors/temp1
+     observe:0  | token: 0x4a
+
+
+RES: 2.05 Content
+     observe:16 | token: 0x4a | Max-Age: 15
+     [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:27.1}]
+</code></pre>
+<pre><code class="language-md">   Client  Server  (hosting a resource at &quot;/temperature&quot; with 
+      |      |       value 22.3 degrees centigrade)
+      |      |
+      +----X |   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: &quot;temperature&quot;
+   TIMEOUT   |
+      |      |
+      +-----&gt;|   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: &quot;temperature&quot;
+      |      |
+      |      |
+      |&lt;-----+   Header: 2.05 Content (T=ACK, Code=2.05, MID=0x7d36)
+      | 2.05 |   Token: 0x31
+      |      |   Content-Format: text/plain;charset=utf-8
+      |      |   Payload: &quot;22.3 C&quot;
+</code></pre>
 
                     </main>
 
