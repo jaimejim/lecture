@@ -103,5 +103,6 @@ RES (LOST MESSAGE): 2.05 Content
 RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
-
 ```
+
+It is important to remember that while `Max Age` may trigger a new request on the client, the retransmission `timeout` is triggered on the server. 
