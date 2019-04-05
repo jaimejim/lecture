@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapabnf.html"><strong aria-hidden="true">3.4.</strong> CoAP ABNF</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -305,10 +305,7 @@ RES: 2.05 Content
      observe:44 | token: 0xb2 | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:18.4}]
 </code></pre>
-<p>most cases not confirmable
-Notification is a response but not necessarily an ACK
-every 10th notification could be confirmable unless it is really important</p>
-<p>Now, getting into a potentially confusing case, it could be that the comunication uses <strong>Confirmable</strong> messages. Since <code>Max-Age</code> is 15 and the <code>timeout</code> is usually from 2 to 5 seconds ... exponential backoff...  in that case there is a retransmission <code>timeout</code> that will be triggered even <em>before</em> the freshness of the data expires.</p>
+<p>While in most cases the notification won't be, it can happen that the comunication uses <strong>Confirmable</strong> messages. It could be that it is important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the licent is still interested. The example below uses <code>Max-Age = 15</code> and a first <code>timeout</code> of usually from 2 seconds ( note that the timeour has an algotythm to calculate the right value). In this case there is a retransmission <em>before</em> the freshness of the data expires.</p>
 <pre><code class="language-txt">REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
      observe:0  | token: 0x4a
 
@@ -322,7 +319,6 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 </code></pre>
-<p>It is important to remember that while <code>Max Age</code> may trigger a new request on the client, the retransmission <code>timeout</code> is triggered on the server.</p>
 <a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization"><h1>CoAP Web Linking and Serialization</h1></a>
 <p>Web Linking in CoRE is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>.</p>
 <a class="header" href="#uris" id="uris"><h2>URIs</h2></a>
@@ -437,27 +433,241 @@ RES: 2.05 Content
 </code></pre>
 <p>To start using the Resource Directory first we need to find it too. There are several options:</p>
 <ol>
-<li>Multicast request as explained in the next section.</li>
-<li>Already knowing the IP address. Which means that devices need to be configured with that IP.</li>
+<li>Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.</li>
 <li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.resource.directory.jaime.win</code>).</li>
+<li>Multicast request as explained in the next below.</li>
 <li>It could be configured using DNS Service Discovery (<a href="https://tools.ietf.org/html/rfc67630">DNS-SD</a>)</li>
 <li>It could be provided by default from the network using <a href="https://tools.ietf.org/html/rfc4861">IPv6 Neighbor Discovery</a> by carrying information about the address of the RD, there is a Resource Directory Address Option (<a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1">RDAO</a>) for it.</li>
 </ol>
-<p>Finding a Resource Directory
-multicast 224.0.1.187  FF0X::FE
-As we saw CoAP allows for Resource Directory</p>
-<p>Registration
-Lookup</p>
-<a class="header" href="#convenient-multicast" id="convenient-multicast"><h3>Convenient Multicast</h3></a>
+<p>After performing the discovery you should get a URI of the resource directory like <code>coap://rd.example.com</code></p>
+<a class="header" href="#registration" id="registration"><h3>Registration</h3></a>
+<p>After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier <code>ep</code>, the  and</p>
+<pre><code class="language-md">REQ: POST coap://rd.example.com/rd?ep=node1
+     Content-Format: 40
+     Payload:
+     &lt;/sensors/temp&gt;;ct=41;rt=&quot;temperature-c&quot;;if=&quot;sensor&quot;;
+     anchor=&quot;coap://spurious.example.com:5683&quot;,
+     &lt;/sensors/light&gt;;ct=41;rt=&quot;light-lux&quot;;if=&quot;sensor&quot;
+
+RES: 2.01 Created
+     Location-Path: /rd/4521
+</code></pre>
+<a class="header" href="#lookup" id="lookup"><h3>Lookup</h3></a>
+<p>REQ: GET /rd-lookup/res?rt=temperature</p>
+<p>RES: 2.05 Content
+<a href="coap://%5B2001:db8:3::123%5D:61616/temp">coap://[2001:db8:3::123]:61616/temp</a>;rt=&quot;temperature&quot;;
+anchor=&quot;coap://[2001:db8:3::123]:61616&quot;</p>
+<a class="header" href="#use-of-multicast-in-coap" id="use-of-multicast-in-coap"><h3>Use of Multicast in CoAP</h3></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
 <p>CoRE has registered two <a href="https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">IPv4</a> and <a href="https://www.iana.org/assignments/ipv6-multicast-addresses">IPv6</a> addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at <code>224.0.1.187</code> and at <code>FF0X::FD</code>. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting. You could do a discovery for all CoAP endpoints with:</p>
 <pre><code class="language-txt">GET coap://FF0X::FD/.well-known/core
 </code></pre>
-<p>In a network that supports multicast well, you can discover the RD using a multicast query for <code>/.well-known/core</code>. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 <code>224.0.1.187</code> and the IPv6 <code>FF0X::FE</code>. the request would then be:</p>
+<p>In a network that supports multicast well, you can discover the RD using a multicast query for <code>/.well-known/core</code> and the query parameter <code>?rt=core.rd*</code>. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 <code>224.0.1.187</code> and an additional IPv6 multicast group address <code>FF0X::FE</code> to limit the burden on other CoAP Endpoints. The request would then be:</p>
 <pre><code class="language-txt">GET coap://FF0X::FE/.well-known/core?rt=core.rd*
 </code></pre>
 <p>Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.</p>
+<a class="header" href="#coap-related-abnf" id="coap-related-abnf"><h1>CoAP-related ABNF</h1></a>
+<p>I have collected the ABNF of various RFCs related to CoAP and compiled the document below.
+They can be tested here at Bill's parser <a href="https://tools.ietf.org/tools/bap/abnf.cgi">https://tools.ietf.org/tools/bap/abnf.cgi</a></p>
+<pre><code class="language-txt">;---------
+;| RFC5234 |
+;---------
+
+ALPHA          =  %x41-5A / %x61-7A   
+                                 ; A-Z / a-z
+BIT            =  &quot;0&quot; / &quot;1&quot;
+CHAR           =  %x01-7F
+                                ; any 7-bit US-ASCII character,
+                                ;  excluding NUL
+CR             =  %x0D
+                                ; carriage return
+CRLF           =  CR LF
+                                ; Internet standard newline
+CTL            =  %x00-1F / %x7F
+                                ; controls
+DIGIT          =  %x30-39
+                                ; 0-9
+DQUOTE         =  %x22
+                                ; &quot; (Double Quote)
+HEXDIG         =  DIGIT / &quot;A&quot; / &quot;B&quot; / &quot;C&quot; / &quot;D&quot; / &quot;E&quot; / &quot;F&quot;
+HTAB           =  %x09
+                                ; horizontal tab
+LF             =  %x0A
+                                ; linefeed
+LWSP           =  *(WSP / CRLF WSP)
+                                ; Use of this linear-white-space rule
+                                ;  permits lines containing only white
+                                ;  space that are no longer legal in
+                                ;  mail headers and have caused
+                                ;  interoperability problems in other
+                                ;  contexts.
+                                ; Do not use when defining mail
+                                ;  headers and use with caution in
+                                ;  other contexts.
+OCTET          =  %x00-FF
+                                ; 8 bits of data
+SP             =  %x20
+VCHAR          =  %x21-7E
+                                ; visible (printing) characters
+WSP            =  SP / HTAB
+                                ; white space
+
+;  ---------
+; | RFC3986 |
+;  ---------
+
+URI           = scheme &quot;:&quot; hier-part [ &quot;?&quot; query ] [ &quot;#&quot; fragment ]
+hier-part     = &quot;//&quot; authority path-abempty
+                 / path-absolute
+                 / path-rootless
+                 / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme &quot;:&quot; hier-part [ &quot;?&quot; query ]
+
+relative-ref  = relative-part [ &quot;?&quot; query ] [ &quot;#&quot; fragment ]
+
+relative-part = &quot;//&quot; authority path-abempty
+                 / path-absolute
+                 / path-noscheme
+                 / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; )
+
+authority     = [ userinfo &quot;@&quot; ] host [ &quot;:&quot; port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / &quot;:&quot; )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = &quot;[&quot; ( IPv6address / IPvFuture  ) &quot;]&quot;
+
+IPvFuture     = &quot;v&quot; 1*HEXDIG &quot;.&quot; 1*( unreserved / sub-delims / &quot;:&quot; )
+
+IPv6address   =                            6( h16 &quot;:&quot; ) ls32
+                 /                       &quot;::&quot; 5( h16 &quot;:&quot; ) ls32
+                 / [               h16 ] &quot;::&quot; 4( h16 &quot;:&quot; ) ls32
+                 / [ *1( h16 &quot;:&quot; ) h16 ] &quot;::&quot; 3( h16 &quot;:&quot; ) ls32
+                 / [ *2( h16 &quot;:&quot; ) h16 ] &quot;::&quot; 2( h16 &quot;:&quot; ) ls32
+                 / [ *3( h16 &quot;:&quot; ) h16 ] &quot;::&quot;    h16 &quot;:&quot;   ls32
+                 / [ *4( h16 &quot;:&quot; ) h16 ] &quot;::&quot;              ls32
+                 / [ *5( h16 &quot;:&quot; ) h16 ] &quot;::&quot;              h16
+                 / [ *6( h16 &quot;:&quot; ) h16 ] &quot;::&quot;
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 &quot;:&quot; h16 ) / IPv4address
+IPv4address   = dec-octet &quot;.&quot; dec-octet &quot;.&quot; dec-octet &quot;.&quot; dec-octet
+dec-octet     = DIGIT                 ; 0-9
+                 / %x31-39 DIGIT         ; 10-99
+                 / &quot;1&quot; 2DIGIT            ; 100-199
+                 / &quot;2&quot; %x30-34 DIGIT     ; 200-249
+                 / &quot;25&quot; %x30-35          ; 250-255
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with &quot;/&quot; or is empty
+                 / path-absolute   ; begins with &quot;/&quot; but not &quot;//&quot;
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+path-abempty  = *( &quot;/&quot; segment )
+path-absolute = &quot;/&quot; [ segment-nz *( &quot;/&quot; segment ) ]
+path-noscheme = segment-nz-nc *( &quot;/&quot; segment )
+path-rootless = segment-nz *( &quot;/&quot; segment )
+path-empty    = 0&lt;pchar&gt;
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / &quot;@&quot; )
+                 ; non-zero-length segment without any colon &quot;:&quot;
+
+pchar         = unreserved / pct-encoded / sub-delims / &quot;:&quot; / &quot;@&quot;
+
+query         = *( pchar / &quot;/&quot; / &quot;?&quot; )
+
+fragment      = *( pchar / &quot;/&quot; / &quot;?&quot; )
+
+pct-encoded   = &quot;%&quot; HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;
+reserved      = gen-delims / sub-delims
+gen-delims    = &quot;:&quot; / &quot;/&quot; / &quot;?&quot; / &quot;#&quot; / &quot;[&quot; / &quot;]&quot; / &quot;@&quot;
+sub-delims    = &quot;!&quot; / &quot;$&quot; / &quot;&amp;&quot; / &quot;'&quot; / &quot;(&quot; / &quot;)&quot;
+                 / &quot;*&quot; / &quot;+&quot; / &quot;,&quot; / &quot;;&quot; / &quot;=&quot;
+
+;  ---------
+; | RFC7252 |
+;  ---------
+
+coap-URI = &quot;coap:&quot; &quot;//&quot; host [ &quot;:&quot; port ] path-abempty [ &quot;?&quot; query ]
+coaps-URI = &quot;coaps:&quot; &quot;//&quot; host [ &quot;:&quot; port ] path-abempty [ &quot;?&quot; query ]
+
+
+;  ---------
+; | RFC6690 |
+;  ---------
+
+Link            = link-value-list
+link-value-list = [ link-value *[ &quot;,&quot; link-value ]]
+link-value     = &quot;&lt;&quot; URI-Reference &quot;&gt;&quot; *( &quot;;&quot; link-param )
+link-param     = ( ( &quot;rel&quot; &quot;=&quot; relation-types )
+                   / ( &quot;anchor&quot; &quot;=&quot; DQUOTE URI-Reference DQUOTE )
+                   / ( &quot;rev&quot; &quot;=&quot; relation-types )
+                   / ( &quot;hreflang&quot; &quot;=&quot; Language-Tag )
+                   / ( &quot;media&quot; &quot;=&quot; ( MediaDesc
+                          / ( DQUOTE MediaDesc DQUOTE ) ) )
+                   / ( &quot;title&quot; &quot;=&quot; quoted-string )
+                   / ( &quot;title*&quot; &quot;=&quot; ext-value )
+                   / ( &quot;type&quot; &quot;=&quot; ( media-type / quoted-mt ) )
+                   / ( &quot;rt&quot; &quot;=&quot; relation-types )
+                   / ( &quot;if&quot; &quot;=&quot; relation-types )
+                   / ( &quot;sz&quot; &quot;=&quot; cardinal )
+                   / ( link-extension ) )
+link-extension = ( parmname [ &quot;=&quot; ( ptoken / quoted-string ) ] )
+                   / ( ext-name-star &quot;=&quot; ext-value )
+ext-name-star  = parmname &quot;*&quot; ; reserved for RFC-2231-profiled
+                                  ; extensions.  Whitespace NOT
+                                  ; allowed in between.
+ptoken         = 1*ptokenchar
+ptokenchar     = &quot;!&quot; / &quot;#&quot; / &quot;$&quot; / &quot;%&quot; / &quot;&amp;&quot; / &quot;'&quot; / &quot;(&quot;
+                   / &quot;)&quot; / &quot;*&quot; / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; / &quot;/&quot; / DIGIT
+                   / &quot;:&quot; / &quot;&lt;&quot; / &quot;=&quot; / &quot;&gt;&quot; / &quot;?&quot; / &quot;@&quot; / ALPHA
+                   / &quot;[&quot; / &quot;]&quot; / &quot;^&quot; / &quot;_&quot; / &quot;`&quot; / &quot;{&quot; / &quot;|&quot;
+                   / &quot;}&quot; / &quot;~&quot;
+media-type     = type-name &quot;/&quot; subtype-name
+quoted-mt      = DQUOTE media-type DQUOTE
+relation-types = relation-type
+                   / DQUOTE relation-type *( 1*SP relation-type ) DQUOTE
+relation-type  = reg-rel-type / ext-rel-type
+reg-rel-type   = LOALPHA *( LOALPHA / DIGIT / &quot;.&quot; / &quot;-&quot; )
+ext-rel-type   = URI
+cardinal       = &quot;0&quot; / ( %x31-39 *DIGIT )
+LOALPHA        = %x61-7A   ; a-z
+;quoted-string  = &lt;defined in [RFC2616]&gt;
+;URI            = &lt;defined in [RFC3986]&gt;
+;URI-Reference  = &lt;defined in [RFC3986]&gt;
+;type-name      = &lt;defined in [RFC4288]&gt;
+;subtype-name   = &lt;defined in [RFC4288]&gt;
+;MediaDesc      = &lt;defined in [W3C.HTML.4.01]&gt;
+;Language-Tag   = &lt;defined in [RFC5646]&gt;
+;ext-value      = &lt;defined in [RFC5987]&gt;
+;parmname       = &lt;defined in [RFC5987]&gt;
+
+
+;  ---------------------------------
+; | draft-ietf-core-http-mapping-12 |
+;  ---------------------------------
+
+s  = &quot;coap&quot; / &quot;coaps&quot; ; from [RFC7252], Sections 6.1 and 6.2
+hp = host [&quot;:&quot; port]  ; from [RFC3986], Sections 3.2.2 and 3.2.3
+p  = path-abempty     ; from [RFC3986], Section 3.3
+q  = query            ; from [RFC3986], Section 3.4
+qq = [ &quot;?&quot; query ]    ; qq is empty if and only if 'query' is empty
+tu = coap-URI / coaps-URI  ; from [RFC7252], Section 6.1 and 6.2
+
+</code></pre>
 <a class="header" href="#on-internet-attacks" id="on-internet-attacks"><h1>On Internet Attacks</h1></a>
 <a class="header" href="#overview-of-network-attacks-on-the-internet" id="overview-of-network-attacks-on-the-internet"><h2>Overview of Network Attacks on the Internet</h2></a>
 <p>(Refer to another10years for users and for attacks)

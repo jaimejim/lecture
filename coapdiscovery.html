@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html" class="active"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html" class="active"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapabnf.html"><strong aria-hidden="true">3.4.</strong> CoAP ABNF</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -175,24 +175,37 @@ RES: 2.05 Content
 </code></pre>
 <p>To start using the Resource Directory first we need to find it too. There are several options:</p>
 <ol>
-<li>Multicast request as explained in the next section.</li>
-<li>Already knowing the IP address. Which means that devices need to be configured with that IP.</li>
+<li>Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.</li>
 <li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.resource.directory.jaime.win</code>).</li>
+<li>Multicast request as explained in the next below.</li>
 <li>It could be configured using DNS Service Discovery (<a href="https://tools.ietf.org/html/rfc67630">DNS-SD</a>)</li>
 <li>It could be provided by default from the network using <a href="https://tools.ietf.org/html/rfc4861">IPv6 Neighbor Discovery</a> by carrying information about the address of the RD, there is a Resource Directory Address Option (<a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1">RDAO</a>) for it.</li>
 </ol>
-<p>Finding a Resource Directory
-multicast 224.0.1.187  FF0X::FE
-As we saw CoAP allows for Resource Directory</p>
-<p>Registration
-Lookup</p>
-<a class="header" href="#convenient-multicast" id="convenient-multicast"><h3>Convenient Multicast</h3></a>
+<p>After performing the discovery you should get a URI of the resource directory like <code>coap://rd.example.com</code></p>
+<a class="header" href="#registration" id="registration"><h3>Registration</h3></a>
+<p>After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier <code>ep</code>, the  and</p>
+<pre><code class="language-md">REQ: POST coap://rd.example.com/rd?ep=node1
+     Content-Format: 40
+     Payload:
+     &lt;/sensors/temp&gt;;ct=41;rt=&quot;temperature-c&quot;;if=&quot;sensor&quot;;
+     anchor=&quot;coap://spurious.example.com:5683&quot;,
+     &lt;/sensors/light&gt;;ct=41;rt=&quot;light-lux&quot;;if=&quot;sensor&quot;
+
+RES: 2.01 Created
+     Location-Path: /rd/4521
+</code></pre>
+<a class="header" href="#lookup" id="lookup"><h3>Lookup</h3></a>
+<p>REQ: GET /rd-lookup/res?rt=temperature</p>
+<p>RES: 2.05 Content
+<a href="coap://%5B2001:db8:3::123%5D:61616/temp">coap://[2001:db8:3::123]:61616/temp</a>;rt=&quot;temperature&quot;;
+anchor=&quot;coap://[2001:db8:3::123]:61616&quot;</p>
+<a class="header" href="#use-of-multicast-in-coap" id="use-of-multicast-in-coap"><h3>Use of Multicast in CoAP</h3></a>
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
 <p>CoRE has registered two <a href="https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">IPv4</a> and <a href="https://www.iana.org/assignments/ipv6-multicast-addresses">IPv6</a> addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at <code>224.0.1.187</code> and at <code>FF0X::FD</code>. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting. You could do a discovery for all CoAP endpoints with:</p>
 <pre><code class="language-txt">GET coap://FF0X::FD/.well-known/core
 </code></pre>
-<p>In a network that supports multicast well, you can discover the RD using a multicast query for <code>/.well-known/core</code>. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 <code>224.0.1.187</code> and the IPv6 <code>FF0X::FE</code>. the request would then be:</p>
+<p>In a network that supports multicast well, you can discover the RD using a multicast query for <code>/.well-known/core</code> and the query parameter <code>?rt=core.rd*</code>. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 <code>224.0.1.187</code> and an additional IPv6 multicast group address <code>FF0X::FE</code> to limit the burden on other CoAP Endpoints. The request would then be:</p>
 <pre><code class="language-txt">GET coap://FF0X::FE/.well-known/core?rt=core.rd*
 </code></pre>
 <p>Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.</p>
@@ -208,7 +221,7 @@ Lookup</p>
                         
 
                         
-                            <a rel="next" href="udpddos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="coapabnf.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -226,7 +239,7 @@ Lookup</p>
                 
 
                 
-                    <a href="udpddos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="coapabnf.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

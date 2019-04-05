@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CoAP ABNF - Lectures</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapabnf.html" class="active"><strong aria-hidden="true">3.4.</strong> CoAP ABNF</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Lectures</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#coap-related-abnf" id="coap-related-abnf"><h1>CoAP-related ABNF</h1></a>
+<p>I have collected the ABNF of various RFCs related to CoAP and compiled the document below.
+They can be tested here at Bill's parser <a href="https://tools.ietf.org/tools/bap/abnf.cgi">https://tools.ietf.org/tools/bap/abnf.cgi</a></p>
+<pre><code class="language-txt">;---------
+;| RFC5234 |
+;---------
+
+ALPHA          =  %x41-5A / %x61-7A   
+                                 ; A-Z / a-z
+BIT            =  &quot;0&quot; / &quot;1&quot;
+CHAR           =  %x01-7F
+                                ; any 7-bit US-ASCII character,
+                                ;  excluding NUL
+CR             =  %x0D
+                                ; carriage return
+CRLF           =  CR LF
+                                ; Internet standard newline
+CTL            =  %x00-1F / %x7F
+                                ; controls
+DIGIT          =  %x30-39
+                                ; 0-9
+DQUOTE         =  %x22
+                                ; &quot; (Double Quote)
+HEXDIG         =  DIGIT / &quot;A&quot; / &quot;B&quot; / &quot;C&quot; / &quot;D&quot; / &quot;E&quot; / &quot;F&quot;
+HTAB           =  %x09
+                                ; horizontal tab
+LF             =  %x0A
+                                ; linefeed
+LWSP           =  *(WSP / CRLF WSP)
+                                ; Use of this linear-white-space rule
+                                ;  permits lines containing only white
+                                ;  space that are no longer legal in
+                                ;  mail headers and have caused
+                                ;  interoperability problems in other
+                                ;  contexts.
+                                ; Do not use when defining mail
+                                ;  headers and use with caution in
+                                ;  other contexts.
+OCTET          =  %x00-FF
+                                ; 8 bits of data
+SP             =  %x20
+VCHAR          =  %x21-7E
+                                ; visible (printing) characters
+WSP            =  SP / HTAB
+                                ; white space
+
+;  ---------
+; | RFC3986 |
+;  ---------
+
+URI           = scheme &quot;:&quot; hier-part [ &quot;?&quot; query ] [ &quot;#&quot; fragment ]
+hier-part     = &quot;//&quot; authority path-abempty
+                 / path-absolute
+                 / path-rootless
+                 / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme &quot;:&quot; hier-part [ &quot;?&quot; query ]
+
+relative-ref  = relative-part [ &quot;?&quot; query ] [ &quot;#&quot; fragment ]
+
+relative-part = &quot;//&quot; authority path-abempty
+                 / path-absolute
+                 / path-noscheme
+                 / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; )
+
+authority     = [ userinfo &quot;@&quot; ] host [ &quot;:&quot; port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / &quot;:&quot; )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = &quot;[&quot; ( IPv6address / IPvFuture  ) &quot;]&quot;
+
+IPvFuture     = &quot;v&quot; 1*HEXDIG &quot;.&quot; 1*( unreserved / sub-delims / &quot;:&quot; )
+
+IPv6address   =                            6( h16 &quot;:&quot; ) ls32
+                 /                       &quot;::&quot; 5( h16 &quot;:&quot; ) ls32
+                 / [               h16 ] &quot;::&quot; 4( h16 &quot;:&quot; ) ls32
+                 / [ *1( h16 &quot;:&quot; ) h16 ] &quot;::&quot; 3( h16 &quot;:&quot; ) ls32
+                 / [ *2( h16 &quot;:&quot; ) h16 ] &quot;::&quot; 2( h16 &quot;:&quot; ) ls32
+                 / [ *3( h16 &quot;:&quot; ) h16 ] &quot;::&quot;    h16 &quot;:&quot;   ls32
+                 / [ *4( h16 &quot;:&quot; ) h16 ] &quot;::&quot;              ls32
+                 / [ *5( h16 &quot;:&quot; ) h16 ] &quot;::&quot;              h16
+                 / [ *6( h16 &quot;:&quot; ) h16 ] &quot;::&quot;
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 &quot;:&quot; h16 ) / IPv4address
+IPv4address   = dec-octet &quot;.&quot; dec-octet &quot;.&quot; dec-octet &quot;.&quot; dec-octet
+dec-octet     = DIGIT                 ; 0-9
+                 / %x31-39 DIGIT         ; 10-99
+                 / &quot;1&quot; 2DIGIT            ; 100-199
+                 / &quot;2&quot; %x30-34 DIGIT     ; 200-249
+                 / &quot;25&quot; %x30-35          ; 250-255
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with &quot;/&quot; or is empty
+                 / path-absolute   ; begins with &quot;/&quot; but not &quot;//&quot;
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+path-abempty  = *( &quot;/&quot; segment )
+path-absolute = &quot;/&quot; [ segment-nz *( &quot;/&quot; segment ) ]
+path-noscheme = segment-nz-nc *( &quot;/&quot; segment )
+path-rootless = segment-nz *( &quot;/&quot; segment )
+path-empty    = 0&lt;pchar&gt;
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / &quot;@&quot; )
+                 ; non-zero-length segment without any colon &quot;:&quot;
+
+pchar         = unreserved / pct-encoded / sub-delims / &quot;:&quot; / &quot;@&quot;
+
+query         = *( pchar / &quot;/&quot; / &quot;?&quot; )
+
+fragment      = *( pchar / &quot;/&quot; / &quot;?&quot; )
+
+pct-encoded   = &quot;%&quot; HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;
+reserved      = gen-delims / sub-delims
+gen-delims    = &quot;:&quot; / &quot;/&quot; / &quot;?&quot; / &quot;#&quot; / &quot;[&quot; / &quot;]&quot; / &quot;@&quot;
+sub-delims    = &quot;!&quot; / &quot;$&quot; / &quot;&amp;&quot; / &quot;'&quot; / &quot;(&quot; / &quot;)&quot;
+                 / &quot;*&quot; / &quot;+&quot; / &quot;,&quot; / &quot;;&quot; / &quot;=&quot;
+
+;  ---------
+; | RFC7252 |
+;  ---------
+
+coap-URI = &quot;coap:&quot; &quot;//&quot; host [ &quot;:&quot; port ] path-abempty [ &quot;?&quot; query ]
+coaps-URI = &quot;coaps:&quot; &quot;//&quot; host [ &quot;:&quot; port ] path-abempty [ &quot;?&quot; query ]
+
+
+;  ---------
+; | RFC6690 |
+;  ---------
+
+Link            = link-value-list
+link-value-list = [ link-value *[ &quot;,&quot; link-value ]]
+link-value     = &quot;&lt;&quot; URI-Reference &quot;&gt;&quot; *( &quot;;&quot; link-param )
+link-param     = ( ( &quot;rel&quot; &quot;=&quot; relation-types )
+                   / ( &quot;anchor&quot; &quot;=&quot; DQUOTE URI-Reference DQUOTE )
+                   / ( &quot;rev&quot; &quot;=&quot; relation-types )
+                   / ( &quot;hreflang&quot; &quot;=&quot; Language-Tag )
+                   / ( &quot;media&quot; &quot;=&quot; ( MediaDesc
+                          / ( DQUOTE MediaDesc DQUOTE ) ) )
+                   / ( &quot;title&quot; &quot;=&quot; quoted-string )
+                   / ( &quot;title*&quot; &quot;=&quot; ext-value )
+                   / ( &quot;type&quot; &quot;=&quot; ( media-type / quoted-mt ) )
+                   / ( &quot;rt&quot; &quot;=&quot; relation-types )
+                   / ( &quot;if&quot; &quot;=&quot; relation-types )
+                   / ( &quot;sz&quot; &quot;=&quot; cardinal )
+                   / ( link-extension ) )
+link-extension = ( parmname [ &quot;=&quot; ( ptoken / quoted-string ) ] )
+                   / ( ext-name-star &quot;=&quot; ext-value )
+ext-name-star  = parmname &quot;*&quot; ; reserved for RFC-2231-profiled
+                                  ; extensions.  Whitespace NOT
+                                  ; allowed in between.
+ptoken         = 1*ptokenchar
+ptokenchar     = &quot;!&quot; / &quot;#&quot; / &quot;$&quot; / &quot;%&quot; / &quot;&amp;&quot; / &quot;'&quot; / &quot;(&quot;
+                   / &quot;)&quot; / &quot;*&quot; / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; / &quot;/&quot; / DIGIT
+                   / &quot;:&quot; / &quot;&lt;&quot; / &quot;=&quot; / &quot;&gt;&quot; / &quot;?&quot; / &quot;@&quot; / ALPHA
+                   / &quot;[&quot; / &quot;]&quot; / &quot;^&quot; / &quot;_&quot; / &quot;`&quot; / &quot;{&quot; / &quot;|&quot;
+                   / &quot;}&quot; / &quot;~&quot;
+media-type     = type-name &quot;/&quot; subtype-name
+quoted-mt      = DQUOTE media-type DQUOTE
+relation-types = relation-type
+                   / DQUOTE relation-type *( 1*SP relation-type ) DQUOTE
+relation-type  = reg-rel-type / ext-rel-type
+reg-rel-type   = LOALPHA *( LOALPHA / DIGIT / &quot;.&quot; / &quot;-&quot; )
+ext-rel-type   = URI
+cardinal       = &quot;0&quot; / ( %x31-39 *DIGIT )
+LOALPHA        = %x61-7A   ; a-z
+;quoted-string  = &lt;defined in [RFC2616]&gt;
+;URI            = &lt;defined in [RFC3986]&gt;
+;URI-Reference  = &lt;defined in [RFC3986]&gt;
+;type-name      = &lt;defined in [RFC4288]&gt;
+;subtype-name   = &lt;defined in [RFC4288]&gt;
+;MediaDesc      = &lt;defined in [W3C.HTML.4.01]&gt;
+;Language-Tag   = &lt;defined in [RFC5646]&gt;
+;ext-value      = &lt;defined in [RFC5987]&gt;
+;parmname       = &lt;defined in [RFC5987]&gt;
+
+
+;  ---------------------------------
+; | draft-ietf-core-http-mapping-12 |
+;  ---------------------------------
+
+s  = &quot;coap&quot; / &quot;coaps&quot; ; from [RFC7252], Sections 6.1 and 6.2
+hp = host [&quot;:&quot; port]  ; from [RFC3986], Sections 3.2.2 and 3.2.3
+p  = path-abempty     ; from [RFC3986], Section 3.3
+q  = query            ; from [RFC3986], Section 3.4
+qq = [ &quot;?&quot; query ]    ; qq is empty if and only if 'query' is empty
+tu = coap-URI / coaps-URI  ; from [RFC7252], Section 6.1 and 6.2
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="coapdiscovery.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="udpddos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="coapdiscovery.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="udpddos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

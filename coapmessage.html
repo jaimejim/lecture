@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html" class="active"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html" class="active"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li><li><a href="coapabnf.html"><strong aria-hidden="true">3.4.</strong> CoAP ABNF</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -208,10 +208,7 @@ RES: 2.05 Content
      observe:44 | token: 0xb2 | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:18.4}]
 </code></pre>
-<p>most cases not confirmable
-Notification is a response but not necessarily an ACK
-every 10th notification could be confirmable unless it is really important</p>
-<p>Now, getting into a potentially confusing case, it could be that the comunication uses <strong>Confirmable</strong> messages. Since <code>Max-Age</code> is 15 and the <code>timeout</code> is usually from 2 to 5 seconds ... exponential backoff...  in that case there is a retransmission <code>timeout</code> that will be triggered even <em>before</em> the freshness of the data expires.</p>
+<p>While in most cases the notification won't be, it can happen that the comunication uses <strong>Confirmable</strong> messages. It could be that it is important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the licent is still interested. The example below uses <code>Max-Age = 15</code> and a first <code>timeout</code> of usually from 2 seconds ( note that the timeour has an algotythm to calculate the right value). In this case there is a retransmission <em>before</em> the freshness of the data expires.</p>
 <pre><code class="language-txt">REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
      observe:0  | token: 0x4a
 
@@ -225,7 +222,6 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 </code></pre>
-<p>It is important to remember that while <code>Max Age</code> may trigger a new request on the client, the retransmission <code>timeout</code> is triggered on the server.</p>
 
                     </main>
 
