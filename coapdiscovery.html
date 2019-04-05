@@ -155,7 +155,7 @@
 <pre><code class="language-txt">      GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
 </code></pre>
 <ol start="3">
-<li>Find an Endpoint or a Resource Registered in the RD.</li>
+<li>Find an endpoint or a temperature resource (for example) Registered in the RD.</li>
 </ol>
 <pre><code class="language-txt">      GET coap://rd.jaime.win/rd-lookup/res?rt=temperature
 </code></pre>
@@ -223,7 +223,15 @@ RES: 2.05 Content
 <p>There are several alternatives, like delegating registration to a Commissioning Tool (CT), requesting the RD to fetch the links from the endpoint and others that are detailed in the RD specification.</p>
 <a class="header" href="#lookup" id="lookup"><h3>Lookup</h3></a>
 <p>To discover the resources registered with the RD an endpoint can use the lookup interface, which allows lookups for endpoints and resources using attributes CoRE Link Format and - at least - two new resource types (<code>rt</code>), <code>core.rd-lookup-res</code> for resources and <code>core.rd-lookup-ep</code> for endpoints.</p>
-<p>You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for any endpoint or resource with <code>rt=core.rd*</code>but in this case we just want to find the resources so we query <code>rt=core.rd-lookup-res</code>. The RD returns the lookup interfaces <code>/rd-lookup/res</code>.</p>
+<p>You will have to ask the RD for its configuration to get which is the path where we can perform lookup, we could ask for all available interfaces by querying <code>rt=core.rd*</code>.</p>
+<pre><code class="language-txt">REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd*
+
+RES: 2.05 Content
+     &lt;/rd&gt;;rt=&quot;core.rd&quot;;ct=40,
+     &lt;/rd-lookup/ep&gt;;rt=&quot;core.rd-lookup-ep&quot;;ct=40,
+     &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40,
+</code></pre>
+<p>However in in this case we just want to find the resources so we query <code>rt=core.rd-lookup-res</code>. The RD returns the lookup interface for resources <code>/rd-lookup/res</code>.</p>
 <pre><code class="language-txt">REQ: GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
 RES: &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40
 </code></pre>
