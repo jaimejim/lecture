@@ -27,22 +27,9 @@ RES: 2.05 Content
 
 We have explained how to discover the resources on a coap endpoint but we have not mentioned how endpoints can be found to begin with.
 
-Networks are and will continue to be heterogeneous, some scenarios foresee the use of multicast, while others have a master/slave approach. Some scenarios will have NATs and firewalls while other - more ideal - will simply have globally addressable IPv6 addresses. Some devices will be asleep while others will be permanently connected. 
+Networks are and will continue to be heterogeneous, some scenarios foresee the use of multicast, while others have a master/slave approach. Some scenarios will have NATs and firewalls while other - more ideal - will simply have globally addressable IPv6 addresses. Some devices will be asleep while others will be permanently connected.
 
-In many IoT applications, direct discovery of resources is not
-   practical due to sleeping nodes, disperse networks, or networks where
-   multicast traffic is inefficient.  These problems can be solved by
-   employing an entity called a Resource Directory (RD), which contains
-   information about resources held on other servers, allowing lookups
-   to be performed for those resources.  The input to an RD is composed
-   of links and the output is composed of links constructed from the
-   information stored in the RD.  This document specifies the web
-   interfaces that a Resource Directory supports for web servers to
-   discover the RD and to register, maintain, lookup and remove
-   information on resources.  Furthermore, new target attributes useful
-   in conjunction with an RD are defined.
-
-To palliate these problems at CoRE there is a function used only to register and lookup for CoAP endpoints and their resources called [Resource Directory (RD)](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20). An RD is an entity whose input and oputput are links and that only stores links; like a link repository.
+In scenarios where direct discovery of resources is not possible due to sleeping nodes, disperse networks or inneficiency of multicast it is possible to store information about resources held on other servers on something called a [Resource Directory (RD)](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20). In adddition to registration it is also possible to do lookups on resources.  
 
 ```txt
                 Registration         Lookup
@@ -59,8 +46,6 @@ To palliate these problems at CoRE there is a function used only to register and
      | CT |----      |                 |
      +----+
 ```
-
-
 
 Finding a Resource Directory
 multicast 224.0.1.187  FF0X::FE
@@ -69,21 +54,22 @@ As we saw CoAP allows for Resource Directory
 Registration
 Lookup
 
+### Convenient Multicast
+
+Although the original lack of TCP, which now [is supported](https://tools.ietf.org/html/rfc8323) too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.
+
+In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.
+
+CoRE has registered two [IPv4](https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml) and [IPv6](https://www.iana.org/assignments/ipv6-multicast-addresses) addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at `224.0.1.187` and at `FF0X::FD`. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting. You could do a discovery for all CoAP endpoints with:
+
 ```txt
-                Registration         Lookup
-                 Interface         Interface
-     +----+          |                 |
-     | EP |----      |                 |
-     +----+    ----  |                 |
-                   --|-    +------+    |
-     +----+          | ----|      |    |     +--------+
-     | EP | ---------|-----|  RD  |----|-----| Client |
-     +----+          | ----|      |    |     +--------+
-                   --|-    +------+    |
-     +----+    ----  |                 |
-     | CT |----      |                 |
-     +----+
-
-
+GET coap://FF0X::FD/.well-known/core
 ```
 
+In a network that supports multicast well, you can discover the RD using a multicast query for `/.well-known/core`. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 `224.0.1.187` and the IPv6 `FF0X::FE`. the request would then be:
+
+```txt
+GET coap://FF0X::FE/.well-known/core?rt=core.rd*
+```
+
+Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.
