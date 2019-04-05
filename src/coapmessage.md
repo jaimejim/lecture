@@ -57,3 +57,58 @@ In CoAP this has been solved by using the [CoAP Observe Option](https://tools.ie
 If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request `token` to the list of observers of the target resource, and the client will be notified of changes to the resource.
 
 Links that are observable may include the attribute `obs` to indicate that. This is an attribute of a link, which will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).
+
+For example a CoAP client could request for a temperature resource and use `obs = 0` to get subsequent notifications. The CoAP server will sent every 
+
+```txt
+REQ: GET coap://coap.me:5683/sensors/temp1
+     observe:0  | token: 0x4a
+
+RES: 2.05 Content
+     observe:9  | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":25.2}]
+
+RES: 2.05 Content
+     observe:16 | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":27.1}]
+```
+
+After these two notifications a message is lost 
+
+```txt
+RES (LOST MESSAGE): 2.05 Content
+     observe:9  | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":25.2}]
+
+REQ: GET coap://coap.me:5683/sensors/temp1
+     observe:0  | token: 0x4a
+
+
+RES: 2.05 Content
+     observe:16 | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":27.1}]
+```
+
+
+
+
+
+```md
+   Client  Server  (hosting a resource at "/temperature" with 
+      |      |       value 22.3 degrees centigrade)
+      |      |
+      +----X |   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: "temperature"
+   TIMEOUT   |
+      |      |
+      +----->|   Header: GET (T=CON, Code=0.01, MID=0x7d36)
+      | GET  |   Token: 0x31
+      |      |   Uri-Path: "temperature"
+      |      |
+      |      |
+      |<-----+   Header: 2.05 Content (T=ACK, Code=2.05, MID=0x7d36)
+      | 2.05 |   Token: 0x31
+      |      |   Content-Format: text/plain;charset=utf-8
+      |      |   Payload: "22.3 C"
+```
