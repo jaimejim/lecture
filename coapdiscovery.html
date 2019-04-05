@@ -173,6 +173,14 @@ RES: 2.05 Content
      | CT |----      |                 |
      +----+
 </code></pre>
+<p>To start using the Resource Directory first we need to find it too. There are several options:</p>
+<ol>
+<li>Multicast request as explained in the next section.</li>
+<li>Already knowing the IP address. Which means that devices need to be configured with that IP.</li>
+<li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.resource.directory.jaime.win</code>).</li>
+<li>It could be configured using DNS Service Discovery (<a href="https://tools.ietf.org/html/rfc67630">DNS-SD</a>)</li>
+<li>It could be provided by default from the network using <a href="https://tools.ietf.org/html/rfc4861">IPv6 Neighbor Discovery</a> by carrying information about the address of the RD, there is a Resource Directory Address Option (<a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1">RDAO</a>) for it.</li>
+</ol>
 <p>Finding a Resource Directory
 multicast 224.0.1.187  FF0X::FE
 As we saw CoAP allows for Resource Directory</p>
