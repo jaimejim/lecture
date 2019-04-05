@@ -47,9 +47,11 @@ In addition to URIs, it is important to know other concepts used in REST applica
 
 2. **Content-Type** they are the top `type` Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).
 
-3. **Content-Coding** are registered in [IANA](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.
+3. **Content-Coding** are registered in [IANA HTTP parameters](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.
 
 4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml).
+
+5. **Attributes** describe information useful in accessing the target link they can be found on [IANA](http://www.iana.org/assignments/http-parameters) and are defined for CoAP in [RFC6690](https://tools.ietf.org/html/rfc6690). For example `rt` to specify the resource type, `sz` for maximum size estimate or `obs` to indicate that the resource is [observable](https://tools.ietf.org/html/rfc7641). 
 
 Keeing all this in mind, the following sentence will now make more sense:
 

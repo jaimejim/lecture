@@ -1,6 +1,6 @@
 # A CoAP Message
 
-As explained in [RFC7252](https://tools.ietf.org/html/rfc7252) CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The `version` indicates the CoAP version, the message `type` can be (`CON`, `NON`, `ACK` and `RST`). This is followed by a variable-length `Token` value, which can be between 0 and 8 bytes long. Then it has the response or method `codes` (e.g. `0.01` (GET) , `0.02` (POST) , `2.05` (Success) , `4.04` (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data.
+As explained in [RFC7252](https://tools.ietf.org/html/rfc7252) CoAP messages are very compact and by default transported over UDP, there is TCP support too for NATed environments, but UDP was the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The `version` indicates the CoAP version, the message `type` can be (`CON`, `NON`, `ACK` and `RST`). This is followed by a variable-length `Token` value, which can be between 0 and 8 bytes long. Then it has the response or method `codes` (e.g. `0.01` (GET) , `0.02` (POST) , `2.05` (Success) , `4.04` (Not Found)). Then there is the Message ID, which is a 16 bit field to detect message duplication. There are then several Options that allow for extensibility and finally the payload with the actual data. The `0xFF` or `11111111` is a marker to indicate the end of the header and beginning of the payload.
 
 ``` md
     0                   1                   2                   3
@@ -46,13 +46,14 @@ Since the first message got lost the client waits for a time until the `timeout`
       |      |   Payload: "22.3 C"
 ```
 
-In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in the next section.
+In the response you can see a `Content-Format` field explaining the format of the content. This is a CoAP option that will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).
 
-## Convenient Multicast
+## Observing Resources
 
-Although the original lack of TCP, which now [is supported](https://tools.ietf.org/html/rfc8323) too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.
+So far we have seen how REST can be used to access resources on a sensor running a tiny server. However REST requires the client interested in the state of a resource to initiate a request to the server every time in order to get the latest representation. If a client wants to have the current representation over a period of time this model does not work. On HTTP this has been solved using repeated polling or HTTP long polling [RFC6202](https://tools.ietf.org/html/rfc6202) but the added complexity makes it hard in the constrained space.
 
-In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.
+In CoAP this has been solved by using the [CoAP Observe Option](https://tools.ietf.org/html/rfc7641). As we saw CoAP allows to define new Options to extend the protocol. This one is added to the `GET` method to request the server to add/remove a client from a list of observers of a resource. Thus the value of this option is either `0` for *register* or `1`for *deregister*.
 
-CoRE has registered two [IPv4](https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml) and [IPv6](https://www.iana.org/assignments/ipv6-multicast-addresses) addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at `224.0.1.187` and at `FF0X::FD`. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting.
+If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request `token` to the list of observers of the target resource, and the client will be notified of changes to the resource.
 
+Links that are observable may include the attribute `obs` to indicate that. This is an attribute of a link, which will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).

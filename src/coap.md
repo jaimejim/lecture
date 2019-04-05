@@ -1,6 +1,6 @@
 # The Constrained Application Protocol (CoAP)
 
-The Constrained Application Protocol (CoAP) is a protocol intended to be used in low-powered devices and networks. That is networks of very low throughput and devices that run on battery. Such devices often have limited memory and CPU too, often as little as 1.5kB of RAM and about 5 kB of ROM.
+The Constrained Application Protocol (CoAP) is a protocol intended to be used in low-powered devices and networks. That is networks of very low throughput and devices that run on battery. Such devices often have limited memory and CPU too, being the [class 1](https://tools.ietf.org/html/rfc7228#page-8) devices of 100KB of Flash and 10KB of RAM but targetting environments with a [minimum of 1.5kB](https://ieeexplore.ieee.org/document/6970748) of RAM and about 5 kB of ROM.
 
 CoAP is a [REST](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) protocol largely inspired by HTTP. However it brings the Web Server concept to the very constrained space where IoT devices are the ones exposing their resources.
 
