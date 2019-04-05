@@ -22,7 +22,7 @@ As mentioned before, CoAP was intended for *UDP transmission*, which is unreliab
 
 To ensure retransmission in case of loss, the CoAP endpoint sending the CON message keeps track of a `timeout` for the message and a `retransmission counter` to keep track of how many times the message was sent.
 
-Below it is shown how a simple CoAP Request would look like. The CoAP Client sends a request message `GET /temperature` that requires requires an acknowledgment message from the server as it uses the type `CON`. The `Message ID` is `0x7d36` which will be used in that acknowledgment message. Without the message ID, a client that makes two GET requests and gets two responses won’t know which response goes with which request. A single CoAP request may trigger several responses, and the same `token` is used in every response, not just the initial acknowledgment. Responses sent after the acknowledgment will have new message IDs, but they’ll be tied to the original request by the token.
+Below it is shown how a simple CoAP Request would look like. The CoAP Client sends a request message `GET /temperature` that requires an acknowledgment message from the server as it uses the type `CON`. The `Message ID` is `0x7d36` which will be used in that acknowledgment message. Without the message ID, a client that makes two GET requests and gets two responses won’t know which response goes with which request. A single CoAP request may trigger several responses, and the same `token` is used in every response, not just the initial acknowledgment. Responses sent after the acknowledgment will have new message IDs, but they’ll be tied to the original request by the token.
 
 Since the first message got lost the client waits for a time until the `timeout` is triggered and the message is sent again.
 
@@ -54,11 +54,9 @@ So far we have seen how REST can be used to access resources on a sensor running
 
 In CoAP this has been solved by using the [CoAP Observe Option](https://tools.ietf.org/html/rfc7641). As we saw CoAP allows to define new Options to extend the protocol. This one is added to the `GET` method to request the server to add/remove a client from a list of observers of a resource. Thus the value of this option is either `0` for *register* or `1`for *deregister*.
 
-If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request `token` to the list of observers of the target resource, and the client will be notified of changes to the resource.
+If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request `token` to the list of observers of the target resource, and the client will be notified of changes to the resource. Links that are observable may include the attribute `obs` to indicate that. This is an attribute of a link, which will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).
 
-Links that are observable may include the attribute `obs` to indicate that. This is an attribute of a link, which will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).
-
-For example a CoAP client could request for a temperature resource and use `obs = 0` to get subsequent notifications. The CoAP server will sent every 
+Another important Option is the Max-Age, which indicates how "fresh" the data is, it is the number of seconds since the data was generated. For example a CoAP client could request for a temperature resource and use `obs = 0` to get subsequent notifications and `Max-Age = 15`. The CoAP server will sent every 
 
 ```txt
 REQ: GET coap://coap.me:5683/sensors/temp1
@@ -73,42 +71,36 @@ RES: 2.05 Content
      [{"u":"C","v":27.1}]
 ```
 
-After these two notifications a message is lost 
+After these two notifications were sent it might happen that third message is lost. Since the `Max-Age` of the data is 15 seconds, the Client will notice that the data is "old" or "stale", at which point it might choose to register again or to wait for the next notification.
 
 ```txt
 RES (LOST MESSAGE): 2.05 Content
-     observe:9  | token: 0x4a | Max-Age: 15
-     [{"u":"C","v":25.2}]
+     observe:25  | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":19.7}]
+
+--- 15 seconds pass and Max-Age timeout triggers---
 
 REQ: GET coap://coap.me:5683/sensors/temp1
-     observe:0  | token: 0x4a
-
+     observe:0  | token: 0xb2
 
 RES: 2.05 Content
-     observe:16 | token: 0x4a | Max-Age: 15
-     [{"u":"C","v":27.1}]
+     observe:44 | token: 0xb2 | Max-Age: 15
+     [{"u":"C","v":18.4}]
 ```
 
+Now, getting into a potentially confusing case, it could be that the comunication uses **Confirmable** messages. Since `Max-Age` is 15 and the `timeout` is usually less than 5 seconds, in that case there is a retransmission `timeout` that will be triggered even *before* the freshness of the data expires.
 
+``txt
+REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
+     observe:0  | token: 0x4a
 
+RES (LOST MESSAGE): 2.05 Content
+     observe:25  | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":19.7}]
 
+--- 2 seconds pass and retransmisison timeout triggers---
 
-```md
-   Client  Server  (hosting a resource at "/temperature" with 
-      |      |       value 22.3 degrees centigrade)
-      |      |
-      +----X |   Header: GET (T=CON, Code=0.01, MID=0x7d36)
-      | GET  |   Token: 0x31
-      |      |   Uri-Path: "temperature"
-   TIMEOUT   |
-      |      |
-      +----->|   Header: GET (T=CON, Code=0.01, MID=0x7d36)
-      | GET  |   Token: 0x31
-      |      |   Uri-Path: "temperature"
-      |      |
-      |      |
-      |<-----+   Header: 2.05 Content (T=ACK, Code=2.05, MID=0x7d36)
-      | 2.05 |   Token: 0x31
-      |      |   Content-Format: text/plain;charset=utf-8
-      |      |   Payload: "22.3 C"
+RES: 2.05 Content
+     observe:25  | token: 0x4a | Max-Age: 15
+     [{"u":"C","v":19.7}]
 ```
