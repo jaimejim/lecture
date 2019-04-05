@@ -88,13 +88,7 @@ RES: 2.05 Content
      [{"u":"C","v":18.4}]
 ```
 
-
-most cases not confirmable 
-Notification is a response but not necessarily an ACK
-every 10th notification could be confirmable unless it is really important
-
-
-Now, getting into a potentially confusing case, it could be that the comunication uses **Confirmable** messages. Since `Max-Age` is 15 and the `timeout` is usually from 2 to 5 seconds ... exponential backoff...  in that case there is a retransmission `timeout` that will be triggered even *before* the freshness of the data expires.
+While in most cases the notification won't be, it can happen that the comunication uses **Confirmable** messages. It could be that it is important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the licent is still interested. The example below uses `Max-Age = 15` and a first `timeout` of usually from 2 seconds ( note that the timeour has an algotythm to calculate the right value). In this case there is a retransmission *before* the freshness of the data expires.
 
 ```txt
 REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
@@ -110,5 +104,3 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
 ```
-
-It is important to remember that while `Max Age` may trigger a new request on the client, the retransmission `timeout` is triggered on the server.

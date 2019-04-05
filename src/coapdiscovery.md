@@ -49,23 +49,42 @@ In scenarios where direct discovery of resources is not possible due to sleeping
 
 To start using the Resource Directory first we need to find it too. There are several options:
 
-1. Multicast request as explained in the next section.
-1. Already knowing the IP address. Which means that devices need to be configured with that IP.
+1. Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.
 1. Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. `www.resource.directory.jaime.win`).
+1. Multicast request as explained in the next below.
 1. It could be configured using DNS Service Discovery ([DNS-SD](https://tools.ietf.org/html/rfc67630))
 1. It could be provided by default from the network using [IPv6 Neighbor Discovery](https://tools.ietf.org/html/rfc4861) by carrying information about the address of the RD, there is a Resource Directory Address Option ([RDAO](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1)) for it.
 
+After performing the discovery you should get a URI of the resource directory like `coap://rd.example.com`
+
+### Registration
+
+After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier `ep`, the  and 
+
+```md
+REQ: POST coap://rd.example.com/rd?ep=node1
+     Content-Format: 40
+     Payload:
+     </sensors/temp>;ct=41;rt="temperature-c";if="sensor";
+     anchor="coap://spurious.example.com:5683",
+     </sensors/light>;ct=41;rt="light-lux";if="sensor"
+
+RES: 2.01 Created
+     Location-Path: /rd/4521
+```
+
+
+### Lookup
+
+REQ: GET /rd-lookup/res?rt=temperature
+
+RES: 2.05 Content
+     <coap://[2001:db8:3::123]:61616/temp>;rt="temperature";
+     anchor="coap://[2001:db8:3::123]:61616"
 
 
 
-Finding a Resource Directory
-multicast 224.0.1.187  FF0X::FE
-As we saw CoAP allows for Resource Directory
-
-Registration
-Lookup
-
-### Convenient Multicast
+### Use of Multicast in CoAP
 
 Although the original lack of TCP, which now [is supported](https://tools.ietf.org/html/rfc8323) too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.
 
@@ -77,7 +96,7 @@ CoRE has registered two [IPv4](https://www.iana.org/assignments/multicast-addres
 GET coap://FF0X::FD/.well-known/core
 ```
 
-In a network that supports multicast well, you can discover the RD using a multicast query for `/.well-known/core`. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 `224.0.1.187` and the IPv6 `FF0X::FE`. the request would then be:
+In a network that supports multicast well, you can discover the RD using a multicast query for `/.well-known/core` and the query parameter `?rt=core.rd*`. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 `224.0.1.187` and an additional IPv6 multicast group address `FF0X::FE` to limit the burden on other CoAP Endpoints. The request would then be:
 
 ```txt
 GET coap://FF0X::FE/.well-known/core?rt=core.rd*
