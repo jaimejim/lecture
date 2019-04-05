@@ -142,9 +142,36 @@
                     <main>
                         <a class="header" href="#finding-your-coap-devices" id="finding-your-coap-devices"><h1>Finding your CoAP devices</h1></a>
 <p>While we have explained how data is transmitted and how it looks like and we do have URL to share the location of our CoAP devices, we have to figure out <strong>how to find CoAP devices to begin with?</strong> and, once we know the URL of a CoAP device, <strong>how do we know what is on that device?</strong></p>
+<a class="header" href="#discovery-steps" id="discovery-steps"><h2>Discovery steps</h2></a>
+<p>There are quite a few steps needed in order to retrieve that measurement we are looking for. At a high level they are:</p>
+<ol>
+<li>Find a Resource Directory (RD).</li>
+</ol>
+<pre><code class="language-txt">      GET coap://[FF0X::FE]/.well-known/core?rt=core.rd*
+</code></pre>
+<ol start="2">
+<li>Find the Lookup Interface of the RD.</li>
+</ol>
+<pre><code class="language-txt">      GET coap://rd.jaime.win/.well-known/core?rt=core.rd-lookup-res
+</code></pre>
+<ol start="3">
+<li>Find an Endpoint or a Resource Registered in the RD.</li>
+</ol>
+<pre><code class="language-txt">      GET coap://rd.jaime.win/rd-lookup/res?rt=temperature
+</code></pre>
+<ol start="4">
+<li>Query that Endpoint for the <code>/.well-known/core</code> resource in order to see what's there.</li>
+</ol>
+<pre><code class="language-txt">      GET coap://[2001:db8:3::123]:5683/.well-known/core?rt=temperature
+</code></pre>
+<ol start="5">
+<li>Query the specific resource you are looking for in order to get the current representation.</li>
+</ol>
+<pre><code class="language-txt">      GET coap://[2001:db8:3::123]:5683/sensors/temp1
+</code></pre>
 <a class="header" href="#discovering-resources" id="discovering-resources"><h2>Discovering Resources</h2></a>
 <p>Let's start with the second question first, how do you find the resources that a device has <em>before</em> asking it for them? Indeed, if we do not have any idea of what the device is supposed to do, it would be impossible to query for anything as we would not know the <code>path</code> part of the URL.</p>
-<p>To fix that problem every CoAP endpoint comes with a default URI that they all know, the <a href="https://tools.ietf.org/html/rfc8428">&quot;well-known&quot;</a> URI. If a server supports representations in <a href="https://tools.ietf.org/html/rfc6690">CoRE Link Format</a> it must always support too the URI called <code>/.well-known/core</code>. That way any CoAP client can always send a <code>GET</code> request to a CoAP Server on <code>/.well-known/core</code> and will get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with query filetering <code>?</code>. For example we could query a CoAP server for all resources of the type <code>rt</code> = temperature.</p>
+<p>To fix that problem every CoAP endpoint comes with a default URI that they all know, the <a href="https://tools.ietf.org/html/rfc8428">&quot;well-known&quot;</a> URI. If a server supports representations in <a href="https://tools.ietf.org/html/rfc6690">CoRE Link Format</a> it must always support too the URI called <code>/.well-known/core</code>. That way any CoAP client can always send a <code>GET</code> request to a CoAP Server on <code>/.well-known/core</code> and will get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with the query filtering symbol <code>?</code>. For example we could query a CoAP server for all resources of the type <code>rt = temperature</code>.</p>
 <pre><code class="language-txt">REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
 RES: 2.05 Content
      &lt;/sensors/temp1&gt;;rt=&quot;temperature&quot;,
@@ -158,7 +185,7 @@ RES: 2.05 Content
 <a class="header" href="#discovering-coap-endpoints" id="discovering-coap-endpoints"><h2>Discovering CoAP Endpoints</h2></a>
 <p>We have explained how to discover the resources on a coap endpoint but we have not mentioned how endpoints can be found to begin with.</p>
 <p>Networks are and will continue to be heterogeneous, some scenarios foresee the use of multicast, while others have a master/slave approach. Some scenarios will have NATs and firewalls while other - more ideal - will simply have globally addressable IPv6 addresses. Some devices will be asleep while others will be permanently connected.</p>
-<p>In scenarios where direct discovery of resources is not possible due to sleeping nodes, disperse networks or inneficiency of multicast it is possible to store information about resources held on other servers on something called a <a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20">Resource Directory (RD)</a>. In adddition to registration it is also possible to do lookups on resources.</p>
+<p>In scenarios where direct discovery of resources is not possible due to sleeping nodes, disperse networks or inneficiency of multicast it is possible to store information about resources held on other servers on something called a <a href="https://tools.ietf.org/html/draft-ietf-core-resource-directory-20">Resource Directory (RD)</a>.</p>
 <pre><code class="language-txt">                Registration         Lookup
                  Interface         Interface
      +----+          |                 |
@@ -173,7 +200,7 @@ RES: 2.05 Content
      | CT |----      |                 |
      +----+
 </code></pre>
-<p>To start using the Resource Directory first we need to find it too. There are several options:</p>
+<p>RD has two interfaces, one for <strong>registration</strong> and another for <strong>lookup</strong>. To start using either fo them we first we need to find the RD. There are several options:</p>
 <ol>
 <li>Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.</li>
 <li>Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. <code>www.rd.jaime.win</code>).</li>
@@ -212,10 +239,10 @@ RES: &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40
 <p>Although the original lack of TCP, which now <a href="https://tools.ietf.org/html/rfc8323">is supported</a> too there is an added benefit of using UDP; a CoAP client can use UDP multicast to broadcast a message to every machine on the local network.</p>
 <p>In some home automation cases, all devices will be under the same subnet, your thermostat, refrigerator, television, light switches, and other home appliances have cheap embedded processors that communicate over a local low-power network. This lets your appliances coordinate their behavior without direct input from you. When you turn the oven on, the climate control system can notice this event and turn down the heat in the kitchen. You can pull out your mobile phone, get a list of all the lights in your current room, and dim the lights through your phone, without having to go over to the light switch.</p>
 <p>CoRE has registered two <a href="https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">IPv4</a> and <a href="https://www.iana.org/assignments/ipv6-multicast-addresses">IPv6</a> addresses for the purpose of CoAP multicast. All CoAP Nodes can be addressed at <code>224.0.1.187</code> and at <code>FF0X::FD</code>. Nevertheless Multicast must be used with care as it is easy to create complex network problems involving broadcasting. You could do a discovery for all CoAP endpoints with:</p>
-<pre><code class="language-txt">GET coap://FF0X::FD/.well-known/core
+<pre><code class="language-txt">GET coap://[FF0X::FD]/.well-known/core
 </code></pre>
 <p>In a network that supports multicast well, you can discover the RD using a multicast query for <code>/.well-known/core</code> and the query parameter <code>?rt=core.rd*</code>. IANA has not yet decided on the multicast address to be reserved but we can assume that all CoRE RDs can be found at the IPv4 <code>224.0.1.187</code> and an additional IPv6 multicast group address <code>FF0X::FE</code> to limit the burden on other CoAP Endpoints. The request would then be:</p>
-<pre><code class="language-txt">GET coap://FF0X::FE/.well-known/core?rt=core.rd*
+<pre><code class="language-txt">GET coap://[FF0X::FE]/.well-known/core?rt=core.rd*
 </code></pre>
 <p>Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.</p>
 
