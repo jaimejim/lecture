@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html" class="active"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Lectures</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html" class="active"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On Internet Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -142,6 +142,17 @@
                     <main>
                         <a class="header" href="#the-constrained-application-protocol-coap" id="the-constrained-application-protocol-coap"><h1>The Constrained Application Protocol (CoAP)</h1></a>
 <p>The Constrained Application Protocol (CoAP) is a protocol intended to be used in low-powered devices and networks. That is networks of very low throughput and devices that run on battery. Such devices often have limited memory and CPU too, being the <a href="https://tools.ietf.org/html/rfc7228#page-8">class 1</a> devices of 100KB of Flash and 10KB of RAM but targetting environments with a <a href="https://ieeexplore.ieee.org/document/6970748">minimum of 1.5kB</a> of RAM and about 5 kB of ROM.</p>
+<pre><code class="language-plantuml">    @startuml
+    database &quot;MySql&quot; {
+      folder &quot;This is my folder&quot; {
+        [Folder 3]
+      }
+      frame &quot;Foo&quot; {
+        [Frame 4]
+      }
+    }
+    @enduml
+</code></pre>
 <p>CoAP is a <a href="https://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">REST</a> protocol largely inspired by HTTP. However it brings the Web Server concept to the very constrained space where IoT devices are the ones exposing their resources.</p>
 <p>Like HTTP, CoAP also uses request/response communication, being CoAP messages very small, of tens of bytes on a 6LoWPAN network and of the hundreds of bytes on a less constrained one.</p>
 <p>CoAP devices are intended to come from multiple manufacturers, much like the World Wide Web enabled anyone to have an HTTP server. While arriving to a common data modeling and representation form as HTML for HTTP has not yet happened for CoAP, the technology is already mature in terms of networking layout.</p>
