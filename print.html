@@ -324,9 +324,9 @@ RES: 2.05 Content
 <a class="header" href="#uris" id="uris"><h2>URIs</h2></a>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
 <pre><code class="language-md">   foo://example.com:8042/over/there?name=ferret#nose
-   \_/   \_____________/\________/\________/ \___/
-    |           |            |            |        |
-   scheme     authority       path        query   fragment
+   \_/   \_______________/\________/\__________/\___/
+    |           |              |          |       |
+   scheme     authority       path      query   fragment
 </code></pre>
 <p>A URI can be classified as a locator, a name, or both. Uniform Resource Locator (URL) refers to URIs that allow for identification <em>and location</em> of a resource by describing how to access it on a network. Uniform Resource Name (URN) are used as <em>globally unique</em> identifiers. Universally Unique IDentifier (<a href="https://tools.ietf.org/html/rfc4122">UUID</a>) are unique and persistent URNs that <em>do not require a central registration authority</em>.</p>
 <p>The URI format is used on pretty much any application protocol in existence, from FTP, HTTP or telnet to CoAP. Some with little variations in the syntax, like that of the email <a href="https://tools.ietf.org/html/rfc6068"><code>mailto</code></a> or the telephone <a href="https://tools.ietf.org/html/rfc3966"><code>tel</code></a>, as you can see below.</p>
@@ -335,9 +335,9 @@ RES: 2.05 Content
    urn:uuid:                        f81d4fa...a0c91e6bf6
    ftp     :// 196.4.160.12        /rfc/rfc1808.txt
    http    :// www.ietf.org        /rfc/rfc2396.txt
-   \______/   \________________/ \_________________/\___________/
-     |              |                 |                         |
-   scheme        authority           path                     query
+   \______/   \__________________/ \___________________/\___________/
+     |              |                       |                  |
+   scheme        authority                 path              query
 </code></pre>
 <p>The CoAP URI is similar: <code>&quot;coap:&quot; &quot;//&quot; host [ &quot;:&quot; port ] path-abempty [ &quot;?&quot; query ]</code>, the examples below show several usages of it. You can try some yourself at <a href="http://coap.me">coap.me</a>.</p>
 <pre><code class="language-md">   coap://sensor.iot.org:5683 /lamp             ?rt=light-lux#rec=3
@@ -616,7 +616,7 @@ Ports:
      80/tcp  
    5683/udp
 </code></pre>
-<pre><code class="language-sh">:~$ shodan host 39.159.XXX.XXX
+<pre><code class="language-bash">:~$ shodan host 39.159.XXX.XXX
 39.159.XXX.XXX
 City:                    Nanchang
 Updated:                 2019-04-10T11:39:13.342628
