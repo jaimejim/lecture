@@ -30,6 +30,7 @@ The table below is inspired from [Dennis Radd](http://rvasec.com/slides/2018/Ran
 
 The amplification factor means represents the effort for an attacker, for example in CoAP a request of `21` bytes without the UDP header of size can yield a response of `21*16= 336` bytes. The target for the attacker is to use the minimum effort for the maximum attack factor. An attacker who has access to a 1 Mbps link could on average reach 16 Mbps and up to 97 Mbps *per endpoint*.
 
+
 | Protocol (port)   | Request size         | Avg/Max amplification            | Numbers                      |
 |:------------------|---------------------:|---------------------------------:|-----------------------------:|
 | DNS (53)          |                 37 b |                            28/54 |                   13.986.243 |
@@ -45,18 +46,17 @@ The amplification factor means represents the effort for an attacker, for exampl
 
 [Shodan](https://www.shodan.io/) and [nmap](https://nmap.org/) are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account. Some of shodan's most basic commands are:
 
-`shodan host [IP_ADDRESS_HERE]` to get info on a specific endpoint.
-
-`shodan count port:5683 country:CN` to get all CoAP endpoints in China.
-
-`shodan stats --limit 20 port:5683` to get some statistics CoAP endpoits out there.
-
-`shodan search --fields ip_str,port,org,hostnames port:5683 country:CN` to get a list of CoAP endpoints, their specific IPs and hostname.
+| Shodan Command                 | Effect                           |
+|:-------------------------------|:---------------------------------|
+|`shodan host [IP_ADDRESS_HERE]` |  get info on a specific endpoint |
+|`shodan count port:5683 country:CN` |  get all CoAP endpoints in China |
+|`shodan stats --limit 20 port:5683` |  get some statistics CoAP endpoits out there |
+|`shodan search --fields ip_str,port,org,hostnames port:5683 country:CN` |  get a list of CoAP endpoints, their specific IPs and hostname |
 
 There is also a web interface that allows for searching, for example [CoAP Endpoints](https://www.shodan.io/search?query=port%3A5683). Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks.
 
 ```sh
-$ shodan host 120.212.XXX.XXX
+:~$ shodan host 120.212.XXX.XXX
 120.212.XXX.XXX
 Hostnames:               XXX
 City:                    Nizhniy Novgorod
@@ -68,7 +68,7 @@ Ports:
 ```
 
 ```sh
-$ shodan host 39.159.XXX.XXX
+:~$ shodan host 39.159.XXX.XXX
 39.159.XXX.XXX
 City:                    Nanchang
 Updated:                 2019-04-10T11:39:13.342628
