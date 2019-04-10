@@ -15,7 +15,7 @@ We will briefly have to explain what a URI is as it is probably very intuitive s
 
 A URI can be classified as a locator, a name, or both. Uniform Resource Locator (URL) refers to URIs that allow for identification *and location* of a resource by describing how to access it on a network. Uniform Resource Name (URN) are used as *globally unique* identifiers. Universally Unique IDentifier ([UUID](https://tools.ietf.org/html/rfc4122)) are unique and persistent URNs that *do not require a central registration authority*.
 
-The URI format is used on pretty much any application protocol in existance, from FTP, HTTP or telnet to CoAP. Some with little variations in the syntax, like that of the email [`mailto`](https://tools.ietf.org/html/rfc6068) or the telephone [`tel`](https://tools.ietf.org/html/rfc3966), as you can see below.
+The URI format is used on pretty much any application protocol in existence, from FTP, HTTP or telnet to CoAP. Some with little variations in the syntax, like that of the email [`mailto`](https://tools.ietf.org/html/rfc6068) or the telephone [`tel`](https://tools.ietf.org/html/rfc3966), as you can see below.
 
 ```md
    tel     :                        +34-690-555-1212
@@ -51,22 +51,22 @@ In addition to URIs, it is important to know other concepts used in REST applica
 
 4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml).
 
-5. **Attributes** describe information useful in accessing the target link they can be found on [IANA](http://www.iana.org/assignments/http-parameters) and are defined for CoAP in [RFC6690](https://tools.ietf.org/html/rfc6690). For example `rt` to specify the resource type, `sz` for maximum size estimate or `obs` to indicate that the resource is [observable](https://tools.ietf.org/html/rfc7641). 
+5. **Attributes** describe information useful in accessing the target link they can be found on [IANA](http://www.iana.org/assignments/http-parameters) and are defined for CoAP in [RFC6690](https://tools.ietf.org/html/rfc6690). For example `rt` to specify the resource type, `sz` for maximum size estimate or `obs` to indicate that the resource is [observable](https://tools.ietf.org/html/rfc7641).
 
-Keeing all this in mind, the following sentence will now make more sense:
+Keeping all this in mind, the following sentence will now make more sense:
 
 **The content-format `60` identifies the `application/cbor` media-type, defined by [RFC7049](http://www.iana.org/go/rfc7049).**
 
 At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.
 
-Just like on the web a HTTP Client (e.g. a browser) can understand the common media types for HTML `text/html` and  images `image/jpeg`; a CoAP Client could understand that `application/cbor` implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
+Just like on the web a HTTP Client (e.g., a browser) can understand the common media types for HTML `text/html` and  images `image/jpeg`; a CoAP Client could understand that `application/cbor` implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
 
 ## Data Serialization
 
 We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be *serialized*, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called [SenML](https://tools.ietf.org/html/rfc8428) that is much readable.
 
-SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writeable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.
+SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.
 
 The CoAP client will **request** the resources available under the path `/device`. The request asks for the content format identifier of `110` which means `application/senml+json` format. Other CoAP fields like `token` or `version` have been omitted for simplicity.
 
@@ -76,7 +76,7 @@ REQ: GET coap://coap.me:5683/device?ct=110
 
 The **response** below uses the CoAP `code` of 2.05, which means that the operation was successful The payload contains a times series of measurements with the base name `bn` indicating the URN of the device, the base time `bt` when the time series started, the units `bu` and the version used `ver` of `2`.
 
-After the base values there is the individual measurements containing the field name `n` either current or voltage, the time it was measured `t` , which is negative for historical data before the base measurement. Finally 
+After the base values there is the individual measurements containing the field name `n` either current or voltage, the time it was measured `t` , which is negative for historical data before the base measurement. The SenML output would look like the one below:
 
 ```json
 RES: 2.05 Content
@@ -88,7 +88,7 @@ RES: 2.05 Content
     ]
 ```
 
-The output looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation ([CBOR](https://cbor.io)) was created. Below you can see the same payload in CBOR in only 147 Bytes.
+At first glance it looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation ([CBOR](https://cbor.io)) was created. Below you can see the same payload in CBOR in only 147 Bytes.
 
 ```md
 00000000: 85a4 2178 1d75 726e 3a64 6576 3a6d 6163  ..!x.urn:dev:mac

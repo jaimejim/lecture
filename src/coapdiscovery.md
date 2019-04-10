@@ -42,7 +42,7 @@ After this last query you would get back the current value of the temperature. O
 
 Let's start with the second question first, how do you find the resources that a device has *before* asking it for them? Indeed, if we do not have any idea of what the device is supposed to do, it would be impossible to query for anything as we would not know the `path` part of the URL. To fix that problem every CoAP endpoint comes with a default URI that all CoAP Endpoints must know, the ["well-known"](https://tools.ietf.org/html/rfc8428) URI.
 
-If a server supports representations in [CoRE Link Format](https://tools.ietf.org/html/rfc6690) it must always support too the URI called `/.well-known/core`. That way any CoAP client can always send a `GET` request to a CoAP Server on `/.well-known/core` and get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the ammount of responses with the query filtering symbol `?`. For example we could query a CoAP server for all resources of the type `rt = temperature`.
+If a server supports representations in [CoRE Link Format](https://tools.ietf.org/html/rfc6690) it must always support too the URI called `/.well-known/core`. That way any CoAP client can always send a `GET` request to a CoAP Server on `/.well-known/core` and get in return a list of hypermedia links to other resources hosted in that server. Moreover, it can also filter the output to limit the amount of responses with the query filtering symbol `?`. For example we could query a CoAP server for all resources of the type `rt = temperature`.
 
 ```txt
 REQ: GET coap://coap.me:5683/.well-known/core?rt=temperature
@@ -65,7 +65,7 @@ We have explained how to discover the resources on a coap endpoint but we have n
 
 Networks are and will continue to be heterogeneous, some scenarios foresee the use of multicast, while others have a master/slave approach. Some scenarios will have NATs and firewalls while other - more ideal - will simply have globally addressable IPv6 addresses. Some devices will be asleep while others will be permanently connected.
 
-In scenarios where direct discovery of resources is not possible due to sleeping nodes, disperse networks or inneficiency of multicast it is possible to store information about resources held on other servers on something called a [Resource Directory (RD)](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20).
+In scenarios where direct discovery of resources is not possible due to sleeping nodes, disperse networks or inefficiency of multicast it is possible to store information about resources held on other servers on something called a [Resource Directory (RD)](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20).
 
 ```txt
                 Registration         Lookup
@@ -86,7 +86,7 @@ In scenarios where direct discovery of resources is not possible due to sleeping
 RD has two interfaces, one for **registration** and another for **lookup**. To start using either fo them we first we need to find the RD. There are several options:
 
 - Already knowing the IP address. Which means that devices need to be configured with that IP, this is the most common setup.
-- Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g. `www.rd.jaime.win`).
+- Using a DNS name for the RD and use DNS to return the IP address of the RD. Which means that devices need to be configured with the domain name (e.g., `www.rd.jaime.win`).
 - Multicast request all RDs in the same multicast group. More on that below.
 - It could be configured using DNS Service Discovery ([DNS-SD](https://tools.ietf.org/html/rfc67630))
 - It could be provided by default from the network using [IPv6 Neighbor Discovery](https://tools.ietf.org/html/rfc4861) by carrying information about the address of the RD, there is a Resource Directory Address Option ([RDAO](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-4.1.1)) for it.
@@ -95,7 +95,7 @@ After performing the discovery you should get the URI of the resource directory 
 
 ### Registration
 
-After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier `ep`, the content format identifier which is `40` in this case (i.e. [`application/link-format`](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml)) as well as a series of links resources that the endpoint wants to register.
+After discovering the RD a CoAP device can register its resources in it. A minimal registration will contain some endpoint identifier `ep`, the content format identifier which is `40` in this case (i.e., [`application/link-format`](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml)) as well as a series of links resources that the endpoint wants to register.
 
 ```md
 REQ: POST coap://rd.jaime.win/rd?ep=node1

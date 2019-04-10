@@ -18,7 +18,7 @@ As explained in [RFC7252](https://tools.ietf.org/html/rfc7252) CoAP messages are
 
 ## Unreliable Transmission
 
-As mentioned before, CoAP was intended for *UDP transmission*, which is unreliable. This means that CoAP request and response messages may arrive out of order, appear duplicated, or go missing without notice. For this reason, CoAP implements a lightweight reliability mechanism using the `type`field, introducing both Confirmable and Non-Confirmable messages. If the messages is CON as in Confirmable, that means that either the request or the response require confirmation, that is an acknowledgemnt of receival or ACK.
+As mentioned before, CoAP was intended for *UDP transmission*, which is unreliable. This means that CoAP request and response messages may arrive out of order, appear duplicated, or go missing without notice. For this reason, CoAP implements a lightweight reliability mechanism using the `type`field, introducing both Confirmable and Non-Confirmable messages. If the messages is CON as in Confirmable, that means that either the request or the response require confirmation, that is an acknowledgement or ACK.
 
 To ensure retransmission in case of loss, the CoAP endpoint sending the CON message keeps track of a `timeout` for the message and a `retransmission counter` to keep track of how many times the message was sent.
 
@@ -52,11 +52,11 @@ In the response you can see a `Content-Format` field explaining the format of th
 
 So far we have seen how REST can be used to access resources on a sensor running a tiny server. However REST requires the client interested in the state of a resource to initiate a request to the server every time in order to get the latest representation. If a client wants to have the current representation over a period of time this model does not work. On HTTP this has been solved using repeated polling or HTTP long polling [RFC6202](https://tools.ietf.org/html/rfc6202) but the added complexity makes it hard in the constrained space.
 
-In CoAP this has been solved by using the [CoAP Observe Option](https://tools.ietf.org/html/rfc7641). As we saw CoAP allows to define new Options to extend the protocol. This one is added to the `GET` method to request the server to add/remove a client from a list of observers of a resource. Thus the value of this option is either `0` for *register* or `1`for *deregister*.
+In CoAP this has been solved by using the [CoAP Observe Option](https://tools.ietf.org/html/rfc7641). As we saw CoAP allows to define new Options to extend the protocol. This one is added to the `GET` method to request the server to add/remove a client from a list of observers of a resource. Thus the value of this option is either `0` for *register* or `1` for *deregister*.
 
 If the servers returns a successful response (2.XX) with the Observe Option as well then that means the server has added the request `token` to the list of observers of the target resource, and the client will be notified of changes to the resource. Links that are observable may include the attribute `obs` to indicate that. This is an attribute of a link, which will be explained in [CoAP Web Linking and Serialization](./coaplinks.md).
 
-Another important Option is the Max-Age, which indicates how "fresh" the data is, it is the number of seconds since the data was generated. For example a CoAP client could request for a temperature resource and use `obs = 0` to get subsequent notifications and `Max-Age = 15`. The CoAP server will sent every 
+Another important Option is the Max-Age, which indicates how "fresh" the data is, it is the number of seconds since the data was generated. For example a CoAP client could request for a temperature resource and use `obs = 0` to get subsequent notifications and `Max-Age = 15` to indicate that the data will be *old* after that time period. The CoAP server will sent a notification every time the resource value changes.
 
 ```txt
 REQ: GET coap://coap.me:5683/sensors/temp1
@@ -71,7 +71,7 @@ RES: 2.05 Content
      [{"u":"C","v":27.1}]
 ```
 
-After these two notifications were sent it might happen that third message is lost. Since the `Max-Age` of the data is 15 seconds, the Client will notice that the data is "old" or "stale", at which point it might choose to register again or to wait for the next notification.
+After these two notifications were sent it might happen that third message is lost. Since the `Max-Age` of the data is 15 seconds, the Client will notice that the data is *old*, at which point it might choose to register again or to wait for the next notification.
 
 ```txt
 RES (LOST MESSAGE): 2.05 Content
@@ -88,7 +88,7 @@ RES: 2.05 Content
      [{"u":"C","v":18.4}]
 ```
 
-While in most cases the notification won't be, it can happen that the comunication uses **Confirmable** messages. It could be that it is important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the licent is still interested. The example below uses `Max-Age = 15` and a first `timeout` of usually from 2 seconds ( note that the timeour has an algotythm to calculate the right value). In this case there is a retransmission *before* the freshness of the data expires.
+It can be important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the client is still interested. Therefore some requests can use confirmable (`CON`) messages, although in most cases notifications won't. The example below uses `Max-Age = 15` and a first `timeout` of usually from 2 seconds (note that the timeout has an algorithm to calculate the right value). In this case there is a retransmission *before* the freshness of the data expires.
 
 ```txt
 REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
@@ -98,7 +98,7 @@ RES: (LOST MESSAGE) 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{"u":"C","v":19.7}]
 
---- 2 seconds pass and retransmisison timeout triggers ---
+--- 2 seconds pass and retransmission timeout triggers ---
 
 RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15

@@ -6,7 +6,7 @@
   - [A CoAP Message](./coapmessage.md)
   - [CoAP Web Linking and Serialization](./coaplinks.md)
   - [Finding your CoAP devices](./coapdiscovery.md)
-- [On Internet Attacks](./udpddos.md)
+- [On DDOS Attacks](./udpddos.md)
   - [DDOS using CoAP](./coapddos.md)
 - [Relevant Articles](./reading.md)
   - [A decade of Internet Evolution](./10years.md)

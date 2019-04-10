@@ -66,7 +66,7 @@ It all starts with an author of set of authors that want to propose some solutio
 
 4. After that the document is sent to the [Internet Engineering Steering Group (IESG)](https://www.ietf.org/about/groups/iesg/) for final review, [IANA](https://www.iana.org/) will due its due process and other and other editing will be done by/with the RFC Editor. After some time the document gets assigned an RFC number and is published. 
 
-5. After several years, providing there is industry adoption and the document is on the Standards Track i.e. it is not informational, the document may be come an Internet Standard. This whole process takes a long time and it can feel a bit slow, but at least the out put has guarantees of *some* consensus and *some* running code.
+5. After several years, providing there is industry adoption and the document is on the Standards Track i.e., it is not informational, the document may be come an Internet Standard. This whole process takes a long time and it can feel a bit slow, but at least the out put has guarantees of *some* consensus and *some* running code.
 
 <center>![IETF Publication Process](./img/ietf-process.png)</center>
 
