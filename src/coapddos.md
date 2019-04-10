@@ -1,74 +1,14 @@
 # DDOS using CoAP
 
-A distributed reflective denial-of-service (DRDoS) is a form of distributed denial-of-service (DDoS) attack that relies on publicly accessible UDP servers and bandwidth amplification factors (BAFs) to overwhelm a victim’s system with UDP traffic.
+That CoAP can be used in malicious DDOS attacks is news but at the same time it isn't. Already when the CoAP RFC was publish it came with a [Security Section](https://tools.ietf.org/html/rfc7252#section-11) with that caveat in mind, being UDP a choice made to process message faster and scale better. Today, CoAP is now deployed widely enough to be more than noticeable by malicious attackers.
 
+As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been *"occasionally used as a basis of DDOS attacks, with increasing frequency, reaching [55Gbps on average](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/), and with the largest one clocking at 320Gbps"*. That is pretty large already, since as we saw [On DDOS Attacks](./udpddos.md) Mirai clocked at 320Gbps. It is thus likely that a 1Tb attack using CoAP will occur soon. Apparently the attacks are short-lived, lasting on average *"just over [90 seconds](https://www.securityweek.com/attackers-use-coap-ddos-amplification)"* and feature around 100 packets per second.
 
-But, in some ways this is news but isn’t. CoAP is widely enough deployed to be noticeable now. 
-Since there is no handshake, little state and smaller messages size, CoAP chose UDP as protocol in order to process messages faster, also shaves of one round trip time for the query and response when using UDP.
+As a danish researcher at [RVAsec](https://www.youtube.com/watch?v=DX68vb2XjdQ&feature=youtu.be&t=19m28s) points out, *the CoAP protocol was not yet mainstream back in 2017, but the number of visible CoAP endpoints has increased rapidly from about `6500` to `220000` between november 2017 and may 2018, to more than `738041` in October 2018*.
 
+That number has decreased as devices are being patched and today we would find about `436854` running `shodan count port:5683`, out of which `305051` are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.
 
-
-
-
-
-## Amplification
-
-[RFC7252 Section 11.3](https://tools.ietf.org/html/rfc7252#section-11.3)
-
-CoAP servers generally reply to a request packet with a response
-   packet.  This response packet may be significantly larger than the
-   request packet.  An attacker might use CoAP nodes to turn a small
-   attack packet into a larger attack packet, an approach known as
-   amplification.  There is therefore a danger that CoAP nodes could
-   become implicated in denial-of-service (DoS) attacks by using the
-   amplifying properties of the protocol: an attacker that is attempting
-   to overload a victim but is limited in the amount of traffic it can
-   generate can use amplification to generate a larger amount of
-   traffic.
-
-This is particularly a problem in nodes that enable NoSec access, are
-   accessible from an attacker, and can access potential victims (e.g.,
-   on the general Internet), as the UDP protocol provides no way to
-   verify the source address given in the request packet.  An attacker
-   need only place the IP address of the victim in the source address of
-   a suitable request packet to generate a larger packet directed at the
-   victim.
-
-   As a mitigating factor, many constrained networks will only be able
-   to generate a small amount of traffic, which may make CoAP nodes less
-   attractive for this attack.  However, the limited capacity of the
-   constrained network makes the network itself a likely victim of an
-   amplification attack.
-
-   Therefore, large amplification factors SHOULD NOT be provided in the
-   response if the request is not authenticated.  A CoAP server can
-   reduce the amount of amplification it provides to an attacker by
-   using slicing/blocking modes of CoAP [BLOCK] and offering large
-   resource representations only in relatively small slices.  For
-   example, for a 1000-byte resource, a 10-byte request might result in
-   an 80-byte response (with a 64-byte block) instead of a 1016-byte
-   response, considerably reducing the amplification provided.
-
-   CoAP also supports the use of multicast IP addresses in requests, an
-   important requirement for M2M.  Multicast CoAP requests may be the
-   source of accidental or deliberate DoS attacks, especially over
-   constrained networks.  This specification attempts to reduce the
-   amplification effects of multicast requests by limiting when a
-   response is returned.  To limit the possibility of malicious use,
-   CoAP servers SHOULD NOT accept multicast requests that can not be
-   authenticated in some way, cryptographically or by some multicast
-   boundary limiting the potential sources.  If possible, a CoAP server
-   SHOULD limit the support for multicast requests to the specific
-   resources where the feature is required.
-
-   On some general-purpose operating systems providing a POSIX-style API
-   [IEEE1003.1], it is not straightforward to find out whether a packet
-   received was addressed to a multicast address.  While many
-   implementations will know whether they have joined a multicast group,
-   this creates a problem for packets addressed to multicast addresses
-   of the form FF0x::1, which are received by every IPv6 node.
-   Implementations SHOULD make use of modern APIs such as
-   IPV6_RECVPKTINFO [RFC3542], if available, to make this determination.
+These attacks are based on the two vulnerabilities of UDP-based protocols mentioned in the [previous section](./udpddos.md):
 
 ## IP Address Spoofing
 
@@ -135,6 +75,67 @@ Due to the lack of a handshake in UDP, a rogue endpoint that is free
    attacks can be prevented using a security mode other than NoSec, thus
    leaving only attacks on the security protocol.
 
+
+
+## Amplification
+
+As it is explained on RFC7252.[11.3](https://tools.ietf.org/html/rfc7252#section-11.3)
+
+CoAP servers generally reply to a request packet with a response
+   packet.  This response packet may be significantly larger than the
+   request packet.  An attacker might use CoAP nodes to turn a small
+   attack packet into a larger attack packet, an approach known as
+   amplification.  There is therefore a danger that CoAP nodes could
+   become implicated in denial-of-service (DoS) attacks by using the
+   amplifying properties of the protocol: an attacker that is attempting
+   to overload a victim but is limited in the amount of traffic it can
+   generate can use amplification to generate a larger amount of
+   traffic.
+
+This is particularly a problem in nodes that enable NoSec access, are
+   accessible from an attacker, and can access potential victims (e.g.,
+   on the general Internet), as the UDP protocol provides no way to
+   verify the source address given in the request packet.  An attacker
+   need only place the IP address of the victim in the source address of
+   a suitable request packet to generate a larger packet directed at the
+   victim.
+
+   As a mitigating factor, many constrained networks will only be able
+   to generate a small amount of traffic, which may make CoAP nodes less
+   attractive for this attack.  However, the limited capacity of the
+   constrained network makes the network itself a likely victim of an
+   amplification attack.
+
+   Therefore, large amplification factors SHOULD NOT be provided in the
+   response if the request is not authenticated.  A CoAP server can
+   reduce the amount of amplification it provides to an attacker by
+   using slicing/blocking modes of CoAP [BLOCK] and offering large
+   resource representations only in relatively small slices.  For
+   example, for a 1000-byte resource, a 10-byte request might result in
+   an 80-byte response (with a 64-byte block) instead of a 1016-byte
+   response, considerably reducing the amplification provided.
+
+   CoAP also supports the use of multicast IP addresses in requests, an
+   important requirement for M2M.  Multicast CoAP requests may be the
+   source of accidental or deliberate DoS attacks, especially over
+   constrained networks.  This specification attempts to reduce the
+   amplification effects of multicast requests by limiting when a
+   response is returned.  To limit the possibility of malicious use,
+   CoAP servers SHOULD NOT accept multicast requests that can not be
+   authenticated in some way, cryptographically or by some multicast
+   boundary limiting the potential sources.  If possible, a CoAP server
+   SHOULD limit the support for multicast requests to the specific
+   resources where the feature is required.
+
+   On some general-purpose operating systems providing a POSIX-style API
+   [IEEE1003.1], it is not straightforward to find out whether a packet
+   received was addressed to a multicast address.  While many
+   implementations will know whether they have joined a multicast group,
+   this creates a problem for packets addressed to multicast addresses
+   of the form FF0x::1, which are received by every IPv6 node.
+   Implementations SHOULD make use of modern APIs such as
+   IPV6_RECVPKTINFO [RFC3542], if available, to make this determination.
+
 ## Avoid NoSec
 
 uct at the cheapest possible price point. It may be disconcerting to realise that the web camera you just installed has a security model that can be summarised with the phrase: “no security at all”, and its actually offering a view of your house to the entire Internet. It may be slightly more disconcerting to realise that your electronic wallet is on a device that is using a massive compilation of open source software of largely unknown origin, with a security model that is not completely understood, but appears to be susceptible to be coerced into being a “yes, take all you want”.
@@ -169,10 +170,6 @@ Distributed Denial of Service (DDoS) attacks are a common way to prevent Interne
 
 `shodan stats --limit 20 port:5683` to get some statistics CoAP endpoits out there.
 
-A
-
-s the presentation given at [RVAsec](https://www.youtube.com/watch?v=DX68vb2XjdQ&feature=youtu.be&t=19m28s) states, the CoAP protocol was not yet mainstream back in 2017, but the number of *visible* CoAP endpoints has increased rapidly from about `6500` to `220000` between november 2017 and may 2018, to more than `738041` in October 2018. That number has decreased as devices are being patched and we would find about `436854` running `shodan count port:5683`, out of which `305051` are in China. There is of course orders of magnitude more endpoints that are not openly visible on the Internet.
-
 
 
 UDP protocols are particularly vulnerable to attack.
@@ -194,7 +191,7 @@ The amplification factor means represents the effort for an attacker, for exampl
 | NTP (123)         |                 12 b |                           22/198 |                    9.483.324 |
 | **CoAP (5683)**   |              **21 b**|                        **16/97** |                  **436.854** |
 | LDAP (389)        |                 52 b |                            45/55 |                      494.276 |
-| Memcached (11211) |                 15 b |                 10000/51000 ([!!](http://www.senki.org/memcached-on-port-11211-udp-tcp-being-exploited/)) |                       39.785 |
+| Memcached (11211) |                 15 b |                 73/51000 ([!!](http://www.senki.org/memcached-on-port-11211-udp-tcp-being-exploited/)) |                       39.785 |
 
 ```sh
 $ shodan host 120.212.XXX.XXX
