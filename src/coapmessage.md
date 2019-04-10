@@ -88,7 +88,7 @@ RES: 2.05 Content
      [{"u":"C","v":18.4}]
 ```
 
-It can be important to have reliability for some resources or it could be that the server includes a confirmable response every 10th message to make sure the client is still interested. Therefore some requests can use confirmable (`CON`) messages, although in most cases notifications won't. The example below uses `Max-Age = 15` and a first `timeout` of usually from 2 seconds (note that the timeout has an algorithm to calculate the right value). In this case there is a retransmission *before* the freshness of the data expires.
+It can be important to have reliability for some resources therefore some requests can use confirmable (`CON`) messages. It could occur that the server includes a confirmable response every Nth message to make sure the client is still interested on the information. although in most cases notifications won't. The example below uses `Max-Age = 15` and a first `timeout` of usually from 2 seconds (note that the timeout has an algorithm to calculate the right value). In this case there is a retransmission *before* the freshness of the data expires.
 
 ```txt
 REQ: GET (T=CON) coap://coap.me:5683/sensors/temp1  
