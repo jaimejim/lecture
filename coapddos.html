@@ -168,12 +168,14 @@
 </tbody></table>
 <a class="header" href="#exploring-vulnerable-endpoints" id="exploring-vulnerable-endpoints"><h2>Exploring Vulnerable Endpoints</h2></a>
 <p><a href="https://www.shodan.io/">Shodan</a> and <a href="https://nmap.org/">nmap</a> are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account. Some of shodan's most basic commands are:</p>
-<p><code>shodan host [IP_ADDRESS_HERE]</code> to get info on a specific endpoint.</p>
-<p><code>shodan count port:5683 country:CN</code> to get all CoAP endpoints in China.</p>
-<p><code>shodan stats --limit 20 port:5683</code> to get some statistics CoAP endpoits out there.</p>
-<p><code>shodan search --fields ip_str,port,org,hostnames port:5683 country:CN</code> to get a list of CoAP endpoints, their specific IPs and hostname.</p>
+<table><thead><tr><th> Shodan Command                 </th><th> Effect                           </th></tr></thead><tbody>
+<tr><td align="left"><code>shodan host [IP_ADDRESS_HERE]</code> </td><td align="left">  get info on a specific endpoint </td></tr>
+<tr><td align="left"><code>shodan count port:5683 country:CN</code> </td><td align="left">  get all CoAP endpoints in China </td></tr>
+<tr><td align="left"><code>shodan stats --limit 20 port:5683</code> </td><td align="left">  get some statistics CoAP endpoits out there </td></tr>
+<tr><td align="left"><code>shodan search --fields ip_str,port,org,hostnames port:5683 country:CN</code> </td><td align="left">  get a list of CoAP endpoints, their specific IPs and hostname </td></tr>
+</tbody></table>
 <p>There is also a web interface that allows for searching, for example <a href="https://www.shodan.io/search?query=port%3A5683">CoAP Endpoints</a>. Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks.</p>
-<pre><code class="language-sh">$ shodan host 120.212.XXX.XXX
+<pre><code class="language-sh">:~$ shodan host 120.212.XXX.XXX
 120.212.XXX.XXX
 Hostnames:               XXX
 City:                    Nizhniy Novgorod
@@ -183,7 +185,7 @@ Ports:
      80/tcp  
    5683/udp
 </code></pre>
-<pre><code class="language-sh">$ shodan host 39.159.XXX.XXX
+<pre><code class="language-sh">:~$ shodan host 39.159.XXX.XXX
 39.159.XXX.XXX
 City:                    Nanchang
 Updated:                 2019-04-10T11:39:13.342628
