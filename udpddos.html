@@ -141,7 +141,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#security-engineering" id="security-engineering"><h1>Security Engineering</h1></a>
-<p>There is a wealth of literature on the topic of Internet and Systems Security, but <a href="https://www.cl.cam.ac.uk/%7Erja14/book.html">Security Engineering by Ross Anderson</a> in particular is a great authoritative and readable source, it is also free. Also <a href="https://staff.washington.edu/dittrich/misc/ddos/index.html">Dave Dittrich's website on DDOS</a> with hundreds of examples and news pointers.</p>
+<p>There is a wealth of literature on the topic of Internet and Systems Security, but <a href="https://www.cl.cam.ac.uk/%7Erja14/book.html">Security Engineering by Ross Anderson</a> in particular is a great authoritative and readable source, it is also free. Also <a href="https://staff.washington.edu/dittrich/misc/ddos/index.html">Dave Dittrich's website on DDOS</a> with hundreds of examples and pointers.</p>
 <p>It would be impossible to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.</p>
 <a class="header" href="#distributed-denial-of-service-ddos-attacks" id="distributed-denial-of-service-ddos-attacks"><h2>Distributed Denial-of-service (DDOS) Attacks</h2></a>
 <p>The purpose of any denial-of-service attack is to limit the availability of a service. A DDOS attack tries to disrupt a machine in the network, <em>preventing it to fullfil its service by flooding it with traffic from many different sources</em> until the resources of the target are exhausted (i.e., memory, processing capabilities, or Internet bandwidth). This effectively makes it impossible to stop the attack simply by blocking a single source.</p>
@@ -158,20 +158,20 @@ Over time <a href="https://staff.washington.edu/dittrich/misc/ddos/">it populari
 <p>There are some drawbacks of using UDP though as it leaves the door open to two types of attacks: <em>IP Address Spoofing</em> and <em>Packet Amplification</em></p>
 <a class="header" href="#ip-address-spoofing" id="ip-address-spoofing"><h3>IP Address Spoofing</h3></a>
 <p>The <a href="https://tools.ietf.org/html/rfc768">UDP</a> header consists of 4 fields [<code>source</code> and <code>destination</code> ports, <code>length</code> and <code>checksum</code>], each of which is 2 bytes being then the header 8 bytes in total. After that we have the 20 byte <a href="https://tools.ietf.org/html/rfc8200">IP</a> header which contains, among other things <code>version</code>, <code>source</code> and <code>destination</code> address. If we want to avoid packet fragmentation that leaves about 1280B for IPv6 and 576 for IPv4. A rudimentary IPv6 packet would be:</p>
-<pre><code class="language-txt">    ---------------------------------------------
+<pre><code class="language-txt">   +---------------------------------------------+
    | 40B IPv6  |  8B UDP  |   1024 bytes payload |
-    ---------------------------------------------
+   +---------------------------------------------+
 </code></pre>
 <p>The IP Spoofing attack consists on an attacker sending such IP packet but with a spoofed source IP address. That fake address being the address of the victim.</p>
 <pre><code class="language-txt">Attacker: IP = 1.1.1.1
- |    -------------------------------------------
+ |   +-------------------------------------------+
  |   | IPs 3.3.3.3 , IPd 2.2.2.2 | UDP | Payload |
- |    -------------------------------------------
+ |   +-------------------------------------------+
  v
 Intermediary: IP = 2.2.2.2
- |    -------------------------------------------
+ |   +-------------------------------------------+
  |   | IPs 2.2.2.2 , IPd 3.3.3.3 | UDP | Payload |
- |    -------------------------------------------
+ |   +-------------------------------------------+
  v
 Victim: IP = 3.3.3.3
 </code></pre>
@@ -184,7 +184,7 @@ Victim: IP = 3.3.3.3
               |            +---------+            |
               |                                   v
 +----------+  |            +---------+        +---+----+
-| Attacker |  +----------&gt; | Interm  +-------&gt;+ Victim |
+| Attacker +--+----------&gt; | Interm  +-------&gt;+ Victim |
 +----------+  |            +---------+        +---+----+
               |                                   ^
               |            +---------+            |
