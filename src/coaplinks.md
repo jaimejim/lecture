@@ -8,9 +8,9 @@ We will briefly have to explain what a URI is as it is probably very intuitive s
 
 ```md
    foo://example.com:8042/over/there?name=ferret#nose
-   \_/   \_____________/\________/\________/ \___/
-    |           |            |            |        |
-   scheme     authority       path        query   fragment
+   \_/   \_______________/\________/\__________/\___/
+    |           |              |          |       |
+   scheme     authority       path      query   fragment
 ```
 
 A URI can be classified as a locator, a name, or both. Uniform Resource Locator (URL) refers to URIs that allow for identification *and location* of a resource by describing how to access it on a network. Uniform Resource Name (URN) are used as *globally unique* identifiers. Universally Unique IDentifier ([UUID](https://tools.ietf.org/html/rfc4122)) are unique and persistent URNs that *do not require a central registration authority*.
@@ -23,9 +23,9 @@ The URI format is used on pretty much any application protocol in existence, fro
    urn:uuid:                        f81d4fa...a0c91e6bf6
    ftp     :// 196.4.160.12        /rfc/rfc1808.txt
    http    :// www.ietf.org        /rfc/rfc2396.txt
-   \______/   \________________/ \_________________/\___________/
-     |              |                 |                         |
-   scheme        authority           path                     query
+   \______/   \__________________/ \___________________/\___________/
+     |              |                       |                  |
+   scheme        authority                 path              query
 ```
 
 The CoAP URI is similar: `"coap:" "//" host [ ":" port ] path-abempty [ "?" query ]`, the examples below show several usages of it. You can try some yourself at [coap.me](http://coap.me).

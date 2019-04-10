@@ -67,7 +67,7 @@ Ports:
    5683/udp
 ```
 
-```sh
+```bash
 :~$ shodan host 39.159.XXX.XXX
 39.159.XXX.XXX
 City:                    Nanchang
