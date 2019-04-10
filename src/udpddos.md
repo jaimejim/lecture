@@ -1,7 +1,7 @@
 
 # Security Engineering
 
-There is a wealth of literature on the topic of Internet and Systems Security, but [Security Engineering by Ross Anderson](https://www.cl.cam.ac.uk/~rja14/book.html) in particular is a great authoritative and readable source, it is also free. Also [Dave Dittrich's website on DDOS](https://staff.washington.edu/dittrich/misc/ddos/index.html) with hundreds of examples and news pointers.
+There is a wealth of literature on the topic of Internet and Systems Security, but [Security Engineering by Ross Anderson](https://www.cl.cam.ac.uk/~rja14/book.html) in particular is a great authoritative and readable source, it is also free. Also [Dave Dittrich's website on DDOS](https://staff.washington.edu/dittrich/misc/ddos/index.html) with hundreds of examples and pointers.
 
 It would be impossible to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.
 
@@ -34,23 +34,23 @@ There are some drawbacks of using UDP though as it leaves the door open to two t
 The [UDP](https://tools.ietf.org/html/rfc768) header consists of 4 fields [`source` and `destination` ports, `length` and `checksum`], each of which is 2 bytes being then the header 8 bytes in total. After that we have the 20 byte [IP](https://tools.ietf.org/html/rfc8200) header which contains, among other things `version`, `source` and `destination` address. If we want to avoid packet fragmentation that leaves about 1280B for IPv6 and 576 for IPv4. A rudimentary IPv6 packet would be:
 
 ```txt
-    ---------------------------------------------
+   +---------------------------------------------+
    | 40B IPv6  |  8B UDP  |   1024 bytes payload |
-    ---------------------------------------------
+   +---------------------------------------------+
 ```
 
 The IP Spoofing attack consists on an attacker sending such IP packet but with a spoofed source IP address. That fake address being the address of the victim.
 
 ```txt
 Attacker: IP = 1.1.1.1
- |    -------------------------------------------
+ |   +-------------------------------------------+
  |   | IPs 3.3.3.3 , IPd 2.2.2.2 | UDP | Payload |
- |    -------------------------------------------
+ |   +-------------------------------------------+
  v
 Intermediary: IP = 2.2.2.2
- |    -------------------------------------------
+ |   +-------------------------------------------+
  |   | IPs 2.2.2.2 , IPd 3.3.3.3 | UDP | Payload |
- |    -------------------------------------------
+ |   +-------------------------------------------+
  v
 Victim: IP = 3.3.3.3
 ```
@@ -68,7 +68,7 @@ Packet amplification is another potential attack carried out over UDP-based appl
               |            +---------+            |
               |                                   v
 +----------+  |            +---------+        +---+----+
-| Attacker |  +----------> | Interm  +------->+ Victim |
+| Attacker +--+----------> | Interm  +------->+ Victim |
 +----------+  |            +---------+        +---+----+
               |                                   ^
               |            +---------+            |

@@ -1,6 +1,6 @@
 # DDOS using CoAP
 
-That CoAP can be used in malicious DDOS attacks is news but at the same time it isn't. Already when the CoAP RFC was publish it came with a [Security Section](https://tools.ietf.org/html/rfc7252#section-11) with that caveat in mind, being UDP a choice made to process message faster and scale better. Today, CoAP is now deployed widely enough to be more than noticeable by malicious attackers as shown in [1](http://i.blackhat.com/eu-18/Thu-Dec-6/eu-18-Maggi-When-Machines-Cant-Talk-wp.pdf) , [2](http://rvasec.com/slides/2018/Rand_Dennis-RVAsec_2018.pdf) , [3](https://nvd.nist.gov/vuln/detail/CVE-2019-9750) and  [4](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks).
+That CoAP can be used in malicious DDOS attacks is news but at the same time it is not. Already when the CoAP RFC was published it came with a [Security Section](https://tools.ietf.org/html/rfc7252#section-11) with that caveat in mind, being UDP a choice made to process message faster and scale better. Today, CoAP is now deployed widely enough to be more than noticeable by malicious attackers as shown in [1](http://i.blackhat.com/eu-18/Thu-Dec-6/eu-18-Maggi-When-Machines-Cant-Talk-wp.pdf) , [2](http://rvasec.com/slides/2018/Rand_Dennis-RVAsec_2018.pdf) , [3](https://nvd.nist.gov/vuln/detail/CVE-2019-9750) and  [4](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks).
 
 As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been *"occasionally used as a basis of DDOS attacks, with increasing frequency, reaching [55Gbps on average](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/), and with the largest one clocking at 320Gbps"*. Apparently the attacks are short-lived, lasting on average *"just over [90 seconds](https://www.securityweek.com/attackers-use-coap-ddos-amplification)"* and feature around 100 packets per second.
 
@@ -104,3 +104,5 @@ As we other DDOS attacks, some solutions are already at hand, some outlined in [
 
 Nevertheless, as it is pointed out in [Another 10 years](./another10years.md):
 > The Internet of Things will continue to be a market place where the compromises between price and quality will continue to push us on to the side of cheap rather than secure.
+
+Bonus: **[Richard Thieme - Staring into the Abyss](https://youtu.be/wbMrVzUpXss)**
