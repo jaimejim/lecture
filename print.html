@@ -574,9 +574,9 @@ Victim: IP = 3.3.3.3
 <a class="header" href="#ddos-using-coap" id="ddos-using-coap"><h1>DDOS using CoAP</h1></a>
 <p>That CoAP can be used in malicious DDOS attacks is news but at the same time it is not. Already when the CoAP RFC was published it came with a <a href="https://tools.ietf.org/html/rfc7252#section-11">Security Section</a> with that caveat in mind, being UDP a choice made to process message faster and scale better. Today, CoAP is now deployed widely enough to be more than noticeable by malicious attackers as shown in <a href="http://i.blackhat.com/eu-18/Thu-Dec-6/eu-18-Maggi-When-Machines-Cant-Talk-wp.pdf">1</a> , <a href="http://rvasec.com/slides/2018/Rand_Dennis-RVAsec_2018.pdf">2</a> , <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-9750">3</a> and  <a href="https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks">4</a>.</p>
 <p>As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been <em>&quot;occasionally used as a basis of DDOS attacks, with increasing frequency, reaching <a href="https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/">55Gbps on average</a>, and with the largest one clocking at 320Gbps&quot;</em>. Apparently the attacks are short-lived, lasting on average <em>&quot;just over <a href="https://www.securityweek.com/attackers-use-coap-ddos-amplification">90 seconds</a>&quot;</em> and feature around 100 packets per second.</p>
-<p>An attack of 320Gbps is already huge, since as we saw <a href="./udpddos.html">On DDOS Attacks</a> Mirai clocked at 600Gbps. It is thus likely that a 1Tbps attack using CoAP will occur sonn, maybe even larger. The current peak volume is an attack of some 1.7Tbps of malicious traffic.</p>
+<p>An attack of 320Gbps is already huge, since as we saw <a href="./udpddos.html">On DDOS Attacks</a> Mirai clocked at 600Gbps. It is thus likely that a 1Tbps attack using CoAP will occur soon, maybe even larger. The current peak volume is an attack of some 1.7Tbps of malicious traffic.</p>
 <p>As a danish researcher at <a href="https://www.youtube.com/watch?v=DX68vb2XjdQ&amp;feature=youtu.be&amp;t=19m28s">RVAsec</a> points out, <em>the CoAP protocol was not yet mainstream back in 2017, but the number of visible CoAP endpoints has increased rapidly from about <code>6500</code> to <code>220000</code> between november 2017 and may 2018, to more than <code>738041</code> in October 2018</em>.</p>
-<p>That number has decreased as devices are being patched and today we would find about <code>436854</code> running <code>shodan count port:5683</code>, out of which <code>305051</code> are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.</p>
+<p>That number has decreased as devices are being patched and today we would find about <code>436854</code> running <code>:~$ shodan count port:5683</code>, out of which <code>305051</code> are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.</p>
 <p>These attacks are based on the two vulnerabilities of UDP-based protocols mentioned in the <a href="./udpddos.html">previous section</a>.</p>
 <a class="header" href="#ip-address-spoofing-1" id="ip-address-spoofing-1"><h2>IP Address Spoofing</h2></a>
 <p>Due to the lack of handshake in UDP, <a href="https://tools.ietf.org/html/rfc7252#section-11.4">RFC7252 Section 11.4</a> warns that there are some message <code>types</code> that can be spoofed on <strong>unsecured</strong> CoAP networks. They can range from simple, like a <code>RST</code> or an <code>ACK</code>in response to a <code>CON</code> message which would cause an error in the communication, to disruptive when spoofing a <strong>multicast request</strong> (cause CoAP does support multicast) for a target node. This may result in a DOS to a victim or in the congestion/collapse of the network.</p>
@@ -598,32 +598,16 @@ Victim: IP = 3.3.3.3
 <tr><td align="left"> Memcached (11211) </td><td align="right">                 15 b </td><td align="right">                 73/51000 (<a href="http://www.senki.org/memcached-on-port-11211-udp-tcp-being-exploited/">!!</a>) </td><td align="right">                       39.785 </td></tr>
 </tbody></table>
 <a class="header" href="#exploring-vulnerable-endpoints" id="exploring-vulnerable-endpoints"><h2>Exploring Vulnerable Endpoints</h2></a>
-<p><a href="https://www.shodan.io/">Shodan</a> and <a href="https://nmap.org/">nmap</a> are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account. Some of shodan's most basic commands are:</p>
+<p><a href="https://www.shodan.io/">Shodan</a> and <a href="https://nmap.org/">nmap</a> are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account.</p>
+<script id="asciicast-192946" src="https://asciinema.org/a/192946.js" async></script>
+<p>Some of Shodan's most basic commands are:</p>
 <table><thead><tr><th> Shodan Command                 </th><th> Effect                           </th></tr></thead><tbody>
 <tr><td align="left"><code>shodan host [IP_ADDRESS_HERE]</code> </td><td align="left">  get info on a specific endpoint </td></tr>
 <tr><td align="left"><code>shodan count port:5683 country:CN</code> </td><td align="left">  get all CoAP endpoints in China </td></tr>
 <tr><td align="left"><code>shodan stats --limit 20 port:5683</code> </td><td align="left">  get some statistics CoAP endpoits out there </td></tr>
 <tr><td align="left"><code>shodan search --fields ip_str,port,org,hostnames port:5683 country:CN</code> </td><td align="left">  get a list of CoAP endpoints, their specific IPs and hostname </td></tr>
 </tbody></table>
-<p>There is also a web interface that allows for searching, for example <a href="https://www.shodan.io/search?query=port%3A5683">CoAP Endpoints</a>. Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks.</p>
-<pre><code class="language-sh">:~$ shodan host 120.212.XXX.XXX
-120.212.XXX.XXX
-Hostnames:               XXX
-City:                    Nizhniy Novgorod
-Updated:                 2019-04-10T11:37:35.572911
-
-Ports:
-     80/tcp  
-   5683/udp
-</code></pre>
-<pre><code class="language-bash">:~$ shodan host 39.159.XXX.XXX
-39.159.XXX.XXX
-City:                    Nanchang
-Updated:                 2019-04-10T11:39:13.342628
-
-Ports:
-   5683/udp
-</code></pre>
+<p>There is also a web interface that allows for searching, for example <a href="https://www.shodan.io/search?query=port%3A5683">CoAP Endpoints</a>. Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks. We can search them by issuing <code>:~$ shodan host 120.212.XXX.XXX</code></p>
 <p>As we saw in the section <a href="./coapdiscovery.html">Finding your CoAP devices</a> CoAP has an in-built discovery mechanism, thus sending a <code>GET</code> request message to the <code>/.well-known/core</code> resource might show information. Indeed, for example:</p>
 <ul>
 <li>
