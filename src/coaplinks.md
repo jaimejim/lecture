@@ -1,6 +1,6 @@
 # CoAP Web Linking and Serialization
 
-Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988) and URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986). We will see some of the basic concepts in this chapter.
+Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by [RFC6690](https://tools.ietf.org/html/rfc6690) in a similar way as HTTP defines it in [RFC5988](https://tools.ietf.org/html/rfc5988). URI's are defined in [RFC3986](https://tools.ietf.org/html/rfc3986). We will see some of the basic concepts in this chapter.
 
 ## URIs
 
@@ -43,23 +43,19 @@ The CoAP URI is similar: `"coap:" "//" host [ ":" port ] path-abempty [ "?" quer
 
 In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good [clarification document](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), 
 
-1. **Media-Type** is often abbreviated as "mt", they are stored at the [IANA Registry](https://www.iana.org/assignments/media-types/media-types.xhtml). Originally it was a term that identify the general type like "text" or "audio". Nowadays it is the combination of a `type` and a `subtype` like "audio/ogg", "text/plain" or "text/html". In IoT common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
+1. **Media Type:** Media types are registered in the [IANA Media Types registry](https://www.iana.org/assignments/media-types/media-types.xhtml). They identify the general type like "audio" or "text" combined with a `subtype` like "ogg", "plain", or "html", resulting in strings like "audio/ogg", "text/plain", and "text/html". In IoT, common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
 
-2. **Content-Type** they are the top `type` Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).
+2. **Content Type:** Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons).
 
-3. **Content-Coding** are registered in [IANA HTTP parameters](http://www.iana.org/assignments/http-parameters) too and they are essentially numbers that identify a *potential transformation to the representation of a resource*. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.
+3. **Content Coding:** Content codings are registered in the [IANA HTTP Parameters registry](http://www.iana.org/assignments/http-parameters) and identify an optional *transformation to the representation of a resource*, such as the compression or encryption of some data.
 
-4. **Content-Format** is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the [CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml).
+4. **Content Format:** Content formats are used in CoAP to identify the combination of a content type and a content coding. They are registered in the [IANA CoAP Content-Formats registry](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml).
 
-5. **Attributes** describe information useful in accessing the target link they can be found on [IANA](http://www.iana.org/assignments/http-parameters) and are defined for CoAP in [RFC6690](https://tools.ietf.org/html/rfc6690). For example `rt` to specify the resource type, `sz` for maximum size estimate or `obs` to indicate that the resource is [observable](https://tools.ietf.org/html/rfc7641).
+For example, the content-format `11060` identifies the content type `application/cbor` (defined by [RFC7049](http://www.iana.org/go/rfc7049)) combined with the content coding `deflate` (defined by [RFC7049](http://www.iana.org/go/rfc1951)).
 
-Keeping all this in mind, the following sentence will now make more sense:
+At this point, we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources, and serving those resources in a specific format.
 
-**The content-format `60` identifies the `application/cbor` media-type, defined by [RFC7049](http://www.iana.org/go/rfc7049).**
-
-At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.
-
-Just like on the web a HTTP Client (e.g., a browser) can understand the common media types for HTML `text/html` and  images `image/jpeg`; a CoAP Client could understand that `application/cbor` implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
+Just like a web browser understands HTTP and the common media types for HTML `text/html` and  images `image/jpeg`, an IoT client could understand CoAP and common media types like `application/cbor`, which implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
 
 ## Data Serialization
 
@@ -68,7 +64,7 @@ While CBOR is binary and hard to read without translation tools for humans, ther
 
 SenML can be represented in various formats with their respective media types which are: `application/senml-exi` , `application/senml+cbor` , `application/senml+json` , `application/senml+xml`. We will use JSON as it is one of the most common and it is easily readable - and writable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.
 
-The CoAP client will **request** the resources available under the path `/device`. The request asks for the content format identifier of `110` which means `application/senml+json` format. Other CoAP fields like `token` or `version` have been omitted for simplicity.
+The CoAP client will **request** the resources available under the path `/device`. The request asks for the content format identifier of `110`, which means `application/senml+json` without any additional content coding.
 
 ```md
 REQ: GET coap://coap.me:5683/device?ct=110
@@ -88,7 +84,7 @@ RES: 2.05 Content
     ]
 ```
 
-At first glance it looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation ([CBOR](https://cbor.io)) was created. Below you can see the same payload in CBOR in only 147 Bytes.
+At first glance, it looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation ([CBOR](https://cbor.io)) was created. Below you can see the same payload in CBOR in only 147 Bytes.
 
 ```md
 00000000: 85a4 2178 1d75 726e 3a64 6576 3a6d 6163  ..!x.urn:dev:mac

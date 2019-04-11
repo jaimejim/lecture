@@ -14,15 +14,15 @@ These attacks are based on the two vulnerabilities of UDP-based protocols mentio
 
 ## IP Address Spoofing
 
-Due to the lack of handshake in UDP, [RFC7252 Section 11.4](https://tools.ietf.org/html/rfc7252#section-11.4) warns that there are some message `types` that can be spoofed on **unsecured** CoAP networks. They can range from simple, like a `RST` or an `ACK`in response to a `CON` message which would cause an error in the communication, to disruptive when spoofing a **multicast request** (cause CoAP does support multicast) for a target node. This may result in a DOS to a victim or in the congestion/collapse of the network.
+Due to the lack of handshake in UDP, [RFC 7252, Section 11.4](https://tools.ietf.org/html/rfc7252#section-11.4), warns that there are some message `types` that can be spoofed on **unsecured** CoAP networks. They can range from simple, like a `RST` or an `ACK`in response to a `CON` message which would cause an error in the communication, to disruptive when spoofing a **multicast request** (cause CoAP does support multicast) for a target node. This may result in a DOS to a victim or in the congestion/collapse of the network.
 
 Moreover under this attack, a constrained node with limited total energy available may exhaust that energy much more quickly than planned (battery depletion attack).
 
 ## Amplification
 
-As it is explained on [RFC7252 Section 11.3](https://tools.ietf.org/html/rfc7252#section-11.3) CoAP responses might be - and usually are - larger than their request. Think for example `GET /.well-known/core` that returns links to all resources, or a query to a complex sensor that returns a large JSON payload. I can imagine that if the Observe option is `obs = 0` then notifications to the victim would be sent automatically, increasing the length of the attack. Also if the crafted request asks for text-based `ct` the response would be larger than binary ones.
+As it is explained on [RFC, 7252 Section 11.3](https://tools.ietf.org/html/rfc7252#section-11.3), CoAP responses might be - and usually are - larger than their request. Think for example `GET /.well-known/core` that returns links to all resources, or a query to a complex sensor that returns a large JSON payload. I can imagine that if the Observe option is `0` then notifications to the victim would be sent automatically, increasing the length of the attack. Also if the crafted request asks for text-based `ct` the response would be larger than binary ones.
 
-The draft then states: *"This is particularly a problem in nodes that enable `NoSec` access, are accessible from an attacker, and can access potential victims (e.g., on the general Internet), as the UDP protocol provides no way to verify the source address given in the request packet".*
+The RFC then states: *"This is particularly a problem in nodes that enable `NoSec` access, are accessible from an attacker, and can access potential victims (e.g., on the general Internet), as the UDP protocol provides no way to verify the source address given in the request packet".*
 
 ### CoAP Amplification Factor
 
@@ -57,7 +57,7 @@ Some of Shodan's most basic commands are:
 |`shodan stats --limit 20 port:5683` |  get some statistics CoAP endpoits out there |
 |`shodan search --fields ip_str,port,org,hostnames port:5683 country:CN` |  get a list of CoAP endpoints, their specific IPs and hostname |
 
-There is also a web interface that allows for searching, for example [CoAP Endpoints](https://www.shodan.io/search?query=port%3A5683). Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks. We can search them by issuing `:~$ shodan host 120.212.XXX.XXX`
+There is also a web interface that allows for searching, for example [CoAP endpoints](https://www.shodan.io/search?query=port%3A5683). Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks. We can search them by issuing `:~$ shodan host 120.212.XXX.XXX`
 
 As we saw in the section [Finding your CoAP devices](./coapdiscovery.md) CoAP has an in-built discovery mechanism, thus sending a `GET` request message to the `/.well-known/core` resource might show information. Indeed, for example:
 
@@ -69,7 +69,7 @@ If we were interested which type of devices are these , it is easy to perform an
 
 ## Solutions
 
-As we other DDOS attacks, some solutions are already at hand, some outlined in [RFC4732](https://tools.ietf.org/html/rfc4732), others on [RFC7252](https://tools.ietf.org/html/rfc7252#section-11) and on [iot-seccons](https://tools.ietf.org/html/draft-irtf-t2trg-iot-seccons-16). The guidelines to be followed when implementing and deploying CoAP networks that help prevent and palliate DOS attacks would be:
+As we other DDOS attacks, some solutions are already at hand, some outlined in [RFC 4732](https://tools.ietf.org/html/rfc4732), others on [RFC 7252](https://tools.ietf.org/html/rfc7252#section-11) and on [draft-irtf-t2trg-iot-seccons](https://tools.ietf.org/html/draft-irtf-t2trg-iot-seccons-16). The guidelines to be followed when implementing and deploying CoAP networks that help prevent and palliate DOS attacks would be:
 
 - Avoiding the use of `NoSec` mode, using instead any of the other [secure modes](https://tools.ietf.org/html/rfc7252#section-9).
 - Avoid exposing CoAP endpoints to the wider Internet if they don't need to.
@@ -82,7 +82,7 @@ As we other DDOS attacks, some solutions are already at hand, some outlined in [
 - CoAP servers should not accept multicast requests that can not be authenticated in some way
 - Ensure all default passwords are changed to strong passwords.
 - Update IoT devices with security patches as soon as patches become available.
-- Network operators could prevent the leakage of packets with forged source addresses by following the guidelines of [RFC2827](https://tools.ietf.org/html/rfc2827).
+- Network operators could prevent the leakage of packets with forged source addresses by following the guidelines of [RFC 2827](https://tools.ietf.org/html/rfc2827).
 
 Nevertheless, as it is pointed out in [Another 10 years](./another10years.md):
 > The Internet of Things will continue to be a market place where the compromises between price and quality will continue to push us on to the side of cheap rather than secure.
