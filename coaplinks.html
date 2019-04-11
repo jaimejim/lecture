@@ -141,7 +141,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization"><h1>CoAP Web Linking and Serialization</h1></a>
-<p>Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>. We will see some of the basic concepts in this chapter.</p>
+<p>Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>. URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>. We will see some of the basic concepts in this chapter.</p>
 <a class="header" href="#uris" id="uris"><h2>URIs</h2></a>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
 <pre><code class="language-md">   foo://example.com:8042/over/there?name=ferret#nose
@@ -172,30 +172,26 @@
 <p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>,</p>
 <ol>
 <li>
-<p><strong>Media-Type</strong> is often abbreviated as &quot;mt&quot;, they are stored at the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Registry</a>. Originally it was a term that identify the general type like &quot;text&quot; or &quot;audio&quot;. Nowadays it is the combination of a <code>type</code> and a <code>subtype</code> like &quot;audio/ogg&quot;, &quot;text/plain&quot; or &quot;text/html&quot;. In IoT common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
+<p><strong>Media Type:</strong> Media types are registered in the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a>. They identify the general type like &quot;audio&quot; or &quot;text&quot; combined with a <code>subtype</code> like &quot;ogg&quot;, &quot;plain&quot;, or &quot;html&quot;, resulting in strings like &quot;audio/ogg&quot;, &quot;text/plain&quot;, and &quot;text/html&quot;. In IoT, common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
 </li>
 <li>
-<p><strong>Content-Type</strong> they are the top <code>type</code> Media-Type, optionally associated with parameters (separated from the media type name and from each other by a semicolon).</p>
+<p><strong>Content Type:</strong> Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons).</p>
 </li>
 <li>
-<p><strong>Content-Coding</strong> are registered in <a href="http://www.iana.org/assignments/http-parameters">IANA HTTP parameters</a> too and they are essentially numbers that identify a <em>potential transformation to the representation of a resource</em>. This might sound confusing cause it is, but think about it as a compact way to indicate that you want to compress/deflate/encrypt some resource value.</p>
+<p><strong>Content Coding:</strong> Content codings are registered in the <a href="http://www.iana.org/assignments/http-parameters">IANA HTTP Parameters registry</a> and identify an optional <em>transformation to the representation of a resource</em>, such as the compression or encryption of some data.</p>
 </li>
 <li>
-<p><strong>Content-Format</strong> is again a number on a registry. This number identifies the combination of a Content-Type and a Content-Coding defined by the <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml">CoAP Content-Formats registry</a>.</p>
-</li>
-<li>
-<p><strong>Attributes</strong> describe information useful in accessing the target link they can be found on <a href="http://www.iana.org/assignments/http-parameters">IANA</a> and are defined for CoAP in <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a>. For example <code>rt</code> to specify the resource type, <code>sz</code> for maximum size estimate or <code>obs</code> to indicate that the resource is <a href="https://tools.ietf.org/html/rfc7641">observable</a>.</p>
+<p><strong>Content Format:</strong> Content formats are used in CoAP to identify the combination of a content type and a content coding. They are registered in the <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml">IANA CoAP Content-Formats registry</a>.</p>
 </li>
 </ol>
-<p>Keeping all this in mind, the following sentence will now make more sense:</p>
-<p><strong>The content-format <code>60</code> identifies the <code>application/cbor</code> media-type, defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>.</strong></p>
-<p>At this point we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources and serving those resources in a specific format.</p>
-<p>Just like on the web a HTTP Client (e.g., a browser) can understand the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>; a CoAP Client could understand that <code>application/cbor</code> implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
+<p>For example, the content-format <code>11060</code> identifies the content type <code>application/cbor</code> (defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>) combined with the content coding <code>deflate</code> (defined by <a href="http://www.iana.org/go/rfc1951">RFC7049</a>).</p>
+<p>At this point, we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources, and serving those resources in a specific format.</p>
+<p>Just like a web browser understands HTTP and the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>, an IoT client could understand CoAP and common media types like <code>application/cbor</code>, which implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
 <a class="header" href="#data-serialization" id="data-serialization"><h2>Data Serialization</h2></a>
 <p>We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be <em>serialized</em>, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called <a href="https://tools.ietf.org/html/rfc8428">SenML</a> that is much readable.</p>
 <p>SenML can be represented in various formats with their respective media types which are: <code>application/senml-exi</code> , <code>application/senml+cbor</code> , <code>application/senml+json</code> , <code>application/senml+xml</code>. We will use JSON as it is one of the most common and it is easily readable - and writable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.</p>
-<p>The CoAP client will <strong>request</strong> the resources available under the path <code>/device</code>. The request asks for the content format identifier of <code>110</code> which means <code>application/senml+json</code> format. Other CoAP fields like <code>token</code> or <code>version</code> have been omitted for simplicity.</p>
+<p>The CoAP client will <strong>request</strong> the resources available under the path <code>/device</code>. The request asks for the content format identifier of <code>110</code>, which means <code>application/senml+json</code> without any additional content coding.</p>
 <pre><code class="language-md">REQ: GET coap://coap.me:5683/device?ct=110
 </code></pre>
 <p>The <strong>response</strong> below uses the CoAP <code>code</code> of 2.05, which means that the operation was successful The payload contains a times series of measurements with the base name <code>bn</code> indicating the URN of the device, the base time <code>bt</code> when the time series started, the units <code>bu</code> and the version used <code>ver</code> of <code>2</code>.</p>
@@ -208,7 +204,7 @@ While CBOR is binary and hard to read without translation tools for humans, ther
         {&quot;n&quot;:&quot;current&quot;,&quot;v&quot;:1.7}
     ]
 </code></pre>
-<p>At first glance it looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation (<a href="https://cbor.io">CBOR</a>) was created. Below you can see the same payload in CBOR in only 147 Bytes.</p>
+<p>At first glance, it looks like JSON and is easily understandable by humans. However, given that we have constrains in bandwidth, it would be very useful to have a data format that, among other features, is much smaller in message size. For that purpose the Concise Binary Object Representation (<a href="https://cbor.io">CBOR</a>) was created. Below you can see the same payload in CBOR in only 147 Bytes.</p>
 <pre><code class="language-md">00000000: 85a4 2178 1d75 726e 3a64 6576 3a6d 6163  ..!x.urn:dev:mac
 00000010: 3a30 3032 3462 6566 6666 6538 3034 6666  :0024befffe804ff
 00000020: 312f 221a 4c0e 856c 2361 4163 7665 7202  1/&quot;.L..l#aAcver.
