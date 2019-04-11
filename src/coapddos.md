@@ -4,11 +4,11 @@ That CoAP can be used in malicious DDOS attacks is news but at the same time it 
 
 As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been *"occasionally used as a basis of DDOS attacks, with increasing frequency, reaching [55Gbps on average](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/), and with the largest one clocking at 320Gbps"*. Apparently the attacks are short-lived, lasting on average *"just over [90 seconds](https://www.securityweek.com/attackers-use-coap-ddos-amplification)"* and feature around 100 packets per second.
 
-An attack of 320Gbps is already huge, since as we saw [On DDOS Attacks](./udpddos.md) Mirai clocked at 600Gbps. It is thus likely that a 1Tbps attack using CoAP will occur sonn, maybe even larger. The current peak volume is an attack of some 1.7Tbps of malicious traffic.
+An attack of 320Gbps is already huge, since as we saw [On DDOS Attacks](./udpddos.md) Mirai clocked at 600Gbps. It is thus likely that a 1Tbps attack using CoAP will occur soon, maybe even larger. The current peak volume is an attack of some 1.7Tbps of malicious traffic.
 
 As a danish researcher at [RVAsec](https://www.youtube.com/watch?v=DX68vb2XjdQ&feature=youtu.be&t=19m28s) points out, *the CoAP protocol was not yet mainstream back in 2017, but the number of visible CoAP endpoints has increased rapidly from about `6500` to `220000` between november 2017 and may 2018, to more than `738041` in October 2018*.
 
-That number has decreased as devices are being patched and today we would find about `436854` running `shodan count port:5683`, out of which `305051` are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.
+That number has decreased as devices are being patched and today we would find about `436854` running `:~$ shodan count port:5683`, out of which `305051` are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.
 
 These attacks are based on the two vulnerabilities of UDP-based protocols mentioned in the [previous section](./udpddos.md).
 
@@ -44,7 +44,11 @@ The amplification factor means represents the effort for an attacker, for exampl
 
 ## Exploring Vulnerable Endpoints
 
-[Shodan](https://www.shodan.io/) and [nmap](https://nmap.org/) are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account. Some of shodan's most basic commands are:
+[Shodan](https://www.shodan.io/) and [nmap](https://nmap.org/) are the preferred tools to find out about existing vulnerable CoAP endpoints, however the usability of the first one is limited without a paid account.
+
+<script id="asciicast-192946" src="https://asciinema.org/a/192946.js" async></script>
+
+Some of Shodan's most basic commands are:
 
 | Shodan Command                 | Effect                           |
 |:-------------------------------|:---------------------------------|
@@ -53,29 +57,7 @@ The amplification factor means represents the effort for an attacker, for exampl
 |`shodan stats --limit 20 port:5683` |  get some statistics CoAP endpoits out there |
 |`shodan search --fields ip_str,port,org,hostnames port:5683 country:CN` |  get a list of CoAP endpoints, their specific IPs and hostname |
 
-There is also a web interface that allows for searching, for example [CoAP Endpoints](https://www.shodan.io/search?query=port%3A5683). Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks.
-
-```sh
-:~$ shodan host 120.212.XXX.XXX
-120.212.XXX.XXX
-Hostnames:               XXX
-City:                    Nizhniy Novgorod
-Updated:                 2019-04-10T11:37:35.572911
-
-Ports:
-     80/tcp  
-   5683/udp
-```
-
-```bash
-:~$ shodan host 39.159.XXX.XXX
-39.159.XXX.XXX
-City:                    Nanchang
-Updated:                 2019-04-10T11:39:13.342628
-
-Ports:
-   5683/udp
-```
+There is also a web interface that allows for searching, for example [CoAP Endpoints](https://www.shodan.io/search?query=port%3A5683). Looking a bit more on a couple of aleatory searched hosts shows two CoAP endpoints that potentially are discoverable over the Internet and vulnerable to UDP-based attacks. We can search them by issuing `:~$ shodan host 120.212.XXX.XXX`
 
 As we saw in the section [Finding your CoAP devices](./coapdiscovery.md) CoAP has an in-built discovery mechanism, thus sending a `GET` request message to the `/.well-known/core` resource might show information. Indeed, for example:
 
