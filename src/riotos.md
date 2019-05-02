@@ -2,25 +2,12 @@
 
 This part is largely a shameless copy from colleagues at the [RIOT](https://github.com/iothon/RIOT) community. The tutorial provides an overview of RIOT and an introduction to using CoAP with well-known cloud services.
 
-**Table of contents**
-
-- [Getting started with RIOT OS](#Getting-started-with-RIOT-OS)
-  - [Get your tools](#Get-your-tools)
-  - [First example: Hello World](#First-example-Hello-World)
-  - [Sensors and actuators](#Sensors-and-Actuators)
-  - [CoAP Introduction](#CoAP-Introduction)
-  - [Resource Discovery and Web Semantics](#Resource-Discovery-and-Web-Semantics)
-- [Getting started with Node-RED](#Getting-started-with-Node-RED)
-  - [Installation](#Installation)
-  - [First example](#First-example)
-  - [CoAP request example](#CoAP-request-example)
-- [Getting started with Maker AllThingsTalk cloud](#Getting-started-with-Maker-AllThingsTalk-cloud)
-
 # Getting started with RIOT OS
 
 [RIOT](http://riot-os.org) is a free, open source operating system developed by a grassroots community gathering companies, academia, and hobbyists, distributed all around the world.
 
 RIOT supports most low-power IoT devices and microcontroller architectures (32-bit, 16-bit, 8-bit). RIOT aims to implement all relevant open standards supporting an Internet of Things that is connected, secure, durable & privacy-friendly.
+
 ## Get your tools
 ### Quick Setup using a Virtual Machine (recommended for this challenge)
 
@@ -275,27 +262,30 @@ Node-RED is a programming tool that provides a browser-base editor that makes it
 
 ![](https://i.imgur.com/YQOeZIF.png)
 
-
 ### Installation
 To run Node-RED locally you will need to install it. For that, you first need Node.js. You can download it from [here](https://nodejs.org/en/).
 
 Check that node is already installed by checking its version, for that on a terminal run:
-```
+
+```sh
 node -v
 ```
 
 Now, to install Node-RED we will use node package manager npm (`sudo` is only required on Linux of OS X):
-```
+
+```sh
 sudo npm install -g --unsafe-perm node-red
 ```
 
 In order to send and receive CoAP messages we will need to install the CoAP support node for Node-RED. To do that, run:
-```
+
+```sh
 npm install node-red-contrib-coap
 ```
 
 If everything went fine, you should be able to start Node-RED by running:
-```
+
+```sh
 node-red
 ```
 
@@ -335,15 +325,19 @@ Click Ok and deploy the flow again.
 
 #### Export and Import
 Flows can be represented by json files. For example, the previous flow can be imported with:
+
 ```json
 [{"id":"58ffae9d.a7005","type":"debug","name":"","active":true,"complete":false,"x":640,"y":200,"wires":[]},{"id":"17626462.e89d9c","type":"inject","name":"","topic":"","payload":"","repeat":"","once":false,"x":240,"y":200,"wires":[["2921667d.d6de9a"]]},{"id":"2921667d.d6de9a","type":"function","name":"Format timestamp","func":"// Create a Date object from the payload\nvar date = new Date(msg.payload);\n// Change the payload to be a formatted Date string\nmsg.payload = date.toString();\n// Return the message so it can be sent on\nreturn msg;","outputs":1,"x":440,"y":200,"wires":[["58ffae9d.a7005"]]}]
 ```
 
 ### CoAP request example
+
 The 'CoAP Request' node can be used to perform a request to a CoAP server. Here you can see an example of a simple request:
+
 ![](https://i.imgur.com/WShfLVU.png)
 
 To import the flow, use this json:
+
 ```json
 [{"id":"57b0b5ae.a0874c","type":"tab","label":"Basic CoAP request","disabled":true,"info":""},{"id":"3f5eb024.b4417","type":"coap request","z":"57b0b5ae.a0874c","method":"GET","observe":false,"url":"","content-format":"text/plain","raw-buffer":false,"name":"CoAP Request","x":580,"y":220,"wires":[["bbf9ecda.8b58c"]]},{"id":"2abc4f25.94ea","type":"inject","z":"57b0b5ae.a0874c","name":"","topic":"Trigger","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":170,"y":220,"wires":[["f1bdfdb5.d8d63"]]},{"id":"f1bdfdb5.d8d63","type":"change","z":"57b0b5ae.a0874c","name":"Set URL","rules":[{"t":"set","p":"url","pt":"msg","to":"coap://[fe80::54f4:73ff:fe8e:58fe]%tapbr0/.well-known/core","tot":"str"}],"action":"","property":"","from":"","to":"","reg":false,"x":360,"y":220,"wires":[["3f5eb024.b4417","cd438587.ff5a58"]]},{"id":"bbf9ecda.8b58c","type":"debug","z":"57b0b5ae.a0874c","name":"Debug: print response","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":800,"y":220,"wires":[]},{"id":"cd438587.ff5a58","type":"debug","z":"57b0b5ae.a0874c","name":"Debug: print URL","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"url","x":590,"y":260,"wires":[]}]
 ```
@@ -357,23 +351,26 @@ Set the URL to the correct value by double clicking the 'Set URL' node and modif
 # Getting started with Maker AllThingsTalk cloud
 [Maker](https://docs.allthingstalk.com/cloud/general/maker/) is the web interface of the AllThingsTalk cloud. It provides APIs to send and receive data in multiple formats. We will be using the [UDP API](https://docs.allthingstalk.com/developers/api/udp-messaging/) and the [JSON format](https://docs.allthingstalk.com/developers/data-formats/).
 
-1- Create an account: [https://maker.allthingstalk.com/signup](https://maker.allthingstalk.com/signup)
+1. Create an account: [https://maker.allthingstalk.com/signup](https://maker.allthingstalk.com/signup)
 
-2- Add a New Ground: [https://maker.allthingstalk.com/environment](https://maker.allthingstalk.com/environment)
+2. Add a New Ground: [https://maker.allthingstalk.com/environment](https://maker.allthingstalk.com/environment)
 
-3- Enter your ground and click on 'Connect a Device'. Choose 'Your own device' and set a name for it.
+3. Enter your ground and click on 'Connect a Device'. Choose 'Your own device' and set a name for it.
 
-4- Once your device is created you will find it in the 'Devices' section. Now create a new asset for it. Assets could be sensors and actuators. From the point of view of the application these assets can be spread among multiple physical nodes.
+4. Once your device is created you will find it in the 'Devices' section. Now create a new asset for it. Assets could be sensors and actuators. From the point of view of the application these assets can be spread among multiple physical nodes.
 You will have to choose the kind of asset, its name and its profile.
 
-5- To send state updates of a particular asset you need to send UDP messages to the API. The payload needs to have the following format:
-```
+5. To send state updates of a particular asset you need to send UDP messages to the API. The payload needs to have the following format:
+
+``` md
 <device ID>\n<device token>\n{"<asset name>": {"value": <new value>}}
 ```
+
 Where:
-- **device ID** and **device Token** can be obtained under 'Settings > Authentication'.
-- **asset name**: is the name of the asset whose state you want to update.
-- **new value**: is the update value.
+
+* **device ID** and **device Token** can be obtained under 'Settings > Authentication'.
+* **asset name**: is the name of the asset whose state you want to update.
+* **new value**: is the update value.
 
 **NOTE** that there is a newline character ('\n') between the device ID, the token and the message.
 

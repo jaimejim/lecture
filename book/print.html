@@ -509,26 +509,6 @@ RES: &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40
 <p>Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.</p>
 <a class="header" href="print.html#riot-os" id="riot-os"><h1>RIOT OS</h1></a>
 <p>This part is largely a shameless copy from colleagues at the <a href="https://github.com/iothon/RIOT">RIOT</a> community. The tutorial provides an overview of RIOT and an introduction to using CoAP with well-known cloud services.</p>
-<p><strong>Table of contents</strong></p>
-<ul>
-<li><a href="print.html#Getting-started-with-RIOT-OS">Getting started with RIOT OS</a>
-<ul>
-<li><a href="print.html#Get-your-tools">Get your tools</a></li>
-<li><a href="print.html#First-example-Hello-World">First example: Hello World</a></li>
-<li><a href="print.html#Sensors-and-Actuators">Sensors and actuators</a></li>
-<li><a href="print.html#CoAP-Introduction">CoAP Introduction</a></li>
-<li><a href="print.html#Resource-Discovery-and-Web-Semantics">Resource Discovery and Web Semantics</a></li>
-</ul>
-</li>
-<li><a href="print.html#Getting-started-with-Node-RED">Getting started with Node-RED</a>
-<ul>
-<li><a href="print.html#Installation">Installation</a></li>
-<li><a href="print.html#First-example">First example</a></li>
-<li><a href="print.html#CoAP-request-example">CoAP request example</a></li>
-</ul>
-</li>
-<li><a href="print.html#Getting-started-with-Maker-AllThingsTalk-cloud">Getting started with Maker AllThingsTalk cloud</a></li>
-</ul>
 <a class="header" href="print.html#getting-started-with-riot-os" id="getting-started-with-riot-os"><h1>Getting started with RIOT OS</h1></a>
 <p><a href="http://riot-os.org">RIOT</a> is a free, open source operating system developed by a grassroots community gathering companies, academia, and hobbyists, distributed all around the world.</p>
 <p>RIOT supports most low-power IoT devices and microcontroller architectures (32-bit, 16-bit, 8-bit). RIOT aims to implement all relevant open standards supporting an Internet of Things that is connected, secure, durable &amp; privacy-friendly.</p>
@@ -728,16 +708,16 @@ INFO # This board features a(n) samd21 MCU.
 <a class="header" href="print.html#installation" id="installation"><h3>Installation</h3></a>
 <p>To run Node-RED locally you will need to install it. For that, you first need Node.js. You can download it from <a href="https://nodejs.org/en/">here</a>.</p>
 <p>Check that node is already installed by checking its version, for that on a terminal run:</p>
-<pre><code>node -v
+<pre><code class="language-sh">node -v
 </code></pre>
 <p>Now, to install Node-RED we will use node package manager npm (<code>sudo</code> is only required on Linux of OS X):</p>
-<pre><code>sudo npm install -g --unsafe-perm node-red
+<pre><code class="language-sh">sudo npm install -g --unsafe-perm node-red
 </code></pre>
 <p>In order to send and receive CoAP messages we will need to install the CoAP support node for Node-RED. To do that, run:</p>
-<pre><code>npm install node-red-contrib-coap
+<pre><code class="language-sh">npm install node-red-contrib-coap
 </code></pre>
 <p>If everything went fine, you should be able to start Node-RED by running:</p>
-<pre><code>node-red
+<pre><code class="language-sh">node-red
 </code></pre>
 <p>Finally, to access the Node-RED editor open a browser tab at <a href="http://localhost:1880">http://localhost:1880</a>.</p>
 <a class="header" href="print.html#first-example" id="first-example"><h3>First example</h3></a>
@@ -767,8 +747,8 @@ return msg;
 <pre><code class="language-json">[{&quot;id&quot;:&quot;58ffae9d.a7005&quot;,&quot;type&quot;:&quot;debug&quot;,&quot;name&quot;:&quot;&quot;,&quot;active&quot;:true,&quot;complete&quot;:false,&quot;x&quot;:640,&quot;y&quot;:200,&quot;wires&quot;:[]},{&quot;id&quot;:&quot;17626462.e89d9c&quot;,&quot;type&quot;:&quot;inject&quot;,&quot;name&quot;:&quot;&quot;,&quot;topic&quot;:&quot;&quot;,&quot;payload&quot;:&quot;&quot;,&quot;repeat&quot;:&quot;&quot;,&quot;once&quot;:false,&quot;x&quot;:240,&quot;y&quot;:200,&quot;wires&quot;:[[&quot;2921667d.d6de9a&quot;]]},{&quot;id&quot;:&quot;2921667d.d6de9a&quot;,&quot;type&quot;:&quot;function&quot;,&quot;name&quot;:&quot;Format timestamp&quot;,&quot;func&quot;:&quot;// Create a Date object from the payload\nvar date = new Date(msg.payload);\n// Change the payload to be a formatted Date string\nmsg.payload = date.toString();\n// Return the message so it can be sent on\nreturn msg;&quot;,&quot;outputs&quot;:1,&quot;x&quot;:440,&quot;y&quot;:200,&quot;wires&quot;:[[&quot;58ffae9d.a7005&quot;]]}]
 </code></pre>
 <a class="header" href="print.html#coap-request-example" id="coap-request-example"><h3>CoAP request example</h3></a>
-<p>The 'CoAP Request' node can be used to perform a request to a CoAP server. Here you can see an example of a simple request:
-<img src="https://i.imgur.com/WShfLVU.png" alt="" /></p>
+<p>The 'CoAP Request' node can be used to perform a request to a CoAP server. Here you can see an example of a simple request:</p>
+<p><img src="https://i.imgur.com/WShfLVU.png" alt="" /></p>
 <p>To import the flow, use this json:</p>
 <pre><code class="language-json">[{&quot;id&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;type&quot;:&quot;tab&quot;,&quot;label&quot;:&quot;Basic CoAP request&quot;,&quot;disabled&quot;:true,&quot;info&quot;:&quot;&quot;},{&quot;id&quot;:&quot;3f5eb024.b4417&quot;,&quot;type&quot;:&quot;coap request&quot;,&quot;z&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;observe&quot;:false,&quot;url&quot;:&quot;&quot;,&quot;content-format&quot;:&quot;text/plain&quot;,&quot;raw-buffer&quot;:false,&quot;name&quot;:&quot;CoAP Request&quot;,&quot;x&quot;:580,&quot;y&quot;:220,&quot;wires&quot;:[[&quot;bbf9ecda.8b58c&quot;]]},{&quot;id&quot;:&quot;2abc4f25.94ea&quot;,&quot;type&quot;:&quot;inject&quot;,&quot;z&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;name&quot;:&quot;&quot;,&quot;topic&quot;:&quot;Trigger&quot;,&quot;payload&quot;:&quot;&quot;,&quot;payloadType&quot;:&quot;date&quot;,&quot;repeat&quot;:&quot;&quot;,&quot;crontab&quot;:&quot;&quot;,&quot;once&quot;:false,&quot;onceDelay&quot;:0.1,&quot;x&quot;:170,&quot;y&quot;:220,&quot;wires&quot;:[[&quot;f1bdfdb5.d8d63&quot;]]},{&quot;id&quot;:&quot;f1bdfdb5.d8d63&quot;,&quot;type&quot;:&quot;change&quot;,&quot;z&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;name&quot;:&quot;Set URL&quot;,&quot;rules&quot;:[{&quot;t&quot;:&quot;set&quot;,&quot;p&quot;:&quot;url&quot;,&quot;pt&quot;:&quot;msg&quot;,&quot;to&quot;:&quot;coap://[fe80::54f4:73ff:fe8e:58fe]%tapbr0/.well-known/core&quot;,&quot;tot&quot;:&quot;str&quot;}],&quot;action&quot;:&quot;&quot;,&quot;property&quot;:&quot;&quot;,&quot;from&quot;:&quot;&quot;,&quot;to&quot;:&quot;&quot;,&quot;reg&quot;:false,&quot;x&quot;:360,&quot;y&quot;:220,&quot;wires&quot;:[[&quot;3f5eb024.b4417&quot;,&quot;cd438587.ff5a58&quot;]]},{&quot;id&quot;:&quot;bbf9ecda.8b58c&quot;,&quot;type&quot;:&quot;debug&quot;,&quot;z&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;name&quot;:&quot;Debug: print response&quot;,&quot;active&quot;:true,&quot;tosidebar&quot;:true,&quot;console&quot;:false,&quot;tostatus&quot;:false,&quot;complete&quot;:&quot;payload&quot;,&quot;x&quot;:800,&quot;y&quot;:220,&quot;wires&quot;:[]},{&quot;id&quot;:&quot;cd438587.ff5a58&quot;,&quot;type&quot;:&quot;debug&quot;,&quot;z&quot;:&quot;57b0b5ae.a0874c&quot;,&quot;name&quot;:&quot;Debug: print URL&quot;,&quot;active&quot;:true,&quot;tosidebar&quot;:true,&quot;console&quot;:false,&quot;tostatus&quot;:false,&quot;complete&quot;:&quot;url&quot;,&quot;x&quot;:590,&quot;y&quot;:260,&quot;wires&quot;:[]}]
 </code></pre>
@@ -777,13 +757,25 @@ return msg;
 <hr />
 <a class="header" href="print.html#getting-started-with-maker-allthingstalk-cloud" id="getting-started-with-maker-allthingstalk-cloud"><h1>Getting started with Maker AllThingsTalk cloud</h1></a>
 <p><a href="https://docs.allthingstalk.com/cloud/general/maker/">Maker</a> is the web interface of the AllThingsTalk cloud. It provides APIs to send and receive data in multiple formats. We will be using the <a href="https://docs.allthingstalk.com/developers/api/udp-messaging/">UDP API</a> and the <a href="https://docs.allthingstalk.com/developers/data-formats/">JSON format</a>.</p>
-<p>1- Create an account: <a href="https://maker.allthingstalk.com/signup">https://maker.allthingstalk.com/signup</a></p>
-<p>2- Add a New Ground: <a href="https://maker.allthingstalk.com/environment">https://maker.allthingstalk.com/environment</a></p>
-<p>3- Enter your ground and click on 'Connect a Device'. Choose 'Your own device' and set a name for it.</p>
-<p>4- Once your device is created you will find it in the 'Devices' section. Now create a new asset for it. Assets could be sensors and actuators. From the point of view of the application these assets can be spread among multiple physical nodes.
+<ol>
+<li>
+<p>Create an account: <a href="https://maker.allthingstalk.com/signup">https://maker.allthingstalk.com/signup</a></p>
+</li>
+<li>
+<p>Add a New Ground: <a href="https://maker.allthingstalk.com/environment">https://maker.allthingstalk.com/environment</a></p>
+</li>
+<li>
+<p>Enter your ground and click on 'Connect a Device'. Choose 'Your own device' and set a name for it.</p>
+</li>
+<li>
+<p>Once your device is created you will find it in the 'Devices' section. Now create a new asset for it. Assets could be sensors and actuators. From the point of view of the application these assets can be spread among multiple physical nodes.
 You will have to choose the kind of asset, its name and its profile.</p>
-<p>5- To send state updates of a particular asset you need to send UDP messages to the API. The payload needs to have the following format:</p>
-<pre><code>&lt;device ID&gt;\n&lt;device token&gt;\n{&quot;&lt;asset name&gt;&quot;: {&quot;value&quot;: &lt;new value&gt;}}
+</li>
+<li>
+<p>To send state updates of a particular asset you need to send UDP messages to the API. The payload needs to have the following format:</p>
+</li>
+</ol>
+<pre><code class="language-md">&lt;device ID&gt;\n&lt;device token&gt;\n{&quot;&lt;asset name&gt;&quot;: {&quot;value&quot;: &lt;new value&gt;}}
 </code></pre>
 <p>Where:</p>
 <ul>
