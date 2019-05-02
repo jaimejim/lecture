@@ -66,16 +66,20 @@ Note that you need to log out once to reload a Linux user's group assignments
 After a successful installation of the tools, try to build and flash *hello world* for two different platforms.
 
 * Navigate into the *hello-world* directory
+
 ```sh
 cd examples/hello-world
 ```
 
 ### Run your first application as Linux process
 * Compile and run on `native` platform:
+
 ```sh
 make all term
 ```
+
 * If everything went well, you should see the serial output of your RIOT program after compilation has finished:
+
 ```sh
 RIOT native interrupts/signals initialized.
 LED_RED_OFF
@@ -91,10 +95,12 @@ This board features a(n) native MCU.
 
 ### Run your first application on real hardware
 * To compile an application for a specific board, we can make use of the `BOARD` environment variable. In case you are running on an Atmel board, type:
+
 ```sh
 BOARD=samr21-xpro make all flash term
 ```
 * If everything went well, you should see the serial output of your RIOT program after compilation and flashing has finished:
+
 ```sh
 INFO # main(): This is RIOT! (Version: xxx)
 INFO # Hello World!
@@ -144,6 +150,7 @@ In constrained nodes this **collection of links** is carried as a payload of one
 
 ### Syntax
 A single link is expressed like:
+
 ```
 <target-URI>;paramName1="paramValue1";paramName2;...;paramNameN
 ```
@@ -155,6 +162,7 @@ Where:
 The target is enclosed in `'<' '>'` characters and the attributes are separated by `';'`.
 
 When more than one link is sent they are separated by `','`:
+
 ```
 <target-URI1>;paramName1="paramValue1",<target-URI2>;paramName2
 ```
@@ -172,7 +180,8 @@ With that in mind, if a server exposes multiple sensors all can present the same
 
 #### Example
 In this example a server present two resources. Both have the same interface "sensor":
-```
+
+```md
 </sensors/temp>;rt="temperature-c";if="sensor",
 </sensors/light>;rt="light-lux";if="sensor"
 ```
@@ -186,6 +195,7 @@ Components in a resource directory environment ([draft](https://tools.ietf.org/h
 3. Client is a web entity that uses the lookup interface to get information about resources/endpoints registered at the RD. A client can also be an EP at the same time.
 
 Summary of the architecture:
+
 ```
                         Registration         Lookup
                          Interface         Interface
@@ -212,6 +222,7 @@ The registration interface of an RD is a resource on the RD with the resource ty
    Res: 2.05 Content
    </rd>;rt="core.rd";ct=40
 ```
+
 Endpoints can register its resources by sending a POST to this resource with at least a unique name (ep) for the endpoint as query parameter. For other optional parameters (d, lt, base, extra-attr) please refer [section 5](https://tools.ietf.org/html/draft-ietf-core-resource-directory-20#section-5) of the draft. The list of resources to be registered and its attributes is expressed in link format and put in the payload.
 
 ```
@@ -241,6 +252,7 @@ To do a lookup, we must first discover the lookup resources of the RD. The looku
 Requesters can use filters for the lookup by including it as query parameters. Other than the attributes defined in link format (rt, ct, base, etc.), RDs also accepts "page" and "count" to obtain the lookup results in specified increments using pagination.
 
 Example of a resource lookup. Here the lookup resource is `/rd-lookup/res`:
+
 ```
  Req: GET /rd-lookup/res?rt=temperature
 
@@ -312,6 +324,7 @@ Select the 'Debug' side bar on the right side, and click the button of the injec
 
 #### Add a Function node
 Function nodes allow you to pass each message through a JavaScript function. Add one of these nodes into the workspace, and place it between the inject and debug nodes (you may delete the wire by selecting it and pressing the delete key). Double-click the node to open up the edit dialog. Enter the following function, it turns the timestamp into a Date string:
+
 ```javascript
 // Create a Date object from the payload
 var date = new Date(msg.payload);
