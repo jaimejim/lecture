@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>CoAP Web Linking and Serialization - Lectures</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html" class="active"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html" class="active"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Lectures</h1> 
+                        <h1 class="menu-title">Lectures</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,9 +145,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization"><h1>CoAP Web Linking and Serialization</h1></a>
+                        <h1><a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization">CoAP Web Linking and Serialization</a></h1>
 <p>Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>. URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>. We will see some of the basic concepts in this chapter.</p>
-<a class="header" href="#uris" id="uris"><h2>URIs</h2></a>
+<h2><a class="header" href="#uris" id="uris">URIs</a></h2>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
 <pre><code class="language-md">   foo://example.com:8042/over/there?name=ferret#nose
    \_/   \_______________/\________/\__________/\___/
@@ -168,8 +173,8 @@
      |           |                 |                |           |
    scheme     authority           path            query     fragment
 </code></pre>
-<a class="header" href="#media-types" id="media-types"><h2>Media Types</h2></a>
-<p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>,</p>
+<h2><a class="header" href="#media-types" id="media-types">Media Types</a></h2>
+<p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>, </p>
 <ol>
 <li>
 <p><strong>Media Type:</strong> Media types are registered in the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a>. They identify the general type like &quot;audio&quot; or &quot;text&quot; combined with a <code>subtype</code> like &quot;ogg&quot;, &quot;plain&quot;, or &quot;html&quot;, resulting in strings like &quot;audio/ogg&quot;, &quot;text/plain&quot;, and &quot;text/html&quot;. In IoT, common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
@@ -187,7 +192,7 @@
 <p>For example, the content-format <code>11060</code> identifies the content type <code>application/cbor</code> (defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>) combined with the content coding <code>deflate</code> (defined by <a href="http://www.iana.org/go/rfc1951">RFC7049</a>).</p>
 <p>At this point, we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources, and serving those resources in a specific format.</p>
 <p>Just like a web browser understands HTTP and the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>, an IoT client could understand CoAP and common media types like <code>application/cbor</code>, which implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
-<a class="header" href="#data-serialization" id="data-serialization"><h2>Data Serialization</h2></a>
+<h2><a class="header" href="#data-serialization" id="data-serialization">Data Serialization</a></h2>
 <p>We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be <em>serialized</em>, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called <a href="https://tools.ietf.org/html/rfc8428">SenML</a> that is much readable.</p>
 <p>SenML can be represented in various formats with their respective media types which are: <code>application/senml-exi</code> , <code>application/senml+cbor</code> , <code>application/senml+json</code> , <code>application/senml+xml</code>. We will use JSON as it is one of the most common and it is easily readable - and writable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.</p>

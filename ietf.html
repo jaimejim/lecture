@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>The IETF - Lectures</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html" class="active"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="ietf.html" class="active"><strong aria-hidden="true">2.</strong> The IETF</a></li><li><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Lectures</h1> 
+                        <h1 class="menu-title">Lectures</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,10 +145,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#the-internet-engineering-task-force-ietf" id="the-internet-engineering-task-force-ietf"><h1>The Internet Engineering Task Force (IETF)</h1></a>
+                        <h1><a class="header" href="#the-internet-engineering-task-force-ietf" id="the-internet-engineering-task-force-ietf">The Internet Engineering Task Force (IETF)</a></h1>
 <p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Looking ahead, there are estimations of several other billions of devices to be soon connected to this network. Noone thought that this feat could be achievable and yet it has happened with almost no fanfare.</p>
 <p>A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.</p>
-<a class="header" href="#what-has-the-ietf-done-for-us-anyways" id="what-has-the-ietf-done-for-us-anyways"><h2>What has the IETF done for us anyways?</h2></a>
+<h2><a class="header" href="#what-has-the-ietf-done-for-us-anyways" id="what-has-the-ietf-done-for-us-anyways">What has the IETF done for us anyways?</a></h2>
 <p>IETF's mission is <strong><a href="https://tools.ietf.org/html/rfc3935">to make the Internet work better</a></strong>, and it tries to do so by creating high quality, relevant technical documents that influence the way people design, use, and manage the Internet. Those formal documents have behind them consensus and several implementations before they are assigned the usual Request for Comments (RFC) number.  Many of those RFCs have already been implemented and run on every connected machine today:</p>
 <ul>
 <li><a href="https://tools.ietf.org/html/rfc791">RFC791</a> The Internet Protocol.</li>
@@ -179,16 +184,16 @@
 </ul>
 <p>You can also explore the RFC universe courtesy of <a href="https://www.peterkrantz.com/v11n/rfc/">Peter Krantz</a>.</p>
 <p><img src="./img/rfc-map.jpg" alt="RFC weighted by reference map" /></p>
-<a class="header" href="#ietf-organization" id="ietf-organization"><h2>IETF Organization</h2></a>
+<h2><a class="header" href="#ietf-organization" id="ietf-organization">IETF Organization</a></h2>
 <p>As explained at the <a href="https://www.ietf.org/about/who/">IETF website</a>, the technical work of the IETF is done in its <a href="https://www.ietf.org/how/wgs/">working groups</a>, which are organized by topic into several areas (e.g., routing, transport, security, etc.). The IETF working groups are grouped into areas, and managed by Area Directors, or ADs. The ADs are members of the Internet Engineering Steering Group (<a href="https://www.ietf.org/glossary.html#IESG">IESG</a>).</p>
 <p>Much of the work in the IETF is handled via <a href="https://www.ietf.org/list/">mailing lists</a>. The IETF holds <a href="https://www.ietf.org/how/meetings/">meetings</a> three times per year. <a href="https://www.ietf.org/how/runningcode/hackathons/">IETF Hackathons</a> encourage collaboration on developing utilities, ideas, sample code, and solutions that show practical implementations of IETF standards. More recently GitHub has become a prevalent way to track the work and interact with developers more smoothly; for example <a href="https://github.com/core-wg">CoRE</a>, <a href="https://github.com/httpwg">HTTP</a> or <a href="https://github.com/ietf-teep">TEEP</a> use it regularly.</p>
 <p>The Internet Architecture Board, (<a href="https://www.ietf.org/glossary.html#IAB">IAB</a>) is responsible for defining the overall architecture of the Internet, providing guidance and broad direction to the IETF. The IAB also serves as the technology advisory group to the Internet Society <a href="https://www.ietf.org/glossary.html#ISOC">ISOC</a>).</p>
 <p>There are very detailed guideline documents like <a href="https://tools.ietf.org/html/rfc2418">RFC2418</a> that explain how WGs are created and what the roles of each individual are, but at a high level the IETF relies on <strong>&quot;rough consensus and running code&quot;</strong>.</p>
-<a class="header" href="#a-drafts-lifetime" id="a-drafts-lifetime"><h2>A draft's lifetime</h2></a>
+<h2><a class="header" href="#a-drafts-lifetime" id="a-drafts-lifetime">A draft's lifetime</a></h2>
 <p>It all starts with an author of set of authors that want to propose some solution for a specific problem they are facing. Usually the problem requires some interoperability and thus an Internet draft seems like the right approach.</p>
 <ol>
 <li>
-<p>An Internet draft is first publish as an <em>individual submission</em> by one or more authors. Literally anyone can write a draft and the requirements on that submission are very low.</p>
+<p>An Internet draft is first publish as an <em>individual submission</em> by one or more authors. Literally anyone can write a draft and the requirements on that submission are very low. </p>
 </li>
 <li>
 <p>Once the submission gets the attention of the Working Group, by discussing it on the mailing list, presenting it, doing implementations or evaluation... then the group can <em>adopt it</em> by doing a <em>Working Group Adoption (WGA)</em> call. Once agreed the document becomes a <em>working group internet draft</em>.</p>
@@ -197,14 +202,14 @@
 <p>The draft will then go through <strong>many</strong> iterations and revisions, interop events, discussions, errata, and so on before the group thinks it is ready for <em>Working Group Last Call</em> which is the moment in which the group decides that the document is ready for publication.</p>
 </li>
 <li>
-<p>After that the document is sent to the <a href="https://www.ietf.org/about/groups/iesg/">Internet Engineering Steering Group (IESG)</a> for final review, <a href="https://www.iana.org/">IANA</a> will due its due process and other and other editing will be done by/with the RFC Editor. After some time the document gets assigned an RFC number and is published.</p>
+<p>After that the document is sent to the <a href="https://www.ietf.org/about/groups/iesg/">Internet Engineering Steering Group (IESG)</a> for final review, <a href="https://www.iana.org/">IANA</a> will due its due process and other and other editing will be done by/with the RFC Editor. After some time the document gets assigned an RFC number and is published. </p>
 </li>
 <li>
 <p>After several years, providing there is industry adoption and the document is on the Standards Track i.e., it is not informational, the document may be come an Internet Standard. This whole process takes a long time and it can feel a bit slow, but at least the out put has guarantees of <em>some</em> consensus and <em>some</em> running code.</p>
 </li>
 </ol>
-<p><center><img src="./img/ietf-process.png" alt="IETF Publication Process" /></center></p>
-<a class="header" href="#contributing-to-ietf" id="contributing-to-ietf"><h2>Contributing to IETF</h2></a>
+<center>![IETF Publication Process](./img/ietf-process.png)</center>
+<h2><a class="header" href="#contributing-to-ietf" id="contributing-to-ietf">Contributing to IETF</a></h2>
 <p>The IETF is built by volunteers, if you are interested to take part, the best thing you can do is to start by reading <a href="https://www.ietf.org/about/participate/tao/">the Tao</a> of the IETF.</p>
 <p>You then select a Working Group that fits your research/development interests and try to see which is the state of the art there. Most groups have a <a href="https://datatracker.ietf.org/wg/core/charter/">charter document</a> that explains the why the group exists and what the purpose for the group is. In that same page you will have links to the many communication tools you can use.</p>
 <ul>
