@@ -177,10 +177,10 @@
 <p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>, </p>
 <ol>
 <li>
-<p><strong>Media Type:</strong> Media types are registered in the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a>. They identify the general type like &quot;audio&quot; or &quot;text&quot; combined with a <code>subtype</code> like &quot;ogg&quot;, &quot;plain&quot;, or &quot;html&quot;, resulting in strings like &quot;audio/ogg&quot;, &quot;text/plain&quot;, and &quot;text/html&quot;. In IoT, common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;.</p>
+<p><strong>Media Type:</strong> Media types are registered in the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a>. They identify the general <code>type</code> like &quot;audio&quot; or &quot;text&quot; combined with a <code>subtype</code> like &quot;ogg&quot;, &quot;plain&quot;, or &quot;html&quot;, resulting in strings like &quot;audio/ogg&quot;, &quot;text/plain&quot;, and &quot;text/html&quot;. In IoT, common media types are used for applications that consume the information like &quot;application/senml+cbor&quot; or &quot;application/link-format&quot;. Media-Types are registered in IANA.</p>
 </li>
 <li>
-<p><strong>Content Type:</strong> Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons).</p>
+<p><strong>Content Type:</strong> Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons). </p>
 </li>
 <li>
 <p><strong>Content Coding:</strong> Content codings are registered in the <a href="http://www.iana.org/assignments/http-parameters">IANA HTTP Parameters registry</a> and identify an optional <em>transformation to the representation of a resource</em>, such as the compression or encryption of some data.</p>
