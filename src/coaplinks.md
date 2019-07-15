@@ -43,9 +43,9 @@ The CoAP URI is similar: `"coap:" "//" host [ ":" port ] path-abempty [ "?" quer
 
 In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good [clarification document](https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00), 
 
-1. **Media Type:** Media types are registered in the [IANA Media Types registry](https://www.iana.org/assignments/media-types/media-types.xhtml). They identify the general type like "audio" or "text" combined with a `subtype` like "ogg", "plain", or "html", resulting in strings like "audio/ogg", "text/plain", and "text/html". In IoT, common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format".
+1. **Media Type:** Media types are registered in the [IANA Media Types registry](https://www.iana.org/assignments/media-types/media-types.xhtml). They identify the general `type` like "audio" or "text" combined with a `subtype` like "ogg", "plain", or "html", resulting in strings like "audio/ogg", "text/plain", and "text/html". In IoT, common media types are used for applications that consume the information like "application/senml+cbor" or "application/link-format". Media-Types are registered in IANA.
 
-2. **Content Type:** Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons).
+2. **Content Type:** Content types are used in HTTP to specify a media type, optionally associated with additional, media type-specific parameters (separated from the media type and each other by semicolons). 
 
 3. **Content Coding:** Content codings are registered in the [IANA HTTP Parameters registry](http://www.iana.org/assignments/http-parameters) and identify an optional *transformation to the representation of a resource*, such as the compression or encryption of some data.
 
