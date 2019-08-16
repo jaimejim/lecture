@@ -4,7 +4,7 @@ That CoAP can be used in malicious DDOS attacks is news but at the same time it 
 
 As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been *"occasionally used as a basis of DDOS attacks, with increasing frequency, reaching [55Gbps on average](https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/), and with the largest one clocking at 320Gbps"*. Apparently the attacks are short-lived, lasting on average *"just over [90 seconds](https://www.securityweek.com/attackers-use-coap-ddos-amplification)"* and feature around 100 packets per second.
 
-An attack of 320Gbps is already huge, since as we saw [On DDOS Attacks](./udpddos.md) Mirai clocked at 600Gbps. It is thus likely that a 1Tbps attack using CoAP will occur soon, maybe even larger. The current peak volume is an attack of some 1.7Tbps of malicious traffic.
+An attack of 320Gbps is already huge, since as we saw [On DDOS Attacks](./udpddos.md) Mirai clocked at 600Gbps. It is thus not unlikely that a 1Tbps attack using CoAP may occur relatively soon. The current peak volume clocked in an attack is of some 1.7Tbps of malicious traffic.
 
 As a danish researcher at [RVAsec](https://www.youtube.com/watch?v=DX68vb2XjdQ&feature=youtu.be&t=19m28s) points out, *the CoAP protocol was not yet mainstream back in 2017, but the number of visible CoAP endpoints has increased rapidly from about `6500` to `220000` between november 2017 and may 2018, to more than `738041` in October 2018*.
 

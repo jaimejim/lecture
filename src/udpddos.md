@@ -3,7 +3,7 @@
 
 There is a wealth of literature on the topic of Internet and Systems Security, but [Security Engineering by Ross Anderson](https://www.cl.cam.ac.uk/~rja14/book.html) in particular is a great authoritative and readable source, it is also free. Also [Dave Dittrich's website on DDOS](https://staff.washington.edu/dittrich/misc/ddos/index.html) with hundreds of examples and pointers.
 
-It would be impossible to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.
+It would be too time consuming to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.
 
 ## Distributed Denial-of-service (DDOS) Attacks
 
@@ -23,9 +23,7 @@ The existence of outdated IoT devices is also a great breeding ground for more a
 
 Although Mirai's attack was using TCP protocols to attack, it required compromising the host before hand. With UDP attacks you can get high amplification factors *without* the need to hack anything.
 
-UDP is a simple, connection-less transport protocol. It has no handshaking and no dedicated end-to-end connection, therefore there is no guarantee of delivery. However, being so small it is very lightweight and it provides multicast possibility both features very useful in the IoT context where normally the communication ar small messages with few requests and responses.
-
-However, being so small it is very lightweight and it provides multicast possibility both features very useful in the IoT context where normally the communication ar small messages with few requests and responses.
+UDP is a simple, connection-less transport protocol. It has no handshaking and no dedicated end-to-end connection, therefore there is no guarantee of delivery. Being so small it is very lightweight while also providing multicast possibility; both features are very useful in the IoT context where normally the communication ar small messages with few requests and responses.
 
 There are some drawbacks of using UDP though as it leaves the door open to two types of attacks: *IP Address Spoofing* and *Packet Amplification*
 
