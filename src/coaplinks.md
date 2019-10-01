@@ -57,6 +57,12 @@ At this point, we are capable of having applications point to specific locations
 
 Just like a web browser understands HTTP and the common media types for HTML `text/html` and  images `image/jpeg`, an IoT client could understand CoAP and common media types like `application/cbor`, which implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
 
+## Link Attributes
+
+A commonly confused term is link or target **attributes**, which are defined in [RFC6690](https://tools.ietf.org/html/rfc6690) and [RFC5988](https://tools.ietf.org/html/rfc5988) and describe information useful to be added to a target link. They are hints indicating information about the link. In HTTP "media" for example indicates the destination medium, "rel" specifies the relation with another link, and so on. 
+
+In CoAP link attributes can define some properties of a device, for example the Open Interconnect Consortium (OIC) [defines](https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#rt-link-target-att-value) resource type "rt" link attributes that help understand which type of device is behind the link, like "oic.d.fan" or "oic.d.light". They use a urn-like type of format. Another link attribute that is used today is interface description "if" which lets the client know that the link points to an interface of some kind. 
+
 ## Data Serialization
 
 We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be *serialized*, that is how it is sent on the wire, by using CBOR.
