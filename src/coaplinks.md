@@ -57,7 +57,7 @@ At this point, we are capable of having applications point to specific locations
 
 Just like a web browser understands HTTP and the common media types for HTML `text/html` and  images `image/jpeg`, an IoT client could understand CoAP and common media types like `application/cbor`, which implies data will be send in [CBOR](http://www.iana.org/go/rfc7049) format.
 
-## Link Attributes
+## Link Attributes
 
 A commonly confused term is link or target **attributes**, which are defined in [RFC6690](https://tools.ietf.org/html/rfc6690) and [RFC5988](https://tools.ietf.org/html/rfc5988) and describe information useful to be added to a target link. They are hints indicating information about the link. In HTTP "media" for example indicates the destination medium, "rel" specifies the relation with another link, and so on. 
 
