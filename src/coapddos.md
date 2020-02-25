@@ -14,6 +14,10 @@ These attacks are based on the two vulnerabilities of UDP-based protocols mentio
 
 ## IP Address Spoofing
 
+There are two main types of transports on the Internet, TCP and UDP. TCP is connection oriented, which means that it is bidirectional between sender and receiver. In TCP there is a handshake -the famous three-way handshake- so that both sender and receiver confirm that they are able to communicate and that they are in sync. In UDP however there is no handshake and know explicit acknowledgment of the communication, information flows in one direction. 
+
+UDP then is vulnerable to **IP spoofing**, which consists on forging the header of the IP packet so that the IP address of the sender is different from that of the machine who sent it, being instead that of the victim machine. The receiver of the packet -another victim- will send the response to the spoofed address. In CoAP every server is expected to reply to some `GET` requests to specific resources, making it easy to guess which is the payload that the request has to contain.
+
 Due to the lack of handshake in UDP, [RFC 7252, Section 11.4](https://tools.ietf.org/html/rfc7252#section-11.4), warns that there are some message `types` that can be spoofed on **unsecured** CoAP networks. They can range from simple, like a `RST` or an `ACK`in response to a `CON` message which would cause an error in the communication, to disruptive when spoofing a **multicast request** (cause CoAP does support multicast) for a target node. This may result in a DOS to a victim or in the congestion/collapse of the network.
 
 Moreover under this attack, a constrained node with limited total energy available may exhaust that energy much more quickly than planned (battery depletion attack).
