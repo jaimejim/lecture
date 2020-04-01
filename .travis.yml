@@ -11,9 +11,9 @@ script:
 - mdbook build && mdbook test
 deploy:
   provider: pages
-  skip-cleanup: true
+  skip_cleanup: true
   github-token: "$GITHUB_TOKEN"
-  local-dir: "./book"
-  keep-history: true
+  local_dir: "./book"
+  keep_history: true
   on:
     branch: master
