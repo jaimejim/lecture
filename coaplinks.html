@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li class="expanded "><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li class="expanded "><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li class="expanded "><a href="coaplinks.html" class="active"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li class="expanded "><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li class="expanded "><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li class="expanded "><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li class="expanded "><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li class="expanded "><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li class="expanded "><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li class="chapter-item expanded "><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li class="chapter-item expanded "><a href="coaplinks.html" class="active"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li class="chapter-item expanded "><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li class="chapter-item expanded "><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coapddos.html"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li class="chapter-item expanded "><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li class="chapter-item expanded "><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Lectures</h1>
+                    <h1 class="menu-title">Lectures</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -195,7 +194,7 @@
 <p>For example, the content-format <code>11060</code> identifies the content type <code>application/cbor</code> (defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>) combined with the content coding <code>deflate</code> (defined by <a href="http://www.iana.org/go/rfc1951">RFC7049</a>).</p>
 <p>At this point, we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources, and serving those resources in a specific format.</p>
 <p>Just like a web browser understands HTTP and the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>, an IoT client could understand CoAP and common media types like <code>application/cbor</code>, which implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
-<p>## Link Attributes</p>
+<h2><a class="header" href="#link-attributes" id="link-attributes">Link Attributes</a></h2>
 <p>A commonly confused term is link or target <strong>attributes</strong>, which are defined in <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> and <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and describe information useful to be added to a target link. They are hints indicating information about the link. In HTTP &quot;media&quot; for example indicates the destination medium, &quot;rel&quot; specifies the relation with another link, and so on. </p>
 <p>In CoAP link attributes can define some properties of a device, for example the Open Interconnect Consortium (OIC) <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#rt-link-target-att-value">defines</a> resource type &quot;rt&quot; link attributes that help understand which type of device is behind the link, like &quot;oic.d.fan&quot; or &quot;oic.d.light&quot;. They use a urn-like type of format. Another link attribute that is used today is interface description &quot;if&quot; which lets the client know that the link points to an interface of some kind. </p>
 <h2><a class="header" href="#data-serialization" id="data-serialization">Data Serialization</a></h2>
@@ -250,13 +249,13 @@ While CBOR is binary and hard to read without translation tools for humans, ther
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="coapmessage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="coapmessage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="coapdiscovery.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="coapdiscovery.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

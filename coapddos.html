@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li class="expanded "><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li class="expanded "><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li class="expanded "><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li class="expanded "><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li class="expanded "><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li class="expanded "><a href="coapddos.html" class="active"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li class="expanded "><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li class="expanded "><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li class="expanded "><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="ietf.html"><strong aria-hidden="true">2.</strong> The IETF</a></li><li class="chapter-item expanded "><a href="coap.html"><strong aria-hidden="true">3.</strong> CoAP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coapmessage.html"><strong aria-hidden="true">3.1.</strong> A CoAP Message</a></li><li class="chapter-item expanded "><a href="coaplinks.html"><strong aria-hidden="true">3.2.</strong> CoAP Web Linking and Serialization</a></li><li class="chapter-item expanded "><a href="coapdiscovery.html"><strong aria-hidden="true">3.3.</strong> Finding your CoAP devices</a></li></ol></li><li class="chapter-item expanded "><a href="udpddos.html"><strong aria-hidden="true">4.</strong> On DDOS Attacks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coapddos.html" class="active"><strong aria-hidden="true">4.1.</strong> DDOS using CoAP</a></li></ol></li><li class="chapter-item expanded "><a href="reading.html"><strong aria-hidden="true">5.</strong> Relevant Articles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10years.html"><strong aria-hidden="true">5.1.</strong> A decade of Internet Evolution</a></li><li class="chapter-item expanded "><a href="another10years.html"><strong aria-hidden="true">5.2.</strong> Another 10 years</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Lectures</h1>
+                    <h1 class="menu-title">Lectures</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -156,6 +155,8 @@
 <p>That number has decreased as devices are being patched and today we would find about <code>436854</code> running <code>:~$ shodan count port:5683</code>, out of which <code>305051</code> are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.</p>
 <p>These attacks are based on the two vulnerabilities of UDP-based protocols mentioned in the <a href="./udpddos.html">previous section</a>.</p>
 <h2><a class="header" href="#ip-address-spoofing" id="ip-address-spoofing">IP Address Spoofing</a></h2>
+<p>There are two main types of transports on the Internet, TCP and UDP. TCP is connection oriented, which means that it is bidirectional between sender and receiver. In TCP there is a handshake -the famous three-way handshake- so that both sender and receiver confirm that they are able to communicate and that they are in sync. In UDP however there is no handshake and know explicit acknowledgment of the communication, information flows in one direction. </p>
+<p>UDP then is vulnerable to <strong>IP spoofing</strong>, which consists on forging the header of the IP packet so that the IP address of the sender is different from that of the machine who sent it, being instead that of the victim machine. The receiver of the packet -another victim- will send the response to the spoofed address. In CoAP every server is expected to reply to some <code>GET</code> requests to specific resources, making it easy to guess which is the payload that the request has to contain.</p>
 <p>Due to the lack of handshake in UDP, <a href="https://tools.ietf.org/html/rfc7252#section-11.4">RFC 7252, Section 11.4</a>, warns that there are some message <code>types</code> that can be spoofed on <strong>unsecured</strong> CoAP networks. They can range from simple, like a <code>RST</code> or an <code>ACK</code>in response to a <code>CON</code> message which would cause an error in the communication, to disruptive when spoofing a <strong>multicast request</strong> (cause CoAP does support multicast) for a target node. This may result in a DOS to a victim or in the congestion/collapse of the network.</p>
 <p>Moreover under this attack, a constrained node with limited total energy available may exhaust that energy much more quickly than planned (battery depletion attack).</p>
 <h2><a class="header" href="#amplification" id="amplification">Amplification</a></h2>
@@ -240,13 +241,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="udpddos.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="udpddos.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="reading.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="reading.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
