@@ -19,3 +19,7 @@ If that looks OK, then follow the subsequent steps:
 2. Use that token to create a new environment variable on this repo. Use `travis encrypt MY_SECRET_ENV=TOKEN-JUST-MADE --add env.global`
 3. Go to travis <https://travis-ci.org/github/jaimejim/lecture/settings> add the TOKEN-JUST-MADE as a new environment variable.
 4. add, commit, push. It should work now.
+
+
+It might also be that the repository has the wrong settings...
+
