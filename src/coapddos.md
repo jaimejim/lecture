@@ -8,9 +8,10 @@ An attack of 320Gbps is already huge, since as we saw [On DDOS Attacks](./udpddo
 
 As a danish researcher at [RVAsec](https://www.youtube.com/watch?v=DX68vb2XjdQ&feature=youtu.be&t=19m28s) points out, *the CoAP protocol was not yet mainstream back in 2017, but the number of visible CoAP endpoints has increased rapidly from about `6500` to `220000` between november 2017 and may 2018, to more than `738041` in October 2018*.
 
-That number has decreased as devices are being patched and today we would find about `436854` running `:~$ shodan count port:5683`, out of which `305051` are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet.
+That number has decreased as devices are being patched and today we would find about `436854` running `:~$ shodan count port:5683`, out of which `305051` are in China. There are of course orders of magnitude more endpoints that are not openly visible on the Internet. As of *20-05-2020* there are `1.276.888` visible CoAP endpoints. 
 
 These attacks are based on the two vulnerabilities of UDP-based protocols mentioned in the [previous section](./udpddos.md).
+
 
 ## IP Address Spoofing
 
