@@ -163,9 +163,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#coap-web-linking-and-serialization" id="coap-web-linking-and-serialization">CoAP Web Linking and Serialization</a></h1>
+                        <h1 id="coap-web-linking-and-serialization"><a class="header" href="#coap-web-linking-and-serialization">CoAP Web Linking and Serialization</a></h1>
 <p>Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>. URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>. We will see some of the basic concepts in this chapter.</p>
-<h2><a class="header" href="#uris" id="uris">URIs</a></h2>
+<h2 id="uris"><a class="header" href="#uris">URIs</a></h2>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
 <pre><code class="language-md">   foo://example.com:8042/over/there?name=ferret#nose
    \_/   \_______________/\________/\__________/\___/
@@ -191,7 +191,7 @@
      |           |                 |                |           |
    scheme     authority           path            query     fragment
 </code></pre>
-<h2><a class="header" href="#media-types" id="media-types">Media Types</a></h2>
+<h2 id="media-types"><a class="header" href="#media-types">Media Types</a></h2>
 <p>In addition to URIs, it is important to know other concepts used in REST applications and systems. In  particular concepts like media-types, content-types, and content coding. There is a very good <a href="https://tools.ietf.org/html/draft-bormann-core-media-content-type-format-00">clarification document</a>, </p>
 <ol>
 <li>
@@ -210,10 +210,10 @@
 <p>For example, the content-format <code>11060</code> identifies the content type <code>application/cbor</code> (defined by <a href="http://www.iana.org/go/rfc7049">RFC7049</a>) combined with the content coding <code>deflate</code> (defined by <a href="http://www.iana.org/go/rfc1951">RFC7049</a>).</p>
 <p>At this point, we are capable of having applications point to specific locations using URLs, indicating concrete protocols used to get resources, and serving those resources in a specific format.</p>
 <p>Just like a web browser understands HTTP and the common media types for HTML <code>text/html</code> and  images <code>image/jpeg</code>, an IoT client could understand CoAP and common media types like <code>application/cbor</code>, which implies data will be send in <a href="http://www.iana.org/go/rfc7049">CBOR</a> format.</p>
-<h2><a class="header" href="#link-attributes" id="link-attributes">Link Attributes</a></h2>
+<h2 id="link-attributes"><a class="header" href="#link-attributes">Link Attributes</a></h2>
 <p>A commonly confused term is link or target <strong>attributes</strong>, which are defined in <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> and <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a> and describe information useful to be added to a target link. They are hints indicating information about the link. In HTTP &quot;media&quot; for example indicates the destination medium, &quot;rel&quot; specifies the relation with another link, and so on. </p>
 <p>In CoAP link attributes can define some properties of a device, for example the Open Interconnect Consortium (OIC) <a href="https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#rt-link-target-att-value">defines</a> resource type &quot;rt&quot; link attributes that help understand which type of device is behind the link, like &quot;oic.d.fan&quot; or &quot;oic.d.light&quot;. They use a urn-like type of format. Another link attribute that is used today is interface description &quot;if&quot; which lets the client know that the link points to an interface of some kind. </p>
-<h2><a class="header" href="#data-serialization" id="data-serialization">Data Serialization</a></h2>
+<h2 id="data-serialization"><a class="header" href="#data-serialization">Data Serialization</a></h2>
 <p>We have explained how resources exposed by a CoAP Server can be addressed using URIs and how the client can tell the server how content is to be presented and which format to use. We have even mention how that content can be <em>serialized</em>, that is how it is sent on the wire, by using CBOR.
 While CBOR is binary and hard to read without translation tools for humans, there is a serialization format called <a href="https://tools.ietf.org/html/rfc8428">SenML</a> that is much readable.</p>
 <p>SenML can be represented in various formats with their respective media types which are: <code>application/senml-exi</code> , <code>application/senml+cbor</code> , <code>application/senml+json</code> , <code>application/senml+xml</code>. We will use JSON as it is one of the most common and it is easily readable - and writable - in this document. To illustrate with an example, we have the following exchange between two CoAP endpoints.</p>

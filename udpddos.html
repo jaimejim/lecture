@@ -163,10 +163,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#security-engineering" id="security-engineering">Security Engineering</a></h1>
+                        <h1 id="security-engineering"><a class="header" href="#security-engineering">Security Engineering</a></h1>
 <p>There is a wealth of literature on the topic of Internet and Systems Security, but <a href="https://www.cl.cam.ac.uk/%7Erja14/book.html">Security Engineering by Ross Anderson</a> in particular is a great authoritative and readable source, it is also free. Also <a href="https://staff.washington.edu/dittrich/misc/ddos/index.html">Dave Dittrich's website on DDOS</a> with hundreds of examples and pointers.</p>
 <p>It would be too time consuming to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.</p>
-<h2><a class="header" href="#distributed-denial-of-service-ddos-attacks" id="distributed-denial-of-service-ddos-attacks">Distributed Denial-of-service (DDOS) Attacks</a></h2>
+<h2 id="distributed-denial-of-service-ddos-attacks"><a class="header" href="#distributed-denial-of-service-ddos-attacks">Distributed Denial-of-service (DDOS) Attacks</a></h2>
 <p>The purpose of any denial-of-service attack is to limit the availability of a service. A DDOS attack tries to disrupt a machine in the network, <em>preventing it to fullfil its service by flooding it with traffic from many different sources</em> until the resources of the target are exhausted (i.e., memory, processing capabilities, or Internet bandwidth). This effectively makes it impossible to stop the attack simply by blocking a single source.</p>
 <p>Distributed denial-of-service (DDoS) attacks came to public notice when
 they were used to bring down Panix, a New York ISP, for several days in 1996.
@@ -174,11 +174,11 @@ Over time <a href="https://staff.washington.edu/dittrich/misc/ddos/">it populari
 <p>DDOS has become a mechanism for extorsion, using DDOS to blackmail ISPs or Internet Services. The modus operandi consists on assembling a botnet and flooding a target webserver with traffic until its owner paid them to desist. While originally substantial sums were paid (e.g., $10,000–$50,000) nowadays the process has been simplified to the point that marketplaces to hire DDOS services exist. The services are as cheap as <a href="https://www.europol.europa.eu/newsroom/news/world%E2%80%99s-biggest-marketplace-selling-internet-paralysing-ddos-attacks-taken-down">15€ a month</a>.</p>
 <p>The existence of outdated IoT devices is also a great breeding ground for more attacks, as 2016 <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46301.pdf">Mirai's</a> botnet, used to perform very large (600Gps) DDOS attacks using an average of 300.000 infected devices (i.e., DVRs, IP cameras, routers, and printers) and as many as 600000.</p>
 <p><img src="./img/mirai.png" alt="Mirai Botnet" /></p>
-<h2><a class="header" href="#using-udp-based-protocols" id="using-udp-based-protocols">Using UDP-based protocols</a></h2>
+<h2 id="using-udp-based-protocols"><a class="header" href="#using-udp-based-protocols">Using UDP-based protocols</a></h2>
 <p>Although Mirai's attack was using TCP protocols to attack, it required compromising the host before hand. With UDP attacks you can get high amplification factors <em>without</em> the need to hack anything.</p>
 <p>UDP is a simple, connection-less transport protocol. It has no handshaking and no dedicated end-to-end connection, therefore there is no guarantee of delivery. Being so small it is very lightweight while also providing multicast possibility; both features are very useful in the IoT context where normally the communication ar small messages with few requests and responses.</p>
 <p>There are some drawbacks of using UDP though as it leaves the door open to two types of attacks: <em>IP Address Spoofing</em> and <em>Packet Amplification</em></p>
-<h3><a class="header" href="#ip-address-spoofing" id="ip-address-spoofing">IP Address Spoofing</a></h3>
+<h3 id="ip-address-spoofing"><a class="header" href="#ip-address-spoofing">IP Address Spoofing</a></h3>
 <p>The <a href="https://tools.ietf.org/html/rfc768">UDP</a> header consists of 4 fields [<code>source</code> and <code>destination</code> ports, <code>length</code> and <code>checksum</code>], each of which is 2 bytes being then the header 8 bytes in total. After that we have the 20 byte <a href="https://tools.ietf.org/html/rfc8200">IP</a> header which contains, among other things <code>version</code>, <code>source</code> and <code>destination</code> address. If we want to avoid packet fragmentation that leaves about 1280B for IPv6 and 576 for IPv4. A rudimentary IPv6 packet would be:</p>
 <pre><code class="language-txt">   +---------------------------------------------+
    | 40B IPv6  |  8B UDP  |   1024 bytes payload |
@@ -198,7 +198,7 @@ Intermediary: IP = 2.2.2.2
 Victim: IP = 3.3.3.3
 </code></pre>
 <p>IP Spoofing over UDP is particularly easy as the <em>Attacker</em> does not require any information about the communication between the <em>Intermediary</em> and the <em>Victim</em>. Over <a href="https://tools.ietf.org/html/rfc793">TCP</a> the <em>Attacker</em> would somehow have to sit between the <em>Intermediary</em> and the <em>Victim</em> in order to forge the IP address as there is a connection establishment handshake.</p>
-<h3><a class="header" href="#packet-amplification" id="packet-amplification">Packet Amplification</a></h3>
+<h3 id="packet-amplification"><a class="header" href="#packet-amplification">Packet Amplification</a></h3>
 <p>Packet amplification is another potential attack carried out over UDP-based application protocols that implement some form of request/response mechanism. The dynamics are simple and it is used together with IP Spoofing.</p>
 <pre><code class="language-txt">               IP Spoofed                Large
                 Request    +---------+  Response
