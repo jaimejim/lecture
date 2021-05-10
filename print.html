@@ -138,13 +138,15 @@
                         </a>
                         
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -169,7 +171,7 @@
 <p>Here is a compilation of notes and potential lecture materials around various topics I have condensed in the past few months.</p>
 <p>The notes are written in markdown and generated using <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a>. The contents are <a href="https://github.com/jaimejim/lecture/blob/master/LICENSE">MIT Licensed</a> and so is any code they might contain. You can find the source code on <a href="https://github.com/jaimejim/lecture">GitHub</a>.</p>
 <p>Please report issues and feature requests on the <a href="https://github.com/jaimejim/lecture/issues">GitHub issue tracker</a>.</p>
-<h1 id="the-internet-engineering-task-force-ietf"><a class="header" href="#the-internet-engineering-task-force-ietf">The Internet Engineering Task Force (IETF)</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="the-internet-engineering-task-force-ietf"><a class="header" href="#the-internet-engineering-task-force-ietf">The Internet Engineering Task Force (IETF)</a></h1>
 <p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). Today the estimation is that some 3.4 billion people are regular users of the Internet, and there are some 20 billion devices connected to it. We have achieved this using some 3 billion unique IPv4 addresses. Looking ahead, there are estimations of several other billions of devices to be soon connected to this network. Noone thought that this feat could be achievable and yet it has happened with almost no fanfare.</p>
 <p>A large portion of this success has been done by the work of engineers at organizations that are more or less unknown to the public. Being the Internet Engineering Task Force (IETF) the most prominent.</p>
 <h2 id="what-has-the-ietf-done-for-us-anyways"><a class="header" href="#what-has-the-ietf-done-for-us-anyways">What has the IETF done for us anyways?</a></h2>
@@ -253,14 +255,14 @@
 <p>Finally, the best and most effective way of collaborating have been the <strong>face to face</strong> meetings happening three times a year. They can also be joined online.</p>
 </li>
 </ul>
-<h1 id="the-constrained-application-protocol-coap"><a class="header" href="#the-constrained-application-protocol-coap">The Constrained Application Protocol (CoAP)</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="the-constrained-application-protocol-coap"><a class="header" href="#the-constrained-application-protocol-coap">The Constrained Application Protocol (CoAP)</a></h1>
 <p>The Constrained Application Protocol (CoAP) is a protocol intended to be used in low-powered devices and networks. That is networks of very low throughput and devices that run on battery. Such devices often have limited memory and CPU too, being the <a href="https://tools.ietf.org/html/rfc7228#page-8">class 1</a> devices of 100KB of Flash and 10KB of RAM but targetting environments with a <a href="https://ieeexplore.ieee.org/document/6970748">minimum of 1.5kB</a> of RAM and about 5 kB of ROM.</p>
 <p>CoAP is a <a href="https://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">REST</a>-based protocol largely inspired by HTTP. However it brings the Web Server concept to the very constrained space where IoT devices are the ones exposing their resources.</p>
 <p>Like HTTP, CoAP also uses request/response communication, being CoAP messages very small, of tens of bytes on a 6LoWPAN network and of the hundreds of bytes on a less constrained one.</p>
 <p>CoAP devices are intended to come from multiple manufacturers, much like the World Wide Web enabled anyone to have an HTTP server. While arriving to a common data modeling and representation form as HTML for HTTP has not yet happened for CoAP, the technology is already mature in terms of networking layout.</p>
 <p>Devices may be sensors and actuators, exposing resources (i.e., measurable data) or enabling interaction with the environment. They have to find ways to register to services, find each other, and interact without much human control or intervention.</p>
 <p>Ideally we would be talking about a decentralized scenario, as on the Web. However, much like the Web is moving back to the mainframe format, most commercial IoT solutions today feature a central control point, manager, broker or orchestrating entity.</p>
-<h1 id="a-coap-message"><a class="header" href="#a-coap-message">A CoAP Message</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="a-coap-message"><a class="header" href="#a-coap-message">A CoAP Message</a></h1>
 <p>As specified on <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a>, CoAP messages are very compact and by default transported over UDP. There is TCP support too (e.g., for NATed environments), but UDP is the intended original transport. CoAP messages are encoded in a simple binary format with a very compact header of 4 bytes. The version field indicates the CoAP version; the message type can be [ <code>CON</code>, <code>NON</code>, <code>ACK</code> and <code>RST</code> ]. This is followed by a method or response code [ <code>0.00</code> (Empty) , <code>0.01</code> (GET) , <code>0.02</code> (POST) , <code>2.05</code> (Success) , <code>4.04</code> (Not Found) ] and a message ID, which is a 16 bit field to detect message duplication. After the header, there is a variable-length <code>token</code>, which can be between 0 and 8 bytes long and is used to correlate requests and responses. Then there several options that allow for extensibility and finally the payload with the actual data. The <code>11111111</code> (255 in binary) is a marker to indicate the end of the options and beginning of the payload.</p>
 <pre><code class="language-md">    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -341,7 +343,7 @@ RES: 2.05 Content
      observe:25  | token: 0x4a | Max-Age: 15
      [{&quot;u&quot;:&quot;C&quot;,&quot;v&quot;:19.7}]
 </code></pre>
-<h1 id="coap-web-linking-and-serialization"><a class="header" href="#coap-web-linking-and-serialization">CoAP Web Linking and Serialization</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="coap-web-linking-and-serialization"><a class="header" href="#coap-web-linking-and-serialization">CoAP Web Linking and Serialization</a></h1>
 <p>Web Linking is a fundamental part of any REST protocol, and it is the feature that makes it more versatile and flexible when compared with other alternative technologies. In CoRE, linking is defined by <a href="https://tools.ietf.org/html/rfc6690">RFC6690</a> in a similar way as HTTP defines it in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>. URI's are defined in <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>. We will see some of the basic concepts in this chapter.</p>
 <h2 id="uris"><a class="header" href="#uris">URIs</a></h2>
 <p>We will briefly have to explain what a URI is as it is probably very intuitive since it is part of our daily HTTP browsing. Everyone can recognize the following syntax of the URI scheme.</p>
@@ -419,7 +421,7 @@ While CBOR is binary and hard to read without translation tools for humans, ther
 00000070: 6375 7272 656e 7402 fb3f fb33 3333 3333  current..?.33333
 00000080: 33                                       3
 </code></pre>
-<h1 id="finding-your-coap-devices"><a class="header" href="#finding-your-coap-devices">Finding your CoAP devices</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="finding-your-coap-devices"><a class="header" href="#finding-your-coap-devices">Finding your CoAP devices</a></h1>
 <p>While we have explained how data is transmitted and how it looks like and we do have URLs to share the location of our CoAP devices, we have to figure out <strong>how to find CoAP devices to begin with</strong> and, once we know the URL of a CoAP device, <strong>how do we know what is on that device</strong>.</p>
 <h2 id="discovery-steps"><a class="header" href="#discovery-steps">Discovery steps</a></h2>
 <p>There are quite a few steps needed in order to retrieve that particular temperature measurement we are looking for. At a high level they are:</p>
@@ -540,7 +542,7 @@ RES: &lt;/rd-lookup/res&gt;;rt=&quot;core.rd-lookup-res&quot;;ct=40
 <pre><code class="language-txt">GET coap://[FF0X::FE]/.well-known/core?rt=core.rd*
 </code></pre>
 <p>Notice that in the first example every CoAP endpoint will reply and in the second only those supporting RD.</p>
-<h1 id="security-engineering"><a class="header" href="#security-engineering">Security Engineering</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="security-engineering"><a class="header" href="#security-engineering">Security Engineering</a></h1>
 <p>There is a wealth of literature on the topic of Internet and Systems Security, but <a href="https://www.cl.cam.ac.uk/%7Erja14/book.html">Security Engineering by Ross Anderson</a> in particular is a great authoritative and readable source, it is also free. Also <a href="https://staff.washington.edu/dittrich/misc/ddos/index.html">Dave Dittrich's website on DDOS</a> with hundreds of examples and pointers.</p>
 <p>It would be too time consuming to go through all potential Internet attacks and IoT security vulnerabilities here. We will focus on one type, the Distributed Denial-of-Service (DDOS) Attack in the context of IoT and CoAP.</p>
 <h2 id="distributed-denial-of-service-ddos-attacks"><a class="header" href="#distributed-denial-of-service-ddos-attacks">Distributed Denial-of-service (DDOS) Attacks</a></h2>
@@ -591,7 +593,7 @@ Victim: IP = 3.3.3.3
                            +---------+
 </code></pre>
 <p>The attacker will use Intermediary nodes as to craft a request that will generate a large response from them. That response will go to the Spoofed Address of the Victim. Depending on the amplification factor an attacking machine could amplify 1MBps on the first machine to <code>number-of-devices * (1 MBps * Amplification Factor)</code>.</p>
-<h1 id="ddos-using-coap"><a class="header" href="#ddos-using-coap">DDOS using CoAP</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="ddos-using-coap"><a class="header" href="#ddos-using-coap">DDOS using CoAP</a></h1>
 <p>That CoAP can be used in malicious DDOS attacks is news but at the same time it is not. Already when the CoAP RFC was published it came with a <a href="https://tools.ietf.org/html/rfc7252#section-11">Security Section</a> with that caveat in mind, being UDP a choice made to process message faster and scale better. Today, CoAP is now deployed widely enough to be more than noticeable by malicious attackers as shown in <a href="http://i.blackhat.com/eu-18/Thu-Dec-6/eu-18-Maggi-When-Machines-Cant-Talk-wp.pdf">1</a> , <a href="http://rvasec.com/slides/2018/Rand_Dennis-RVAsec_2018.pdf">2</a> , <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-9750">3</a> and  <a href="https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks">4</a>.</p>
 <p>As CoAP becomes more mainstream, it is likely that there will be more attacks taking advantage of misconfigured endpoints. In fact CoAP has already been <em>&quot;occasionally used as a basis of DDOS attacks, with increasing frequency, reaching <a href="https://www.zdnet.com/article/the-coap-protocol-is-the-next-big-thing-for-ddos-attacks/">55Gbps on average</a>, and with the largest one clocking at 320Gbps&quot;</em>. Apparently the attacks are short-lived, lasting on average <em>&quot;just over <a href="https://www.securityweek.com/attackers-use-coap-ddos-amplification">90 seconds</a>&quot;</em> and feature around 100 packets per second.</p>
 <p>An attack of 320Gbps is already huge, since as we saw <a href="./udpddos.html">On DDOS Attacks</a> Mirai clocked at 600Gbps. It is thus not unlikely that a 1Tbps attack using CoAP may occur relatively soon. The current peak volume clocked in an attack is of some 1.7Tbps of malicious traffic.</p>
@@ -661,16 +663,16 @@ Victim: IP = 3.3.3.3
 <p>The Internet of Things will continue to be a market place where the compromises between price and quality will continue to push us on to the side of cheap rather than secure.</p>
 </blockquote>
 <p>Bonus: <strong><a href="https://youtu.be/wbMrVzUpXss">Richard Thieme - Staring into the Abyss</a></strong></p>
-<h1 id="coap-explorer"><a class="header" href="#coap-explorer">CoAP-Explorer</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="coap-explorer"><a class="header" href="#coap-explorer">CoAP-Explorer</a></h1>
 <p>It is a work-in-progress project to help researchers understand potential CoAP DDOS.</p>
 <p>More on: <a href="http://research.coap-explorer.realmv6.org/">http://research.coap-explorer.realmv6.org/</a></p>
-<h1 id="more-information"><a class="header" href="#more-information">More information</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="more-information"><a class="header" href="#more-information">More information</a></h1>
 <p>Below are some excelent references that are worth reading:</p>
 <ul>
 <li><a href="./10years.html">A decade of Internet Evolution</a> was published in the Internet Protocol Journal on June 2009 - Volume 11, number 2. Author is Vint Cerf.</li>
 <li><a href="./another10years.html">Another 10 years</a> was published in the Internet Protocol Journal on August 2018 - Volume 21, number 2. Author is Geoff Huston.</li>
 </ul>
-<h1 id="a-decade-of-internet-evolution"><a class="header" href="#a-decade-of-internet-evolution">A decade of Internet Evolution</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="a-decade-of-internet-evolution"><a class="header" href="#a-decade-of-internet-evolution">A decade of Internet Evolution</a></h1>
 <p><em>This is an article published in the <a href="https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-40/112-evolution.html">Internet Protocol Journal on June 2009 - Volume 11, number 2</a>, written by Vint Cerf.</em></p>
 <hr />
 <p>In 1998 the Internet had about 50 million users, supported by approximately 25 million servers (Web and e-mail hosting sites, for example, but not desktops or laptops). In that same year, the <a href="https://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_10-4/104_future.html">Internet Corporation for Assigned Names and Numbers (ICANN)</a> was created. Internet companies such as Netscape Communications, Yahoo!, eBay, and Amazon were already 3 to 4 years old and the Internet was in the middle of its so-called &quot;dot-boom&quot; period. Google emerged that year as a highly speculative effort to &quot;organize the world's information and make it accessible and useful.&quot; Investment in anything related to the Internet was called &quot;irrational exuberance&quot; by the then head of the U.S. Federal Reserve Bank, Alan Greenspan.</p>
@@ -692,7 +694,7 @@ Victim: IP = 3.3.3.3
 <p>The design team quickly recognized that the standard TCP/IP protocols would not overcome some of the long delays and disruptions to be expected in deep space communication. A new set of protocols evolved that could operate above the conventional Internet or on underlying transport protocols more suited to long delays and disruption. Called <a href="ftp://ftp.rfc-editor.org/in-notes/rfc4838.txt">&quot;delay and disruption tolerant networking&quot;</a> or DTN, this suite of protocols is layered in the same abstract way as the Internet. The Interplanetary system could be thought of as a network of Internets, although it is not constrained to use conventional Internet protocols. The analog of IP is called the <a href="ftp://ftp.rfc-editor.org/in-notes/rfc5050.txt">Bundle Protocol</a>, and this protocol can run above TCP or the User Datagram Protocol (UDP) or the new Licklider Transport Protocol (for deep space application). Ironically, the DTN protocol suite has also proven to be useful for terrestrial applications in which delay and disruption are common: tactical military communication and civilian mobile communication.</p>
 <p>After 10 years of work, the DTN system will be tested onboard the Deep Impact mission platform late in 2008 as part of a program to qualify the new technology for use in future space missions. It is hoped that this protocol suite can be standardized for use by any of the world's space agencies so that spacecraft from any country will be interoperable with spacecraft of other countries and available to support new missions if they are still operational and have completed their primary missions. Such a situation already exists on Mars, where the Rovers are using previously launched orbital satellites to relay information to Earth's Deep Space Network using store-and-forward techniques like those common to the Internet.</p>
 <p>The Internet has gone from dial-up to deep space in just the past 10 years. One can only begin to speculate about its application and condition 10 years hence. We will all have to keep our subscriptions to The Internet Protocol Journal to find out!</p>
-<h1 id="another-10-years-later"><a class="header" href="#another-10-years-later">Another 10 Years Later</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="another-10-years-later"><a class="header" href="#another-10-years-later">Another 10 Years Later</a></h1>
 <p><em>This is an article published in the <a href="http://ipj.dreamhosters.com/wp-content/uploads/2018/08/ipj212.pdf">Internet Protocol Journal on August 2018 - Volume 21, number 2</a>. It was written by Geoff Huston who is Chief Scientist at APNIC, the Regional Internet Registry serving the Asia-Pacific region.</em></p>
 <hr />
 <p>The evolutionary path of any technology can often take strange and unanticipated turns and twists. At some points simplicity and minimalism can be replaced by complexity and ornamentation, while at other times a dramatic cut-through exposes the core concepts of the technology and removes layers of superfluous additions. The evolution of the Internet appears to be no exception and contains these same forms of unanticipated turns and twists. In thinking about the technology of the Internet over the last ten years, it appears that it’s been a very mixed story about what’s changed and what’s stayed the same.</p>
