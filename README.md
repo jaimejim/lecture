@@ -1,6 +1,6 @@
 # Lecture Material
 
-[![Build Status](https://travis-ci.org/jaimejim/lecture.svg?branch=master)](https://travis-ci.org/jaimejim/lecture)
+[![Build Status](https://travis-ci.com/jaimejim/lecture.svg?branch=master)](https://travis-ci.com/jaimejim/lecture)
 
 Contains notes and lecture material around IoT topics.
 
